@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:17:27 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/04 19:07:16 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:50:14 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ t_syntax	*ft_others(t_input *input);
 t_syntax	*ft_others_c(t_input *input);
 t_syntax	*ft_dgreat(t_input *input);
 void		eat(t_input *input, t_tokentype type);
+bool		is_redir(t_tokentype type);
 
 //syntex order
 t_syntax	*ft_order(t_syntax *syntax);
