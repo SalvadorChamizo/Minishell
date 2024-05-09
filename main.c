@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:19:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/08 14:23:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:07:06 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	input_init(t_input *input, char **ev)
 	i = 0;
 	input->pos = 0;
 	input->line = readline(RED"minishell> "RESET);
-	//input->line = "First Second Third | Fourth";
+	//input->line = "cat dog";
 	while (ev[i] != NULL)
 	{
 		if (ft_strcmp(ev[i], "PATH="))
