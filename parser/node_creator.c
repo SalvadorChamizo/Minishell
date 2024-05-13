@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 17:15:24 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/09 15:45:43 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:53:43 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,39 +43,3 @@ t_syntax	*endap_nose(t_token *token)
 	new_node->right = NULL;
 	return (new_node);
 }
-
-/*t_syntax	*ft_quote(t_input *input, t_syntax	*tree, t_token *token)
-{
-	if (input->current_token->type == T_SQUOTE)
-	{
-		eat(input, T_DQUOTE);
-		tree = binap_nose(token, ft_others(input), NULL);
-	}
-	else if (input->current_token->type == T_DQUOTE)
-	{
-		eat(input, T_DQUOTE);
-		tree = binap_nose(token, ft_others(input), NULL);
-	}
-	return (tree);
-}
-
-t_syntax	*ft_others(t_input *input)
-{
-	t_syntax	*tree;
-	t_token		*token;
-
-	token = input->current_token;
-	tree = NULL;
-	if (input->current_token->type == T_O_PARENT)
-	{
-		tree = ft_pipe(input);
-		eat(input, T_C_PARENT);
-	}
-	else if (input->current_token->type == T_IDENTIFIER)
-	{
-		eat(input, T_IDENTIFIER);
-		tree = binap_nose(token, ft_others(input), NULL); //ft_outfile_1(input)
-	}
-	tree = ft_quote(input, tree, token);
-	return (tree);
-}*/

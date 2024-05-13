@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:19:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/09 17:07:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:38:18 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,63 @@ void	print_ast_helper(t_syntax *node, int depth, char *side)
 {
 	if (node == NULL)
 		return ;
-	if (node->type == NUM)
-		printf(GREEN"%*s%sNUM:"RESET" %s\n", depth * 2, "", side, node->token->value);
-	else if (node->type == UNIOP)
+	if (node->token->type == T_IDENTIFIER)
 	{
-		printf("%*s%sUNIOP: %s\n", depth * 2, "", side, node->token->value);
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"IDENTIFIER:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	else if (node->token->type == T_LESS || node->token->type == T_GREAT || node->token->type == T_DGREAT)
+	{
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"REDIRECTION:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	else if (node->token->type == T_COMMAND)
+	{
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"COMMAND:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	else if (node->token->type == T_ASS)
+	{
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"ASSIGNMENT:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	else if (node->token->type == T_BUILTIN)
+	{
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"BUILTIN:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	/*else if(node->token->type == T_ARGUMENT)
+	{
+		printf(RED"%*s%s"RESET""YELLOW"ARGUMENT:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}*/
+	else if (node->token->type == T_DELIMITER)
+	{
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"LIMITER:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	else if (node->token->type == T_FILE)
+	{
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"FILE:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	else if (node->token->type == T_DLESS)
+	{
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"HEREDOC:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
 		print_ast_helper(node->left, depth + 2, "left:  ");
 		print_ast_helper(node->right, depth + 2, "right: ");
 	}
 	else
 	{
-		printf(YELLOW"%*s%sBINOP:"RESET" %s\n", depth * 2, "", side, node->token->value);
+		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"PIPELINE:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
 		print_ast_helper(node->left, depth + 2, "left:  ");
 		print_ast_helper(node->right, depth + 2, "right: ");
 	}
@@ -34,8 +80,57 @@ void	print_ast_helper(t_syntax *node, int depth, char *side)
 
 void	print_ast(t_syntax *root)
 {
+	printf(YELLOW"Arbol desplegado:\n"RESET);
 	print_ast_helper(root, 0, "root: ");
 }
+
+/* void	print_assignment(t_assign_list *list)
+{
+	t_assign_list	*temp;
+	int				i;
+
+	i = 1;
+	temp = list;
+	if (!list)
+		printf(BLUE"No assignments\n"RESET);
+	else
+	{
+		printf(BLUE"\nAssignment List\n"RESET);
+		while (temp)
+		{
+			printf("Node %d: Variable = %s, Value = %s\n", i, temp->variable, temp->value);
+			temp = temp->next;
+			i++;
+		}		
+	}
+} */
+
+////////////////////////////////////////////////////////////////////////////////
+
+/* void	print_ast_helper(t_syntax *node, int depth, char *side) node->token->type,
+{
+	if (node == NULL)
+		return ;
+	if(node->token->type == NUM)
+		printf(GREEN"%*s%sNUM:"RESET" %u\n", depth * 2, "", side, node->token->type, node->token->type);
+	else if(node->token->type == UNIOP)
+	{
+		printf("%*s%sUNIOP: %s\n", depth * 2, "", side, node->token->type, node->token->value);
+		print_ast_helper(node->left, depth + 2, "left:  ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+	else
+	{
+		printf(YELLOW"%*s%s"MAGENTA"%s "GREEN"->"RESET" %u\n", depth * 2, "", side, node->token->type, node->token->value, node->token->type);
+		print_ast_helper(node->left, depth + 2, "left: ");
+		print_ast_helper(node->right, depth + 2, "right: ");
+	}
+}
+
+void	print_ast(t_syntax *root)
+{
+	print_ast_helper(root, 0, "root: ");
+} */
 
 void	input_init(t_input *input, char **ev)
 {
@@ -81,7 +176,7 @@ int	main(int argc, char **argv, char **env)
 		else
 		{
 			syntax = ft_pipe(input);
-			ft_printf(RED"\n/////////////////////////////////////////\n\n"RESET);
+			ft_expanser(syntax);
 			print_ast(syntax);
 			free(input->line);
 		}

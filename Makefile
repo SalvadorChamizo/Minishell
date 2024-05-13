@@ -19,6 +19,7 @@ FILES =	main \
 		exit \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
+		tokenizer/tokenizer_quote \
 		parser/parser \
 		parser/parser_struct \
 		parser/node_creator \

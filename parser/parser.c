@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 10:11:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/04 11:51:05 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:52:59 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,5 @@ bool	parser(t_tokentype val, t_parscontrol *control)
 		return (true);
 	}
 	else
-	{
-		printf("parse error\n");
 		return (false);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:17:27 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/08 19:50:14 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:33:02 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,20 @@
 typedef enum e_tokentype
 {
 	T_IDENTIFIER, //w
-	T_LESS,	//r-
-	T_GREAT, //r-
-	T_DLESS, //r-
-	T_DGREAT, //r-
-	T_PIPE, //pipe-
-	T_O_PARENT, //OP-
+	T_COMMAND,
+	T_BUILTIN,
+	T_FILE,
+	T_DELIMITER,
+	T_LESS,	//r
+	T_GREAT,
+	T_DLESS,
+	T_DGREAT,
+	T_PIPE, //pipe
+	T_O_PARENT, //OP
 	T_C_PARENT, //CP
 	T_SQUOTE, //w
-	T_DQUOTE, //w
-	T_ASS,
+	T_DQUOTE,
+	T_ASS, //=
 	T_EOF,
 }	t_tokentype;
 
@@ -116,15 +120,15 @@ t_syntax	*ft_dgreat(t_input *input);
 void		eat(t_input *input, t_tokentype type);
 bool		is_redir(t_tokentype type);
 
-//syntex order
-t_syntax	*ft_order(t_syntax *syntax);
-
 //expanser
-
+void		ft_expanser(t_syntax *tree);
 
 //others
 void		ft_enter(void);
 void		ft_exit(void);
+
+//To delete
+void		print_ast(t_syntax *root);
 
 #endif
 
