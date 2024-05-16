@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:32:39 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/15 18:35:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:08:00 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,15 @@
 
 typedef enum e_tokentype
 {
-	T_IDENTIFIER, //w
-	T_COMMAND,
-	T_BUILTIN,
-	T_FILE,
-	T_DELIMITER,
-	T_LESS,	//r
+	T_IDENTIFIER,
+	T_LESS,
 	T_GREAT,
 	T_DLESS,
 	T_DGREAT,
-	T_PIPE, //pipe
-	T_O_PARENT, //OP
-	T_C_PARENT, //CP
-	T_SQUOTE, //w
-	T_DQUOTE,
-	T_ASS, //=
+	T_PIPE,
+	T_O_PARENT,
+	T_C_PARENT,
+	T_ASSING,
 	T_EOF,
 }	t_tokentype;
 
