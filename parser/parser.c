@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 11:51:05 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:24:10 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../include/bash.h"
 
-/*t_token	*get_next_token(t_input *input);
+t_token	*get_next_token(t_input *input);
 t_ast	*ft_expr(t_input *input);
 t_ast	*ft_outfile(t_input *input, t_idenlst **list);
 t_ast	*ft_factor(t_input *input, t_idenlst **list);
@@ -80,7 +80,7 @@ t_ast	*ft_assignment(t_input *input, t_idenlst **list)
 
 	ast_node = NULL;
 	token = input->current_token;
-	if (token->type == T_ASSING)
+	if (token->type == T_IDENTIFIER && check_equal(token->value))
 	{
 		ft_eat(input, T_IDENTIFIER);
 		ast_node = new_b_node(NULL, token, ft_factor(input, list));
@@ -94,7 +94,9 @@ t_ast	*ft_assignment(t_input *input, t_idenlst **list)
 	return (ast_node);
 }
 
-t_ast	*ft_factor(t_input *input)
+
+
+/*t_ast	*ft_factor(t_input *input)
 {
 	t_token	*token;
 	t_ast	*ast_node;
@@ -119,7 +121,7 @@ t_ast	*ft_factor(t_input *input)
 		return (ast_node);
 	}
 	return (ast_node);
-}
+}*/
 
 t_ast	*ft_factor(t_input *input, t_idenlst **list)
 {
@@ -129,19 +131,19 @@ t_ast	*ft_factor(t_input *input, t_idenlst **list)
 
 	ast_node = ft_assignment(input, list);
 	token = input->current_token;
-	if (token->type == T_IDENTIFIER)
+	if (token->type == T_IDENTIFIER && !check_equal(token->value))
 	{
-		ft_eat(input, T_IDENTIFIER);
-		ast_node = new_b_node(ft_factor(input), token, ast_node);
+		/*ft_eat(input, T_IDENTIFIER);
+		ast_node = new_b_node(ft_factor(input), token, ast_node);*/
 		new_node = ft_lstnew_identifier(input->current_token);
 		printf("%s\n", new_node->token->value);
 		ft_lstadd_identifier(list, new_node);
 		ft_eat(input, T_IDENTIFIER);
 		ast_node = ft_outfile(input, list);
-		if (ast_node)
+		/*if (ast_node)
 			ast_node = new_b_node(ft_factor(input), token, ast_node);
 		else
-			ast_node = new_b_node(ft_factor(input), token, ft_factor(input));
+			ast_node = new_b_node(ft_factor(input), token, ft_factor(input));*/
 	}
 	return (ast_node);
 }
@@ -194,10 +196,12 @@ t_ast	*ft_expr(t_input *input)
 {
 	t_ast	*ast;
 	t_ast	*ast2;
+	//t_ast	*ast3;
 	t_token	*token;
 	t_idenlst *list;
 
 	list = NULL;
+	ast2 = NULL;
 	input->current_token = get_next_token(input);
 	ast = ft_outfile(input, &list);
 	token = input->current_token;
@@ -207,12 +211,22 @@ t_ast	*ft_expr(t_input *input)
 	}
 	if (list)
 	{
+		printf("ENTRA AQUI 3\n");
 		ast2 = iden_node(list);
 		print_ast(ast2);
 	}
-	if (ast && ast->right == NULL)
+	if (ast2 && ast && ast->right == NULL)
 	{
+		printf("ENTRA AQUI\n");
 		ast->right = ast2;
 	}
+	if (ast2 && ast && ast->right != NULL && ast->token->type != T_PIPE)
+	{
+		printf("ENTRA AQUI 2\n");
+		//ast3 = ast->right;
+		//ast->right = ast2;
+		ast2->right = ast;
+		return (ast2);
+	}
 	return (ast);
-}*/
+}

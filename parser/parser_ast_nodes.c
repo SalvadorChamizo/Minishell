@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast_nodes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 13:11:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 11:49:10 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:24:31 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../include/bash.h"
 
 /*t_astnode	*create_binop_node(t_astnode *left, t_token *op, t_astnode *right)
 {
@@ -24,7 +24,7 @@
 	return (ast_node);
 }*/
 
-/*t_nodetype	return_type(t_token *token)
+t_nodetype	return_type(t_token *token)
 {
 	if (token->type == T_IDENTIFIER)
 		return (N_IDENTIFIER);
@@ -88,7 +88,7 @@ t_ast	*new_b_node2(t_ast *left, t_token *op, t_ast *right, t_ast *iden)
 	return (ast_node);
 }
 
-t_ast	*create_word_node(t_input *input, t_token *token)
+/*t_ast	*create_word_node(t_input *input, t_token *token)
 {
 	t_ast	*ast_node;
 

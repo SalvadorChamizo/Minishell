@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:10:25 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 11:50:39 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:25:05 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include "../bash.h"
+#include "../../include/bash.h"
 
 void	print_ast_helper(t_ast *node, int depth, char *side)
 {
@@ -124,4 +124,4 @@ void	print_list(t_idenlst *list)
 			i++;
 		}		
 	}
-}*/
+}

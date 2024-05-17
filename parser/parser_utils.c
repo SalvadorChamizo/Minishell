@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:13:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 11:50:24 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:24:49 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include "../bash.h"
+#include "../../include/bash.h"
 
 void	ft_eat_aux(t_input *input)
 {
@@ -30,4 +30,4 @@ void	ft_eat_aux(t_input *input)
 		else if (input->current_token->type == T_DGREAT)
 			ft_eat(input, T_DGREAT);
 	}
-}*/
+}
