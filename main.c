@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/17 12:18:32 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:40:55 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	input_init(t_input *input, char **ev)
 int	main(int argc, char **argv, char **env)
 {
 	t_input				*input;
-	//t_ast				*syntax;
+	t_ast				*syntax;
 	t_token				*current_token;
 	int 				i;
 
@@ -183,9 +183,9 @@ int	main(int argc, char **argv, char **env)
 			}
 			free(current_token);
 			input->pos = 0;
-			//syntax = ft_expr(input);
+			syntax = ft_expr(input);
 			//ft_expanser(syntax);
-			//print_ast(syntax);
+			print_ast(syntax);
 			free(input->line);
 		}
 		free(input);

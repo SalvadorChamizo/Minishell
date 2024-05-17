@@ -6,11 +6,11 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 19:25:03 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:29:43 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/bash.h"
+#include "../bash.h"
 
 t_token	*get_next_token(t_input *input);
 t_ast	*ft_expr(t_input *input);
@@ -59,13 +59,13 @@ t_idenlst	*ft_lstnew_identifier(t_token *token)
 	return (new);
 }
 
-void	ft_add_identifier(t_input *input)
+/*void	ft_add_identifier(t_input *input)
 {
 	t_idenlst	*new_node;
 
 	new_node = ft_lstnew_identifier(input->current_token);
 	ft_lstadd_identifier(&input->list, new_node);
-}
+}*/
 
 void	ft_eat(t_input *input, t_tokentype type)
 {
@@ -80,9 +80,9 @@ t_ast	*ft_assignment(t_input *input, t_idenlst **list)
 
 	ast_node = NULL;
 	token = input->current_token;
-	if (token->type == T_IDENTIFIER && check_equal(token->value))
+	if (token->type == T_ASSING)
 	{
-		ft_eat(input, T_IDENTIFIER);
+		ft_eat(input, T_ASSING);
 		ast_node = new_b_node(NULL, token, ft_factor(input, list));
 	}
 	else if (token->type == T_O_PARENT)
@@ -131,7 +131,7 @@ t_ast	*ft_factor(t_input *input, t_idenlst **list)
 
 	ast_node = ft_assignment(input, list);
 	token = input->current_token;
-	if (token->type == T_IDENTIFIER && !check_equal(token->value))
+	if (token->type == T_IDENTIFIER)
 	{
 		/*ft_eat(input, T_IDENTIFIER);
 		ast_node = new_b_node(ft_factor(input), token, ast_node);*/

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast_nodes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 13:11:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 13:24:31 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:31:24 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/bash.h"
+#include "../bash.h"
 
 /*t_astnode	*create_binop_node(t_astnode *left, t_token *op, t_astnode *right)
 {
