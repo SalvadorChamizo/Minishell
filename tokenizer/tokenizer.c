@@ -6,13 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/16 18:10:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:54:23 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "../bash.h"
 
-void	is_redirection(t_input *minishell, t_token *newtok, char *ret)
+void	is_redir(t_input *minishell, t_token *newtok, char *ret)
 {
 	char	c;
 	char	d;
@@ -29,7 +29,7 @@ void	is_redirection(t_input *minishell, t_token *newtok, char *ret)
 		ft_dop_def(minishell, newtok, ret, T_DGREAT);
 }
 
-void	ft_operator(t_input *minishell, t_token *newtok, char *ret)
+void	ft_operat(t_input *minishell, t_token *newtok, char *ret)
 {
 	char	c;
 
@@ -44,7 +44,7 @@ void	ft_operator(t_input *minishell, t_token *newtok, char *ret)
 		s_quote_case(minishell, newtok, ret, T_IDENTIFIER);
 	else if (c == '\"')
 		d_quote_case(minishell, newtok, ret, T_IDENTIFIER);
-	is_redirection(minishell, newtok, ret);
+	is_redir(minishell, newtok, ret);
 	if (!newtok->value)
 		return ;
 	minishell->pos++;
@@ -52,7 +52,7 @@ void	ft_operator(t_input *minishell, t_token *newtok, char *ret)
 
 bool	isidentifier(char c)
 {
-	if (isspace(c) || isoperator(c))
+	if (ft_isspace(c) || isoperator(c))
 		return (false);
 	return (true);
 }
@@ -82,6 +82,8 @@ t_token	*get_next_token(t_input *minishell)
 	newtok = malloc(sizeof(t_token));
 	if (!newtok)
 		return (NULL);
+	newtok->type = T_EOF;
+	newtok->value = 0;
 	while (ret[minishell->pos])
 	{
 		ft_skip_spaces(minishell, ret);
@@ -94,14 +96,12 @@ t_token	*get_next_token(t_input *minishell)
 		}
 		else if (isoperator(ret[minishell->pos]) && ret[minishell->pos])
 		{
-			ft_operator(minishell, newtok, ret);
+			ft_operat(minishell, newtok, ret);
 			printf(BLUE"Token value:"RESET" %s\n", newtok->value);
 			printf(BLUE"Token type:"RESET" %d\n\n", newtok->type);
 			return (newtok);
 		}
 		minishell->pos++;
 	}
-	newtok->type = T_EOF;
-	newtok->value = 0;
 	return (newtok);
 }

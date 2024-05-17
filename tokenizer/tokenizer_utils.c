@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:04:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/16 11:29:23 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:29:36 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "../bash.h"
 
 bool	isoperator(char c)
 {

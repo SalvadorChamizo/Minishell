@@ -6,13 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/16 18:13:30 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:18:32 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "bash.h"
 
-void	print_ast_helper(t_syntax *node, int depth, char *side)
+/*void	print_ast_helper(t_syntax *node, int depth, char *side)
 {
 	if (node == NULL)
 		return ;
@@ -46,12 +46,12 @@ void	print_ast_helper(t_syntax *node, int depth, char *side)
 		print_ast_helper(node->left, depth + 2, "left:  ");
 		print_ast_helper(node->right, depth + 2, "right: ");
 	}
-	/*else if(node->token->type == T_ARGUMENT)
+	else if(node->token->type == T_ARGUMENT)
 	{
 		printf(RED"%*s%s"RESET""YELLOW"ARGUMENT:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
 		print_ast_helper(node->left, depth + 2, "left:  ");
 		print_ast_helper(node->right, depth + 2, "right: ");
-	}*/
+	}
 	else if (node->token->type == T_DELIMITER)
 	{
 		printf(RED"%*s%s"RESET""BLUE"%d "YELLOW"LIMITER:"RESET" %s\n", depth * 2, "", side, node->token->type, node->token->value);
@@ -82,7 +82,7 @@ void	print_ast(t_ast *root)
 {
 	printf(YELLOW"Arbol desplegado:\n"RESET);
 	print_ast_helper(root, 0, "root: ");
-}
+}*/
 
 /* void	print_assignment(t_assign_list *list)
 {
@@ -153,10 +153,11 @@ void	input_init(t_input *input, char **ev)
 int	main(int argc, char **argv, char **env)
 {
 	t_input				*input;
-	t_parscontrol		*control;
-	t_ast				*syntax;
+	//t_ast				*syntax;
 	t_token				*current_token;
+	int 				i;
 
+	i = 0;
 	(void)argc;
 	(void)argv;
 	//ft_enter(); eslogan de entrada
@@ -173,11 +174,9 @@ int	main(int argc, char **argv, char **env)
 		else
 		{
 			current_token = get_next_token(input);
+			printf("ENTRA\n");
 			while (current_token->type != T_EOF)
 			{
-				printf("\nToken number: %d\n", i);
-				printf("Token value: %s\n", current_token->value);
-				printf("Token type: %d\n", current_token->type);
 				free(current_token);
 				current_token = get_next_token(input);
 				i++;

@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:46:42 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/16 11:29:33 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 11:25:22 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "../bash.h"
 
 void	s_quote_case(t_input *mshll, t_token *nt, char *rt, t_tokentype t)
 {

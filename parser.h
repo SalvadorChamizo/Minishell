@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:18:16 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/16 16:43:26 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:29:19 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSER_H
 
 # include "bash.h"
-#include "../include/lexer.h"
 
 typedef enum e_nodetype
 {
@@ -28,13 +27,10 @@ typedef enum e_nodetype
 typedef enum e_tokentype
 {
 	T_IDENTIFIER,
-	T_NUMBER,
 	T_REDIRECTION,
 	T_PIPE,
 	T_O_PARENT,
 	T_C_PARENT,
-	T_SQUOTE,
-	T_DQUOTE,
 	T_EOF,
 }	t_tokentype;
 
