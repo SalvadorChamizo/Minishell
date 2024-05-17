@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 13:24:10 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:25:03 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ t_ast	*ft_expr(t_input *input)
 {
 	t_ast	*ast;
 	t_ast	*ast2;
-	//t_ast	*ast3;
+	t_ast	*ast3;
 	t_token	*token;
 	t_idenlst *list;
 
@@ -215,18 +215,27 @@ t_ast	*ft_expr(t_input *input)
 		ast2 = iden_node(list);
 		print_ast(ast2);
 	}
+	if (!ast && ast2)
+		return (ast2);
 	if (ast2 && ast && ast->right == NULL)
 	{
 		printf("ENTRA AQUI\n");
 		ast->right = ast2;
+		return (ast);
 	}
-	if (ast2 && ast && ast->right != NULL && ast->token->type != T_PIPE)
+	if (ast2 && ast && ast->right != NULL && ast->token->type == T_PIPE)
 	{
 		printf("ENTRA AQUI 2\n");
-		//ast3 = ast->right;
-		//ast->right = ast2;
-		ast2->right = ast;
-		return (ast2);
+		printf("TOKEN AST->RIGHT: %s\n", ast->right->token->value);
+		/*printf("TOKEN AST->LEFT: %s\n", ast->left->token->value);
+		printf("TOKEN AST->LEFT: %s\n", ast->left->left->token->value);
+		printf("TOKEN AST: %s\n", ast->token->value);
+		printf("TOKEN AST2: %s\n", ast2->token->value);*/
+		ast3 = ast->left;
+		ast2->right = ast3;
+		ast->left = ast2;
+		return (ast);
 	}
+	printf("SALE POR AQUI\n");
 	return (ast);
 }
