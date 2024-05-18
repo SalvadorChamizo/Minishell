@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/17 14:40:55 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:42:12 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_input				*input;
 	t_ast				*syntax;
-	t_token				*current_token;
-	int 				i;
 
-	i = 0;
 	(void)argc;
 	(void)argv;
 	//ft_enter(); eslogan de entrada
@@ -173,15 +170,6 @@ int	main(int argc, char **argv, char **env)
 		}
 		else
 		{
-			current_token = get_next_token(input);
-			printf("ENTRA\n");
-			while (current_token->type != T_EOF)
-			{
-				free(current_token);
-				current_token = get_next_token(input);
-				i++;
-			}
-			free(current_token);
 			input->pos = 0;
 			syntax = ft_expr(input);
 			//ft_expanser(syntax);

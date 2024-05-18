@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:10:25 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 14:30:23 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:39:53 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	print_ast_helper(t_ast *node, int depth, char *side)
 
 void	print_ast(t_ast *root)
 {
-	printf("Entra\n");
+	printf(GREEN"ARBOL\n");
 	print_ast_helper(root, 0, "root: ");
 }
 
