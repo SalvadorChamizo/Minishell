@@ -1,5 +1,5 @@
 NAME = minishell
-CC = gcc
+CC = gcc -lreadline
 FLAGS = -g -Wall -Werror -Wextra -Iinclude
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
