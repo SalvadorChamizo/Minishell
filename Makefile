@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-FLAGS = -g -Wall -Werror -Wextra -Iinclude
+FLAGS = -g -Wall -Werror -Wextra -lreadline
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
@@ -42,7 +42,7 @@ BNS_OBJS = $(addprefix $(BNS_OBJ_DIR), $(addsuffix .o, $(BNS_FILES)))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(FLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC)  $(OBJS) $(LIBFT) $(FLAGS) -o $(NAME)
 	@echo
 	@echo "$(MAGENTA)minishell compiled!$(RESET)"
 	@echo
