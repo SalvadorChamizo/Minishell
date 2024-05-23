@@ -1,6 +1,6 @@
 NAME = minishell
-CC = gcc -lreadline
-FLAGS = -g -Wall -Werror -Wextra -Iinclude
+CC = gcc
+FLAGS = -g -Wall -Werror -Wextra -Iinclude -lreadline
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
@@ -16,15 +16,13 @@ BOLD    = \033[1m
 RED     = \033[31;1m
 
 FILES =	main \
-		exit \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
+		tokenizer/tokenizer_quote \
 		parser/parser \
-		parser/parser_struct \
-		parser/node_creator \
-		parser/parser_struct_ad \
-		parser/syntax_order \
-		expanser/expanser \
+		parser/parser_utils \
+		parser/parser_ast_nodes \
+		parser/print_parser\
 
 BNS_FILES = 
 
@@ -44,7 +42,7 @@ BNS_OBJS = $(addprefix $(BNS_OBJ_DIR), $(addsuffix .o, $(BNS_FILES)))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(FLAGS) -lreadline $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBFT) $(FLAGS) -o $(NAME)
 	@echo
 	@echo "$(MAGENTA)minishell compiled!$(RESET)"
 	@echo
@@ -52,7 +50,7 @@ $(NAME): $(LIBFT) $(OBJS)
 bonus: $(NAME_BNS)
 
 $(NAME_BNS): $(LIBFT) $(BNS_OBJS) $(OBJS)
-	@$(CC) $(FLAGS) $(BNS_OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(BNS_OBJS) $(LIBFT) $(FLAGS) -o $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_PATH) all

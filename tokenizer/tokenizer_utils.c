@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:04:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/08 13:14:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:09:28 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../bash.h"
 
 bool	isoperator(char c)
 {
@@ -23,54 +23,33 @@ bool	isoperator(char c)
 void	ft_sop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t)
 {
 	nt->value = ft_substr(rt, mshll->pos, 1);
+	if (!nt->value)
+		return ;
 	nt->type = t;
 }
 
 void	ft_dop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t)
 {
 	nt->value = ft_substr(rt, mshll->pos, 2);
+	if (!nt->value)
+		return ;
 	nt->type = t;
 	mshll->pos++;
 }
 
-void	s_quote_case(t_input *mshll, t_token *nt, char *rt, t_tokentype t)
+int	ft_isspace(char c)
 {
-	int	start;
-
-	start = mshll->pos;
-	mshll->pos++;
-	while (mshll->line[mshll->pos] != '\'' && mshll->line[mshll->pos])
-		mshll->pos++;
-	if (mshll->line[mshll->pos] == '\'')
-	{
-		nt->value = ft_substr(rt, start, mshll->pos - start + 1);
-		nt->type = t;
-		return ;
-	}
+	if (c == ' ' || c == '\t' || c == '\n')
+		return (1);
 	else
-	{
-		printf("single quote do not close\n");
-		exit (0);
-	}
+		return (0);
 }
 
-void	d_quote_case(t_input *mshll, t_token *nt, char *rt, t_tokentype t)
+void	ft_skip_spaces(t_input *input, char *text)
 {
-	int	start;
-
-	start = mshll->pos;
-	mshll->pos++;
-	while (mshll->line[mshll->pos] != '\"' && mshll->line[mshll->pos])
-		mshll->pos++;
-	if (mshll->line[mshll->pos] == '\"')
+	if (ft_isspace(text[input->pos]))
 	{
-		nt->value = ft_substr(rt, start, mshll->pos - start + 1);
-		nt->type = t;
-		return ;
-	}
-	else
-	{
-		printf("double quote do not close\n");
-		exit (0);
+		while (ft_isspace(text[input->pos]))
+			input->pos++;
 	}
 }
