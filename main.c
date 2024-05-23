@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/17 19:42:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:49:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			input->pos = 0;
 			syntax = ft_expr(input);
-			//ft_expanser(syntax);
+			ft_expanser(syntax);
 			print_ast(syntax);
 			free(input->line);
 		}

@@ -23,7 +23,8 @@ FILES =	main \
 		parser/parser \
 		parser/parser_utils \
 		parser/parser_ast_nodes \
-		parser/print_parser\
+		parser/print_parser \
+		expanser/expanser \
 
 BNS_FILES = 
 
