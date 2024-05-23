@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 19:42:43 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:53:32 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,11 @@ t_ast	*ft_expr(t_input *input)
 	{
 		ast->right = ast2;
 		return (ast);
+	}
+	if (ast2 && ast && ast->token->type != T_PIPE)
+	{
+		ast2->right = ast;
+		return (ast2);
 	}
 	if (ast2 && ast && ast->right != NULL && ast->token->type == T_PIPE)
 	{
