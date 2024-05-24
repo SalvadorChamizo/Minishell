@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/18 11:28:10 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:11:43 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ void	is_redir(t_input *minishell, t_token *newtok, char *ret)
 	else if (c == '>' && d != '>')
 		ft_sop_def(minishell, newtok, ret, T_GREAT);
 	else if (c == '<' && d == '<')
-	{
 		ft_dop_def(minishell, newtok, ret, T_DLESS);
-	}
 	else if (c == '>' && d == '>')
 		ft_dop_def(minishell, newtok, ret, T_DGREAT);
 }
@@ -51,7 +49,6 @@ void	ft_operat(t_input *minishell, t_token *newtok, char *ret)
 	is_redir(minishell, newtok, ret);
 	if (!newtok->value)
 		return ;
-	printf(GREYM2"POS:%d\n", minishell->pos);
 	minishell->pos++;
 }
 
