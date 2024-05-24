@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/23 18:52:16 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:31:21 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,8 @@ void	store_assignment(t_ast *ast, t_assign_list **list)
 	t_assign_list	*new_node;
 
 	new_node = NULL;
-	if (ast == NULL)
+	if (ast == NULL || ast->token->type == T_PIPE
+		|| ast->token->type == T_IDENTIFIER)
 		return ;
 	if (ast->type == N_ASSIGN)
 	{
