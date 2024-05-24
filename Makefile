@@ -17,6 +17,7 @@ BOLD    = \033[1m
 RED     = \033[31;1m
 
 FILES =	main \
+		exit \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
 		tokenizer/tokenizer_quote \

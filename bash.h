@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/17 12:08:53 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:00:51 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 # define RESET      "\x1b[0m"
 # define CLEAR      "\033[2J"
 
+//TOKENIZER
+
 typedef enum e_tokentype
 {
 	T_IDENTIFIER,
@@ -78,9 +80,7 @@ typedef struct s_syntax
 	struct s_syntax	*right;
 }	t_syntax;
 
-
-
-//////////////////////////
+//PARSER
 
 typedef enum e_nodetype
 {
@@ -135,6 +135,7 @@ int			ft_skip_quote(t_input *input, char *text, t_token *new_token);
 int			is_operator(char c);
 t_tokentype	ft_operator(char *text);
 
+//parser
 int			is_redirection(t_token *token);
 int			ft_redirection(t_token *token, int state);
 int			ft_word(t_token *token, int state);
@@ -165,5 +166,9 @@ t_token		*get_next_token(t_input *input);
 int			check_equal(char *text);
 void		ft_expanser(t_ast *ast);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
+
+//others
+void		ft_enter(void);
+void		ft_exit(void);
 
 #endif
