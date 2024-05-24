@@ -6,11 +6,29 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/24 12:38:01 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/24 19:50:55 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bash.h"
+
+///////////////////////////////////////////
+
+volatile sig_atomic_t sigint_received = 0;
+
+void signal_handler(int signal_number) 
+{
+	if (signal_number == SIGINT)
+	{
+		printf("\n");
+        rl_replace_line("", 0);
+		rl_on_new_line();
+        rl_redisplay();
+		sigint_received = 1;
+    }
+}
+
+//////////////////////////////////////////
 
 void	input_init(t_input *input, char **ev)
 {
@@ -38,11 +56,18 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	ft_enter(); //eslogan de entrada
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		input = malloc(sizeof(t_input));
 		input_init(input, env);
 		add_history(input->line);
+		/*if (sigint_received) 
+		{
+			sigint_received = 0;
+			free(input->line);
+        }*/
 		if (!ft_strncmp(input->line, "exit", 4))
 		{
 			ft_exit(); //eslogan de salida
@@ -52,8 +77,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			input->pos = 0;
 			syntax = ft_expr(input);
-			/* print_ast(syntax);
-			printf("\n\n"); */
 			ft_expanser(syntax);
 			print_ast(syntax);
 			free(input->line);
