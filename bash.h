@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/24 11:00:51 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:16:15 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@
 # define BOLD       "\033[1m"
 # define RESET      "\x1b[0m"
 # define CLEAR      "\033[2J"
+
+//GLOBAL
+extern volatile sig_atomic_t g_signal;
 
 //TOKENIZER
 
@@ -166,6 +169,9 @@ t_token		*get_next_token(t_input *input);
 int			check_equal(char *text);
 void		ft_expanser(t_ast *ast);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
+
+//sygnal
+void		signal_c(int signal_number);
 
 //others
 void		ft_enter(void);

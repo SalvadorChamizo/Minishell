@@ -6,36 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/25 10:47:19 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:29:13 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bash.h"
 
-///////////////////////////////////////////
-
-volatile sig_atomic_t sigint_received = 0;
-
-void signal_c(int signal_number) 
-{
-	if (signal_number == SIGINT)
-	{
-		if (isatty(STDIN_FILENO))
-		{
-			printf("\n");
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-			sigint_received = 1;
-		}
-		else
-		{
-			sigint_received = 1;
-		}
-	}
-}
-
-//////////////////////////////////////////
+volatile sig_atomic_t g_signal = 0;
 
 void	input_init(t_input *input, char **ev)
 {
@@ -74,13 +51,14 @@ int	main(int argc, char **argv, char **env)
 	{
 		input = malloc(sizeof(t_input));
 		input_init(input, env);
-		add_history(input->line);
+		if (input->line[0] != '\0')
+			add_history(input->line);
 		/*if (sigint_received) 
 		{
 			sigint_received = 0;
 			free(input->line);
         }*/
-		 if (!strncmp(input->line, "exit", 4)) 
+		if (!ft_strncmp(input->line, "exit", 4)) 
         {
             ft_exit(); // eslogan de salida
             break;
