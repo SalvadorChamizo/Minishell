@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/27 15:22:54 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:59:22 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,14 +161,16 @@ void		print_ast(t_ast *root);
 void		print_ast_helper(t_ast *node, int depth, char *side);
 void		print_list(t_idenlst *list);
 
-t_ast		*create_redirec_node(t_input *input, t_ast *root, t_token *token);
-t_ast		*create_word_node(t_input *input, t_token *token, t_nodetype type, int check);
 t_ast		*new_i_node(t_token *token);
-t_ast		*new_b_node(t_ast *left, t_token *op, t_ast *right);
+t_ast		*bi_node(t_ast *left, t_token *op, t_ast *right);
 t_ast		*iden_node(t_idenlst *lst);
-t_ast		*new_b_node2(t_ast *left, t_token *op, t_ast *right, t_ast *iden);
 
 void		ft_eat_aux(t_input *input);
+t_ast		*ft_expr_aux(t_ast *ast, t_ast *ast2, t_idenlst **list);
+
+t_idenlst	*ft_lstnew_identifier(t_token *token);
+void		ft_lstadd_identifier(t_idenlst **lst, t_idenlst *new);
+void		ft_add_identifier_front(t_idenlst **lst, t_idenlst *new);
 
 t_token		*get_next_token(t_input *input);
 
@@ -182,5 +184,11 @@ void		signal_c(int signal_number);
 //others
 void		ft_enter(void);
 void		ft_exit(void);
+
+//Builtin
+void	ft_cd(t_ast *tree);
+
+//executer
+void    ft_executer(t_ast *ast);
 
 #endif
