@@ -24,9 +24,12 @@ FILES =	main \
 		parser/parser \
 		parser/parser_utils \
 		parser/parser_ast_nodes \
+		parser/parser_list \
 		parser/print_parser \
 		expanser/expanser \
 		signal/sygnal \
+		builtin/cd \
+		executer/executer \
 
 BNS_FILES = 
 
