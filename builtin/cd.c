@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/27 15:08:59 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/27 15:50:47 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,21 @@
 
 void	cd_error(char *path)
 {
-	ft_putstr_fd("bash: cd: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	char	*wish;
+
+	wish = ft_strjoin(getcwd(NULL, 0), path);
+	if (access(wish, X_OK) == 0)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
 }
 
 void	regret_basic(t_ast *tree)
