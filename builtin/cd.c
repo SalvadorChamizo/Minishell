@@ -6,28 +6,50 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/27 15:50:47 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:50:26 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
+char	*wish_ensambler(char const *s1, char const *s2)
+{
+	char	*s3;
+	char	*p;
+	size_t	len1;
+	size_t	len2;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	s3 = malloc(len1 + len2 + 2);
+	if (s3 == NULL)
+		return (NULL);
+	p = s3;
+	while (len1--)
+		*p++ = *s1++;
+	*p++ = '/';
+	while (len2--)
+		*p++ = *s2++;
+	*p = '\0';
+	return (s3);
+}
+
 void	cd_error(char *path)
 {
 	char	*wish;
 
-	wish = ft_strjoin(getcwd(NULL, 0), path);
-	if (access(wish, X_OK) == 0)
+	wish = wish_ensambler(getcwd(NULL, 0), path);
+	if (access(wish, F_OK) == 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putstr_fd(": Permission denied\n", 2);
 	}
 	else
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 }
 
@@ -45,11 +67,24 @@ void	regret_basic(t_ast *tree)
 
 void	cd_complete_path(t_ast *tree, char **path, int i)
 {
+	if (access(tree->left->token->value, F_OK) < 0)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(tree->left->token->value, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return ;
+	}
+	else if (access(tree->left->token->value, X_OK) < 0)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(tree->left->token->value, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		return ;
+	}
 	regret_basic(tree);
 	while (path[i])
 	{
-		if (chdir(path[i]) == -1)
-			cd_error(tree->left->token->value);
+		chdir(path[i]);
 		i++;
 	}
 }
@@ -61,7 +96,7 @@ void	ft_cd(t_ast *tree)
 
 	path = ft_split(tree->left->token->value, '/');
 	i = 0;
-	if (path[0] == NULL)
+	if (path[0] == NULL && tree->left->token->value[0] != '/')
 	{
 		regret_basic(tree);
 		if (chdir("home") == -1)
