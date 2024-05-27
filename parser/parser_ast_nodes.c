@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast_nodes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 13:11:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 19:38:40 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:01:09 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ t_ast	*iden_node(t_idenlst *lst)
 	{
 		ast_node = iden_node(lst->next);
 	}
-	ast_node = new_b_node(ast_node, lst->token, NULL);
+	ast_node = bi_node(ast_node, lst->token, NULL);
 	return (ast_node);
 }
 
-t_ast	*new_b_node(t_ast *left, t_token *op, t_ast *right)
+t_ast	*bi_node(t_ast *left, t_token *op, t_ast *right)
 {
 	t_ast	*ast_node;
 
@@ -60,18 +60,5 @@ t_ast	*new_b_node(t_ast *left, t_token *op, t_ast *right)
 	ast_node->token = op;
 	ast_node->left = left;
 	ast_node->right = right;
-	return (ast_node);
-}
-
-t_ast	*new_b_node2(t_ast *left, t_token *op, t_ast *right, t_ast *iden)
-{
-	t_ast	*ast_node;
-
-	ast_node = malloc(sizeof(t_ast));
-	ast_node->type = return_type(op);
-	ast_node->token = op;
-	ast_node->left = left;
-	ast_node->right = iden;
-	iden->right = right;
 	return (ast_node);
 }
