@@ -26,6 +26,7 @@ FILES =	main \
 		parser/parser_ast_nodes \
 		parser/print_parser \
 		expanser/expanser \
+		signal/sygnal \
 
 BNS_FILES = 
 
