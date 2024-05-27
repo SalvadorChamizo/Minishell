@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/27 15:57:09 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:05:30 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	cd_complete_path(t_ast *tree, char **path, int i)
 
 void	ft_cd(t_ast *tree)
 {
-	char	**path;
+	char	**path = NULL;
 	int		i;
 
 	path = ft_split(tree->left->token->value, '/');

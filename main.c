@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/27 15:24:58 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:06:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ int	main(int argc, char **argv, char **env)
 			/* print_ast(syntax);
 			printf("\n\n"); */
 			ft_expanser(syntax , minishell);
+			ft_executer(syntax);
 			print_ast(syntax);
 			free(minishell->input->line);
+			printf(RED"DIR actual: "MAGENTA"%s\n"RESET,getcwd(NULL, 0));
 		}
 		free(minishell->input);
 	}
