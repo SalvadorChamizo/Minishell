@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/24 12:38:01 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:56:25 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	input_init(t_input *input, char **ev)
 	i = 0;
 	input->pos = 0;
 	input->line = readline(RED"minishell> "RESET);
+	//input->line = "echo \"$hola     pero    $y\"";
 	while (ev[i] != NULL)
 	{
 		if (ft_strcmp(ev[i], "PATH="))
@@ -30,35 +31,39 @@ void	input_init(t_input *input, char **ev)
 	}
 }
 
+
 int	main(int argc, char **argv, char **env)
 {
-	t_input				*input;
+	t_minishell			*minishell;
 	t_ast				*syntax;
+	//char				**path = NULL;
 
 	(void)argc;
 	(void)argv;
 	ft_enter(); //eslogan de entrada
+	//execve("/usr/bin/bash", path, env);
+	minishell = malloc(sizeof(t_minishell));
 	while (1)
 	{
-		input = malloc(sizeof(t_input));
-		input_init(input, env);
-		add_history(input->line);
-		if (!ft_strncmp(input->line, "exit", 4))
+		minishell->input = malloc(sizeof(t_input)); 
+		input_init(minishell->input, env);
+		add_history(minishell->input->line);
+		if (!ft_strncmp(minishell->input->line, "exit", 4))
 		{
 			ft_exit(); //eslogan de salida
 			break ;
 		}
 		else
 		{
-			input->pos = 0;
-			syntax = ft_expr(input);
+			minishell->input->pos = 0;
+			syntax = ft_expr(minishell->input);
 			/* print_ast(syntax);
 			printf("\n\n"); */
-			ft_expanser(syntax);
+			ft_expanser(syntax , minishell);
 			print_ast(syntax);
-			free(input->line);
+			free(minishell->input->line);
 		}
-		free(input);
+		free(minishell->input);
 	}
 	return (0);
 }
