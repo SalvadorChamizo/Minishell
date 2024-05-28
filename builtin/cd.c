@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 10:33:03 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:06:46 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	cd_complete_path(t_ast *tree, char **path, int i)
 	}
 }
 
-void	ft_cd(t_ast *tree)
+void	ft_cd(t_ast *tree, char **env)
 {
 	char	**path = NULL;
 	int		i;

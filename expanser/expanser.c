@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 14:11:19 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:06:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,5 +254,5 @@ void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 	expand_builtin(ast);
 	expand_command2(ast);
 	store_assignment(ast, &minishell->list);
-	print_assignment(minishell->list);
+	//print_assignment(minishell->list);
 }
