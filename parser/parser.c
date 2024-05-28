@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 12:08:31 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:22:12 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast	*ft_assignment(t_input *input, t_idenlst **list)
 
 	ast_node = NULL;
 	token = input->current_token;
-	if (token->type == T_ASSING && !list)
+	if (token->type == T_ASSING && !*list)
 	{
 		ft_eat(input, T_ASSING);
 		ast_node = bi_node(NULL, token, ft_factor(input, list));
