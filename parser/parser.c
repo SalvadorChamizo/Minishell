@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/27 20:00:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:08:31 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ast	*ft_assignment(t_input *input, t_idenlst **list)
 
 	ast_node = NULL;
 	token = input->current_token;
-	if (token->type == T_ASSING)
+	if (token->type == T_ASSING && !list)
 	{
 		ft_eat(input, T_ASSING);
 		ast_node = bi_node(NULL, token, ft_factor(input, list));
@@ -46,11 +46,14 @@ t_ast	*ft_factor(t_input *input, t_idenlst **list)
 
 	ast_node = ft_assignment(input, list);
 	token = input->current_token;
-	if (token->type == T_IDENTIFIER)
+	if ((token->type == T_IDENTIFIER || token->type == T_ASSING) && list)
 	{
 		new_node = ft_lstnew_identifier(input->current_token);
 		ft_lstadd_identifier(list, new_node);
-		ft_eat(input, T_IDENTIFIER);
+		if (token->type == T_IDENTIFIER)
+			ft_eat(input, T_IDENTIFIER);
+		if (token->type == T_ASSING)
+			ft_eat(input, T_ASSING);
 		ast_node = ft_outfile(input, list);
 	}
 	return (ast_node);
