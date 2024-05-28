@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 10:40:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:47:20 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,13 @@ int			ft_redirection(t_token *token, int state);
 int			ft_word(t_token *token, int state);
 int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
+
+//Expanser
+int		ft_check_dollar(char *text);
+char	*remove_dollar(t_ast *ast);
+char	*get_variable(char	*text, int *cur);
+void	ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag);
+void	ft_dollar(t_ast *ast, t_assign_list *list);
 
 //Builtin
 void	ft_cd(t_ast *tree);
