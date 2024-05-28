@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 12:54:00 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:27:44 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void		ft_add_identifier_front(t_idenlst **lst, t_idenlst *new);
 t_token		*get_next_token(t_input *input);
 
 int			check_equal(char *text);
-void		ft_expanser(t_ast *ast, t_minishell *minishell);
+void		ft_expanser(t_ast *ast, t_minishell *minishell, char **envp);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 
 //sygnal
