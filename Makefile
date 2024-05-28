@@ -32,6 +32,7 @@ FILES =	main \
 		builtin/cd \
 		builtin/pwd \
 		builtin/echo \
+		builtin/env \
 		executer/executer \
 
 BNS_FILES = 
