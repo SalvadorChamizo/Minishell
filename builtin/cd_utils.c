@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:10:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 16:22:09 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:25:54 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ char	*wish_ensambler(char const *s1, char const *s2)
 	return (s3);
 }
 
-void	regret_basic(t_ast *tree)
+void	regret_basic(t_ast *tree, char **env)
 {
 	while (ft_strcmp(getcwd(NULL, 0), "/") != 0)
 	{
-		if (chdir("..") == -1)
+		if (ft_chdir("..", env) == -1)
 		{
 			cd_error(tree->left->token->value);
 			break ;
@@ -46,11 +46,23 @@ void	regret_basic(t_ast *tree)
 	}
 }
 
-void    ft_chdir(t_ast *tree)
+int	ft_chdir(char *order, char **env)
 {
-    if (chdir(tree->left->token->value) == -1)
-    {
-        cd_error(tree->left->token->value);
-        return ;
-    }
+	char	*oldpath;
+	int		i;
+
+	i = 0;
+	oldpath = getcwd(NULL, 0);
+	if (chdir(order) == -1)
+		return (-1);
+	while (env[i] != NULL)
+	{
+		
+		if (ft_strncmp(env[i], "PWD=", 4) == 0)
+			env[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
+		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
+			env[i] = ft_strjoin("OLDPWD=", oldpath);
+		i++;
+	}
+	return (0);
 }

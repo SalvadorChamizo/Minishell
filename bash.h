@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 16:07:06 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:06:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,10 @@ void	ft_dollar(t_ast *ast, t_assign_list *list);
 
 //Builtin
 void		ft_cd(t_ast *tree, char **env);
+void		cd_error(char *path);
+char		*wish_ensambler(char const *s1, char const *s2);
+void		regret_basic(t_ast *tree, char **env);
+int			ft_chdir(char *order, char **env);
 void		ft_pwd(void);
 void		ft_echo(t_ast *ast);
 

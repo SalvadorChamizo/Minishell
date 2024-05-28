@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 16:01:38 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:08:04 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	execute_builtin(t_ast *ast, char **env)
 {
     if (!ft_strcmp(ast->token->value, "cd"))
-        ft_cd(ast);
+        ft_cd(ast, env);
     else if (!ft_strcmp(ast->token->value, "pwd"))
         ft_pwd();
     else if (!ft_strcmp(ast->token->value, "echo"))
