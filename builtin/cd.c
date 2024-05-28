@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 10:24:10 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 10:33:03 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ft_cd(t_ast *tree)
 	{
 		regret_basic(tree);
 		if (chdir("home") == -1 || chdir(getenv("USER")) == -1)
-			cd_error(tree->left->token->value);
+			printf("bash: cd: HOME not set\n");
 		return ;
 	}
 	i = 0;
