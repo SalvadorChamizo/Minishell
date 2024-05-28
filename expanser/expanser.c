@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 12:44:31 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:11:19 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,13 +223,29 @@ void	expand_quotes(t_ast *ast)
 	expand_quotes(ast->right);
 }
 
-void	ft_expanser(t_ast *ast, t_minishell *minishell)
+void	ft_store_env(t_assign_list **list, char **envp)
+{
+	t_assign_list	*new_node;
+	int	i;
+
+	new_node = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		new_node = new_assignment(envp[i], *list);
+		ft_assign_add_back(list, new_node);
+		i++;
+	}
+}
+
+void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 {
 	t_ast			*ast_temp;
 	t_assign_list	*list;
 
 	list = NULL;
 	ast_temp = ast;
+	ft_store_env(&minishell->list, envp);
 	expand_redir(ast, NULL, 0);
 	ft_dollar(ast, minishell->list);
 	expand_quotes(ast);
@@ -238,5 +254,5 @@ void	ft_expanser(t_ast *ast, t_minishell *minishell)
 	expand_builtin(ast);
 	expand_command2(ast);
 	store_assignment(ast, &minishell->list);
-	//print_assignment(minishell->list);
+	print_assignment(minishell->list);
 }
