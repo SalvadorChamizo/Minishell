@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:10:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 16:12:53 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:22:09 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,11 @@ void	regret_basic(t_ast *tree)
 	}
 }
 
+void    ft_chdir(t_ast *tree)
+{
+    if (chdir(tree->left->token->value) == -1)
+    {
+        cd_error(tree->left->token->value);
+        return ;
+    }
+}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 12:08:04 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:01:38 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-void	execute_builtin(t_ast *ast)
+void	execute_builtin(t_ast *ast, char **env)
 {
     if (!ft_strcmp(ast->token->value, "cd"))
         ft_cd(ast);
@@ -29,7 +29,7 @@ void	execute_builtin(t_ast *ast)
     else if (!ft_strcmp(ast->token->value, "exit"))
         ft_exit(ast->right);*/
 }
-void    ft_executer(t_ast *ast)
+void    ft_executer(t_ast *ast, char **env)
 {
-    execute_builtin(ast);
+    execute_builtin(ast, env);
 }

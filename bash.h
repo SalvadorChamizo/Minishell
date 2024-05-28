@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 13:27:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:07:06 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,12 @@ void	ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag);
 void	ft_dollar(t_ast *ast, t_assign_list *list);
 
 //Builtin
-void		ft_cd(t_ast *tree);
+void		ft_cd(t_ast *tree, char **env);
 void		ft_pwd(void);
 void		ft_echo(t_ast *ast);
 
 //executer
-void    ft_executer(t_ast *ast);
+void    ft_executer(t_ast *ast, char **env);
 
 t_ast		*ft_expr(t_input *input);
 t_ast		*ft_simple_command(t_input *input);

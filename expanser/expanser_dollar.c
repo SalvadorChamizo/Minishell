@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 14:54:25 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:27:27 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*get_variable(char	*text, int *cur)
 	i = *cur + 1;
 	if (text[*cur] == '$')
 	{
-		while(text[*cur] != ' ' && text[*cur] != '\0')
+		while (text[*cur] != ' ' && text[*cur] != '\0')
 		{
 			*cur = *cur + 1;
 			len++;

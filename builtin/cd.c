@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 16:10:56 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:21:34 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	cd_complete_path(t_ast *tree, char **path, int i)
 	}
 }
 
-void	ft_cd(t_ast *tree)
+void	ft_cd(t_ast *tree, char **env)
 {
 	char	**path = NULL;
 	int		i;

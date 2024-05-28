@@ -6,11 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2024/05/28 13:27:22 by schamizo         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/28 14:06:48 by saroca-f         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2024/05/28 16:22:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 			minishell->input->pos = 0;
 			syntax = ft_expr(minishell->input);
 			ft_expanser(syntax , minishell, env);
-			ft_executer(syntax);
+			ft_executer(syntax, env);
 			print_ast(syntax);
 			free(minishell->input->line);
 		}
