@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 16:35:28 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:50:52 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,9 @@ void		signal_c(int signal_number);
 //others
 void		ft_enter(void);
 void		ft_exit(void);
+
+//memory
+void	free_ast(t_ast **ast);
 
 
 #endif

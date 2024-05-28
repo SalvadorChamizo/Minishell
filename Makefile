@@ -34,6 +34,7 @@ FILES =	main \
 		builtin/echo \
 		builtin/env \
 		executer/executer \
+		manage_memory/free_ast \
 
 BNS_FILES = 
 
