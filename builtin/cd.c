@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/27 20:05:30 by schamizo         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/27 16:50:26 by saroca-f         ###   ########.fr       */
->>>>>>> refs/remotes/origin/develop
+/*   Updated: 2024/05/28 10:24:10 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +94,17 @@ void	ft_cd(t_ast *tree)
 	char	**path = NULL;
 	int		i;
 
-	path = ft_split(tree->left->token->value, '/');
-	i = 0;
-	if (path[0] == NULL && tree->left->token->value[0] != '/')
+	if (tree->left)
+		path = ft_split(tree->left->token->value, '/');
+	else
 	{
 		regret_basic(tree);
-		if (chdir("home") == -1)
+		if (chdir("home") == -1 || chdir(getenv("USER")) == -1)
 			cd_error(tree->left->token->value);
-		if (chdir(getenv("USER")) == -1)
-			cd_error(tree->left->token->value);
+		return ;
 	}
-	else if (tree->left->token->value[0] == '/')
+	i = 0;
+	if (tree->left->token->value[0] == '/')
 		cd_complete_path(tree, path, i);
 	else
 	{
