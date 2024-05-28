@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 12:43:54 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:54:25 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag)
 	i = 0;
 	j = 0;
 	k = 0;
-	new_text = malloc(sizeof(char) * ft_strlen(text) * 2);
+	new_text = malloc(sizeof(char) * 2048);
 	while (text[i])
 	{
 		if (text[i] == '$')
