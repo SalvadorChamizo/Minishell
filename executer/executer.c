@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:38:01 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:39:09 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	execute_builtin(t_ast *ast, char **env)
 {
     if (!ft_strcmp(ast->token->value, "cd"))
-        ft_cd(ast, env);
         ft_cd(ast, env);
     else if (!ft_strcmp(ast->token->value, "pwd"))
         ft_pwd();
