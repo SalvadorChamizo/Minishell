@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/24 11:11:43 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:46:57 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,11 @@ t_token	*get_next_token(t_input *minishell)
 		if (isidentifier(ret[minishell->pos]))
 		{
 			identifer_case(minishell, newtok, ret);
-			printf(BLUE"(IDEN) Token value:"RESET" %s\n", newtok->value);
-			printf(BLUE"(IDEN) Token type:"RESET" %d\n\n", newtok->type);
 			return (newtok);
 		}
 		else if (isoperator(ret[minishell->pos]) && ret[minishell->pos])
 		{
 			ft_operat(minishell, newtok, ret);
-			printf(BLUE"(OPER) Token value:"RESET" %s\n", newtok->value);
-			printf(BLUE"(OPER) Token type:"RESET" %d\n\n", newtok->type);
 			return (newtok);
 		}
 		minishell->pos++;
