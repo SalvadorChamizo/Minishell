@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 12:22:12 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:55:47 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,6 @@ t_ast	*ft_expr(t_input *input)
 	token = input->current_token;
 	if (input->current_token->type == T_PIPE)
 		ast = bi_node(ast, token, ft_expr(input));
-	printf("Hasta aquí bien\n");
 	ast = ft_expr_aux(ast, ast2, &list);
-	printf("Aquí nada\n");
-	print_ast(ast);
 	return (ast);
 }

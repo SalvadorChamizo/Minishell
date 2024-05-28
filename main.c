@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 10:46:31 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:55:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			minishell->input->pos = 0;
 			syntax = ft_expr(minishell->input);
-			/* print_ast(syntax);
-			printf("\n\n"); */
 			ft_expanser(syntax , minishell);
 			ft_executer(syntax);
 			print_ast(syntax);
