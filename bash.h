@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/27 19:59:22 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 10:40:48 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,13 @@ int			ft_word(t_token *token, int state);
 int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
 
+//Builtin
+void	ft_cd(t_ast *tree);
+void	ft_pwd(void);
+
+//executer
+void    ft_executer(t_ast *ast);
+
 t_ast		*ft_expr(t_input *input);
 t_ast		*ft_simple_command(t_input *input);
 t_ast		*ft_simple_element(t_input *input);
@@ -185,10 +192,5 @@ void		signal_c(int signal_number);
 void		ft_enter(void);
 void		ft_exit(void);
 
-//Builtin
-void	ft_cd(t_ast *tree);
-
-//executer
-void    ft_executer(t_ast *ast);
 
 #endif

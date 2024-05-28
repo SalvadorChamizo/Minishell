@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/27 20:06:41 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 10:46:31 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	main(int argc, char **argv, char **env)
 			ft_executer(syntax);
 			print_ast(syntax);
 			free(minishell->input->line);
-			printf(RED"DIR actual: "MAGENTA"%s\n"RESET,getcwd(NULL, 0));
 		}
 		free(minishell->input);
 	}

@@ -29,6 +29,7 @@ FILES =	main \
 		expanser/expanser \
 		signal/sygnal \
 		builtin/cd \
+		builtin/pwd \
 		executer/executer \
 
 BNS_FILES = 
