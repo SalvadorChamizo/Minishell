@@ -6,13 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/25 17:13:55 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:56:13 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-void signal_c(int signal_number) 
+void	signal_c(int signal_number)
 {
 	if (signal_number == SIGINT)
 	{
