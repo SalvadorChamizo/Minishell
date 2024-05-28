@@ -27,6 +27,7 @@ FILES =	main \
 		parser/parser_list \
 		parser/print_parser \
 		expanser/expanser \
+		expanser/expanser_dollar \
 		signal/sygnal \
 		builtin/cd \
 		builtin/pwd \
