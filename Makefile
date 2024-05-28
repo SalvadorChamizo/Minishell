@@ -30,6 +30,7 @@ FILES =	main \
 		signal/sygnal \
 		builtin/cd \
 		builtin/pwd \
+		builtin/echo \
 		executer/executer \
 
 BNS_FILES = 

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 10:40:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:12:24 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,9 @@ int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
 
 //Builtin
-void	ft_cd(t_ast *tree);
-void	ft_pwd(void);
+void		ft_cd(t_ast *tree);
+void		ft_pwd(void);
+void		ft_echo(t_ast *ast);
 
 //executer
 void    ft_executer(t_ast *ast);
