@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 12:33:45 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:48:27 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 volatile sig_atomic_t g_signal = 0;
 
-void	input_init(t_input *input, char **ev)
+void	input_init(t_input *input)
 {
-	int	i;
-
-	i = 0;
 	input->pos = 0;
 	input->line = readline(RED"minishell> "RESET);
 	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
@@ -28,15 +25,6 @@ void	input_init(t_input *input, char **ev)
 		free(input);
 		exit(0);
 	}
-	while (ev[i] != NULL)
-	{
-		if (ft_strcmp(ev[i], "PATH="))
-		{
-			input->path = ft_split(ev[i], ':');
-			break ;
-		}
-		i++;
-	}
 }
 
 
@@ -45,7 +33,9 @@ int	main(int argc, char **argv, char **env)
 	t_minishell			*minishell;
 	t_ast				*syntax;
 	//char				**path = NULL;
+	int i;
 
+	i = 0;
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, signal_c);
@@ -58,7 +48,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
-		input_init(minishell->input, env);
+		input_init(minishell->input);
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);
 		if (!ft_strncmp(minishell->input->line, "exit", 4))
@@ -74,7 +64,6 @@ int	main(int argc, char **argv, char **env)
 			ft_executer(syntax, env);
 			print_ast(syntax);
 			free(minishell->input->line);
-			free_split(minishell->input->path);
 			free_ast(&syntax);
 		}
 		free(minishell->input);
