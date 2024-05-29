@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 19:37:01 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:05:33 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ void	cd_complete_path(t_ast *tree, char **path, int i, char **env)
 
 void	ft_cd(t_ast *tree, char **env)
 {
-	char	**path = NULL;
+	char	**path;
 	int		i;
 
-	env = NULL;
+	path = NULL;
 	if (tree->left)
 		path = ft_split(tree->left->token->value, '/');
 	else //modificar
