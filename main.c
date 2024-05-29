@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 16:52:18 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:48:52 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	input_init(t_input *input, char **ev)
 	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
 	{
 		printf("exit\n");
+		free(input->line);
+		free(input);
 		exit(0);
 	}
 	while (ev[i] != NULL)
@@ -51,6 +53,8 @@ int	main(int argc, char **argv, char **env)
 	ft_enter(); //eslogan de entrada
 	//execve("/usr/bin/bash", path, env);
 	minishell = malloc(sizeof(t_minishell));
+	if (minishell == NULL)
+		return (1);
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
@@ -70,9 +74,15 @@ int	main(int argc, char **argv, char **env)
 			ft_executer(syntax, env);
 			print_ast(syntax);
 			free(minishell->input->line);
+			free_split(minishell->input->path);
 			free_ast(&syntax);
 		}
 		free(minishell->input);
 	}
+	rl_clear_history();
+	free_split(minishell->input->path);
+	free(minishell->input->line);
+	free(minishell->input);
+	free(minishell);
 	return (0);
 }

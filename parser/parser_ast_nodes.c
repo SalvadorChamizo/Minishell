@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 13:11:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/27 20:01:09 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:53:00 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_ast	*iden_node(t_idenlst *lst)
 		ast_node = iden_node(lst->next);
 	}
 	ast_node = bi_node(ast_node, lst->token, NULL);
+	free(lst);
 	return (ast_node);
 }
 
