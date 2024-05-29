@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 19:34:00 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:34:31 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,34 @@ void	expand_command(t_ast *ast, t_ast *prev, int flag)
 	else
 		expand_command(ast->left, ast, 0);
 	expand_command(ast->right, ast, 1);
+}
+
+void	expand_command_3(t_ast *ast, char **path)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (!ast)
+		return ;
+	if (ast->type == N_COMMAND)
+	{
+		while (path[i] != NULL)
+		{
+			str = ft_strjoin(path[i], ast->token->value);
+			if (access(str, F_OK | X_OK) == 0)
+			{
+				free(ast->token->value);
+				ast->token->value = str;
+				break ;
+			}	
+			free(str);
+			str = NULL;
+			i++;
+		}
+	}
+	expand_command_3(ast->left, path);
+	expand_command_3(ast->right, path);
 }
 
 void	expand_redir(t_ast *ast, t_ast *prev, int flag)
@@ -238,11 +266,28 @@ void	ft_store_env(t_assign_list **list, char **envp)
 	}
 }
 
+char	**ft_get_path(char **envp)
+{
+	int	i;
+	char	*str;
+	char	**split;
+
+	i = 0;
+	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
+		i++;
+	str = ft_substr(envp[i], 5, ft_strlen(envp[i]));
+	split = ft_split(str, ':');
+	free(str);
+	return (split);
+}
+
 void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 {
 	t_ast			*ast_temp;
 	t_assign_list	*list;
+	int	i;
 
+	i = 0;
 	list = NULL;
 	ast_temp = ast;
 	ft_store_env(&minishell->list, envp);
@@ -253,6 +298,7 @@ void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 	expand_command(ast, NULL, 0);
 	expand_builtin(ast);
 	expand_command2(ast);
+	expand_command_3(ast, ft_get_path(envp));
 	store_assignment(ast, &minishell->list);
 	//print_assignment(minishell->list);
 }
