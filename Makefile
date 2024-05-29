@@ -30,6 +30,7 @@ FILES =	main \
 		expanser/expanser_dollar \
 		signal/sygnal \
 		builtin/cd \
+		builtin/cd_utils \
 		builtin/pwd \
 		builtin/echo \
 		builtin/env \

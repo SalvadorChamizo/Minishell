@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 16:33:59 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:05:33 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
-
-char	*wish_ensambler(char const *s1, char const *s2)
-{
-	char	*s3;
-	char	*p;
-	size_t	len1;
-	size_t	len2;
-
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	s3 = malloc(len1 + len2 + 2);
-	if (s3 == NULL)
-		return (NULL);
-	p = s3;
-	while (len1--)
-		*p++ = *s1++;
-	*p++ = '/';
-	while (len2--)
-		*p++ = *s2++;
-	*p = '\0';
-	return (s3);
-}
 
 void	cd_error(char *path)
 {
@@ -53,19 +31,7 @@ void	cd_error(char *path)
 	}
 }
 
-void	regret_basic(t_ast *tree)
-{
-	while (ft_strcmp(getcwd(NULL, 0), "/") != 0)
-	{
-		if (chdir("..") == -1)
-		{
-			cd_error(tree->left->token->value);
-			break ;
-		}
-	}
-}
-
-void	cd_complete_path(t_ast *tree, char **path, int i)
+void	cd_complete_path(t_ast *tree, char **path, int i, char **env)
 {
 	if (access(tree->left->token->value, F_OK) < 0)
 	{
@@ -81,37 +47,37 @@ void	cd_complete_path(t_ast *tree, char **path, int i)
 		ft_putstr_fd(": Permission denied\n", 2);
 		return ;
 	}
-	regret_basic(tree);
+	regret_basic(tree, env);
 	while (path[i])
 	{
-		chdir(path[i]);
+		ft_chdir(path[i], env);
 		i++;
 	}
 }
 
 void	ft_cd(t_ast *tree, char **env)
 {
-	char	**path = NULL;
+	char	**path;
 	int		i;
 
-	env = NULL;
+	path = NULL;
 	if (tree->left)
 		path = ft_split(tree->left->token->value, '/');
-	else
+	else //modificar
 	{
-		regret_basic(tree);
+		regret_basic(tree, env);
 		if (chdir("home") == -1 || chdir(getenv("USER")) == -1)
 			printf("bash: cd: HOME not set\n");
 		return ;
 	}
 	i = 0;
 	if (tree->left->token->value[0] == '/')
-		cd_complete_path(tree, path, i);
+		cd_complete_path(tree, path, i, env);
 	else
 	{
 		while (path[i])
 		{
-			if (chdir(path[i]) == -1)
+			if (ft_chdir(path[i], env) == -1)
 				cd_error(tree->left->token->value);
 			i++;
 		}
