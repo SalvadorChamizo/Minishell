@@ -6,11 +6,19 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 18:07:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:52:47 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
+
+void	export_free(char ***env, int i, int str)
+{
+	if (!str)
+		free(*env);
+	else
+		free((*env)[i]);
+}
 
 int	mat_extenser(char **env)
 {
@@ -24,28 +32,35 @@ int	mat_extenser(char **env)
 
 void	ft_newenv(char ***env, char *str)
 {
-	int		i;
-	char	**newenv;
+	static int	i;
+	int			flag;
+	char		**newenv;
 
+	flag = 0;
+	if (i)
+		flag = 1;
 	i = mat_extenser(*env) + 2;
 	newenv = malloc(sizeof(char *) * i);
 	i = 0;
 	while((*env)[i])
 	{
-		newenv[i] = (*env)[i];
+		newenv[i] = ft_strdup((*env)[i]);
+		if (flag)
+			export_free(env, i, 1);
 		i++;
 	}
 	newenv[i] = malloc(sizeof(char) * ft_strlen(str) + 1);
 	strcpy(newenv[i], str);
-	printf("[%d]"YELLOW" (%s)"RESET" se asigna\n", i, newenv[i]);
 	newenv[i + 1] = NULL;
+	if (flag)
+		export_free(env, 0, 0);
 	*env = newenv;
 }
 
 void	ft_export(t_ast *ast, char ***env)
 {
-	t_ast	*tmp;
-	int		i;
+	t_ast		*tmp;
+	int			i;
 
 	tmp = ast->left;
 	i = 0;
