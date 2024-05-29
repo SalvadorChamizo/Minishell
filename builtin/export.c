@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 18:25:08 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:28:57 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_newenv(char ***env, char *str)
 	*env = newenv;
 }
 
-/*void	ft_export(t_ast *ast, char ***env)
+void	ft_export(t_ast *ast, char ***env)
 {
 	t_ast	*tmp;
 	int		i;
@@ -65,4 +65,4 @@ void	ft_newenv(char ***env, char *str)
 		ft_newenv(env, tmp->token->value);
 		tmp = tmp->left;
 	}
-}*/
+}
