@@ -34,6 +34,7 @@ FILES =	main \
 		builtin/pwd \
 		builtin/echo \
 		builtin/env \
+		builtin/export \
 		executer/executer \
 		manage_memory/free_ast \
 
