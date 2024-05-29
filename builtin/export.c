@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 16:27:13 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:07:12 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,9 @@ void	ft_newenv(char ***env, char *str)
 	i = 0;
 	while((*env)[i])
 	{
-		printf("[%d]"YELLOW" (%s)"RESET" entra - ", i, (*env)[i]);
 		newenv[i] = (*env)[i];
-		//free((*env)[i]);
-		printf("[%d]"YELLOW" (%s)"RESET" se asigna\n", i, newenv[i]);
 		i++;
 	}
-	printf("sale del bucle\n");
 	newenv[i] = malloc(sizeof(char) * ft_strlen(str) + 1);
 	strcpy(newenv[i], str);
 	printf("[%d]"YELLOW" (%s)"RESET" se asigna\n", i, newenv[i]);
