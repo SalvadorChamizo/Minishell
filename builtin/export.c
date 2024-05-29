@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 16:27:13 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:40:03 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_newenv(char ***env, char *str)
 	*env = newenv;
 }
 
-void	ft_export(t_ast *ast, char ***env)
+/*void	ft_export(t_ast *ast, char ***env)
 {
 	t_ast	*tmp;
 	int		i;
@@ -69,4 +69,4 @@ void	ft_export(t_ast *ast, char ***env)
 		ft_newenv(env, tmp->token->value);
 		tmp = tmp->left;
 	}
-}
+}*/
