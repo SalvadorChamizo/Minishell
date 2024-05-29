@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 11:25:38 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:49:49 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void		ft_exit(void);
 
 //memory
 void	free_ast(t_ast **ast);
+void	*free_split(char **str);
 
 
 #endif
