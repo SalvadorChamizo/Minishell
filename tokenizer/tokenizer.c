@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 12:46:57 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:33:12 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ void	ft_operat(t_input *minishell, t_token *newtok, char *ret)
 		ft_sop_def(minishell, newtok, ret, T_O_PARENT);
 	else if (c == ')')
 		ft_sop_def(minishell, newtok, ret, T_C_PARENT);
-	else if (c == '\'')
-		s_quote_case(minishell, newtok, ret, T_IDENTIFIER);
-	else if (c == '\"')
-		d_quote_case(minishell, newtok, ret, T_IDENTIFIER);
 	is_redir(minishell, newtok, ret);
 	if (!newtok->value)
 		return ;

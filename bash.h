@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 12:04:15 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:59:03 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,8 @@ void		ft_pwd(void);
 void		ft_echo(t_ast *ast);
 void		ft_env(char **env);
 void		ft_export(t_ast *ast, char ***env);
+int 		var_len(char *str);
+void		ft_putenv_fd(char *s);
 
 //executer
 void    ft_executer(t_ast *ast, char ***env);

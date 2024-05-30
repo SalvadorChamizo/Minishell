@@ -35,6 +35,7 @@ FILES =	main \
 		builtin/echo \
 		builtin/env \
 		builtin/export \
+		builtin/export_utils \
 		executer/executer \
 		manage_memory/free_ast \
 
