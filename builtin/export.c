@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 10:07:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:41:57 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	export_free(char ***env, int i, int str)
 
 int	mat_extenser(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(env[i])
+	while (env[i])
 		i++;
 	return (i);
 }
@@ -42,7 +42,7 @@ void	ft_newenv(char ***env, char *str)
 	i = mat_extenser(*env) + 2;
 	newenv = malloc(sizeof(char *) * i);
 	i = 0;
-	while((*env)[i])
+	while ((*env)[i])
 	{
 		newenv[i] = ft_strdup((*env)[i]);
 		if (flag)
@@ -55,6 +55,24 @@ void	ft_newenv(char ***env, char *str)
 	if (flag)
 		export_free(env, 0, 0);
 	*env = newenv;
+}
+
+int env_exist(char **env, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (!ft_strncmp(env[i], str, var_len(str)))
+		{
+			free(env[i]);
+			env[i] = ft_strdup(str);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
 void	ft_export(t_ast *ast, char ***env)
@@ -77,7 +95,9 @@ void	ft_export(t_ast *ast, char ***env)
 	}
 	while (tmp)
 	{
-		ft_newenv(env, tmp->token->value);
+		if (ft_strchr(tmp->token->value, '='))
+			if (!env_exist(*env, tmp->token->value))
+				ft_newenv(env, tmp->token->value);
 		tmp = tmp->left;
 	}
 }

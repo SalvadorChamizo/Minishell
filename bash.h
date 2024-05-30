@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 16:08:52 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:36:10 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ void		ft_pwd(void);
 void		ft_echo(t_ast *ast);
 void		ft_env(char **env);
 void		ft_export(t_ast *ast, char ***env);
+int 		var_len(char *str);
 
 //executer
 void    ft_executer(t_ast *ast, char ***env);
