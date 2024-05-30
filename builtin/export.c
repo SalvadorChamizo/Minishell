@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/29 18:28:57 by schamizo         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/29 19:02:16 by saroca-f         ###   ########.fr       */
->>>>>>> refs/remotes/origin/develop
+/*   Updated: 2024/05/29 19:19:22 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
