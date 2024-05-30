@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/29 19:06:59 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:44:56 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **env)
 	i = 0;
 	(void)argc;
 	(void)argv;
+	env = NULL;
 	signal(SIGINT, signal_c);
 	signal(SIGQUIT, SIG_IGN);
 	ft_enter(); //eslogan de entrada
@@ -59,8 +60,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			minishell->input->pos = 0;
 			syntax = ft_expr(minishell->input);
-			ft_expanser(syntax , minishell, env);
-			ft_executer(syntax, &env);
 			print_ast(syntax);
 			free(minishell->input->line);
 			free_ast(&syntax);
