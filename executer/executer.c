@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/29 18:25:52 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:07:27 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void    ft_pipeline(t_ast *ast, char **env)
 }
 
 
-void    ft_executer(t_ast *ast, char **env)
+void    ft_executer(t_ast *ast, char ***env)
 {
     if (ast->type == N_PIPELINE)
     {
-        ft_pipeline(ast->left, env);
-        ft_pipeline(ast->right, env);
+        ft_pipeline(ast->left, (*env));
+        ft_pipeline(ast->right, (*env));
     }
     if (ast->type == N_BUILTIN)
         execute_builtin(ast, env);

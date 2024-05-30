@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 12:17:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/03 12:24:47 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:09:18 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "bash.h"
 
 void	ft_exit(void)
 {
