@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/29 19:08:18 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:50:42 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,54 @@ void	execute_builtin(t_ast *ast, char ***env)
 		ft_exit(ast->right);*/
 }
 
+char	**ft_command_args(t_ast *ast)
+{
+	t_ast	*temp;
+	char	**args;
+	int		i;
+
+	temp = ast;
+	i = 0;
+	while (temp)
+	{
+		temp = temp->left;
+		i++;
+	}
+	temp = ast;
+	args = malloc(sizeof(char *) * i);
+	i = 0;
+	while (temp)
+	{
+		args[i] = temp->token->value;
+		temp = temp->left;
+		i++;
+	}
+	return (args);
+}
+
+void	ft_simple_command(t_ast *ast, char ***env)
+{
+	pid_t	pid;
+
+	if (ast->right)
+		ft_executer(ast->right, env);
+	if (access(ast->token->value, F_OK | X_OK) != 0)
+	{
+		printf("Command \"%s\" not found\n", ast->token->value);
+		return ;
+	}
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(1);
+	}
+	else if (pid == 0)
+	{
+		execve(ast->token->value, ft_command_args(ast), *env);
+	}
+}
+
 void	ft_command(t_ast *ast, char ***env)
 {
 	pid_t	pid;
@@ -45,6 +93,11 @@ void	ft_command(t_ast *ast, char ***env)
 	{
 		ft_executer(ast->right, env);
 	}
+	if (access(ast->token->value, F_OK | X_OK) != 0)
+	{
+		printf("Command \"%s\" not found\n", ast->token->value);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 	{
@@ -53,25 +106,56 @@ void	ft_command(t_ast *ast, char ***env)
 	}
 	else if (pid == 0)
 	{
-		while (temp)
-		{
-			temp = temp->left;
-			cont++;
-		}
-		temp = ast;
-		args = malloc(sizeof(char *) * cont);
-		while (temp)
-		{
-			args[i] = temp->token->value;
-			temp = temp->left;
-			i++;
-		}
+		args = ft_command_args(ast);
 		execve(ast->token->value, args, *env);
 	}
 }
 
+int	check_files(t_ast *ast)
+{
+	if (access(ast->token->value, F_OK) != 0)
+	{
+		printf("bash: %s: No such file or directory\n", ast->token->value);
+		return (1);
+	}
+	if (access(ast->token->value, R_OK) != 0)
+	{
+		ft_printf("bash: %s: Permission denied\n", ast->token->value);
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_open_infile(t_ast *ast)
+{
+	int	fd;
+
+	if (!check_files(ast->left))
+	{
+		fd = open(ast->left->token->value, O_RDONLY);
+		if (fd < 0)
+		{
+			perror("open");
+		}
+		dup2(fd, STDIN_FILENO);
+	}
+}
+
+void	ft_redirect(t_ast *ast, char ***env)
+{
+	if (ast->right)
+		ft_executer(ast->right, env);
+	if (ft_strcmp(ast->token->value, "<") == 0)
+		ft_open_infile(ast);
+	/*else if (ast->token->value == '>' || ast->token->value == '>>')
+		ft_open_outfile(ast);
+	else if (ast->token->value == '<<')
+		ft_open_heredoc(ast);*/
+}
+
 void	ft_pipeline(t_ast *ast, char ***env)
 {
+	
 	if (ast->type == N_PIPELINE)
 	{
 		ft_pipeline(ast->left, env);
@@ -96,17 +180,19 @@ void	ft_executer(t_ast *ast, char ***env)
 {
 	if (ast->type == N_PIPELINE)
 	{
-		ft_executer(ast->left, env);
-		ft_executer(ast->right, env);
+		ft_pipeline(ast->left, env);
+		ft_pipeline(ast->right, env);
 	}
 	if (ast->type == N_BUILTIN)
 	{
-		printf("Entra\n");
 		execute_builtin(ast, env);
 	}
 	if (ast->type == N_COMMAND)
 	{
-		printf("Entra 2\n");
-		ft_command(ast, env);
+		ft_simple_command(ast, env);
+	}
+	if (ast->type == N_REDIRECTION)
+	{
+		ft_redirect(ast, env);
 	}
 }
