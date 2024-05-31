@@ -6,11 +6,11 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 18:09:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:47:34 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../include/bash.h"
 
 int	check_builtin(char *text)
 {
@@ -43,15 +43,10 @@ void	expand_builtin(t_ast *ast)
 
 void	expand_command2(t_ast *ast)
 {
-	char	*str;
 	if (ast == NULL)
 		return ;
-	if (ast->type == N_COMMAND && ast->token->value[0] != '.')
-	{
-		str = ft_strjoin("/", ast->token->value);
-		free(ast->token->value);
-		ast->token->value = str;
-	}
+	if (ast->type == N_COMMAND)
+		ast->token->value = ft_strjoin("/", ast->token->value);
 	expand_command2(ast->left);
 	expand_command2(ast->right);
 }
@@ -96,34 +91,6 @@ void	expand_command(t_ast *ast, t_ast *prev, int flag)
 	else
 		expand_command(ast->left, ast, 0);
 	expand_command(ast->right, ast, 1);
-}
-
-void	expand_command_3(t_ast *ast, char **path)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	if (!ast)
-		return ;
-	if (ast->type == N_COMMAND)
-	{
-		while (path[i] != NULL)
-		{
-			str = ft_strjoin(path[i], ast->token->value);
-			if (access(str, F_OK | X_OK) == 0)
-			{
-				free(ast->token->value);
-				ast->token->value = str;
-				break ;
-			}	
-			free(str);
-			str = NULL;
-			i++;
-		}
-	}
-	expand_command_3(ast->left, path);
-	expand_command_3(ast->right, path);
 }
 
 void	expand_redir(t_ast *ast, t_ast *prev, int flag)
@@ -174,36 +141,16 @@ void	expand_assignment(t_ast *ast, t_ast *prev)
 	expand_assignment(ast->right, ast);
 }
 
-t_assign_list	*new_assignment(char *text, t_assign_list *list)
+t_assign_list	*new_assignment(char *text)
 {
 	t_assign_list	*new_node;
-	t_assign_list	*temp;
-	char			*word;
-	char			*new_value;
 	int				i;
 
 	i = 0;
+	new_node = malloc(sizeof(t_assign_list));
 	while (text[i] != '=')
 		i++;
-	word = ft_substr(text, 0, i);
-	if (list)
-	{
-		temp = list;
-		while (temp)
-		{
-			if (!ft_strcmp(word, temp->variable))
-			{
-				new_value = ft_substr(text, i + 1, ft_strlen(text) - i);
-				free(temp->value);
-				free(word);
-				temp->value = new_value;
-				return (NULL);
-			}
-			temp = temp->next;
-		}
-	}
-	new_node = malloc(sizeof(t_assign_list));
-	new_node->variable = word;
+	new_node->variable = ft_substr(text, 0, i);
 	new_node->value = ft_substr(text, i + 1, ft_strlen(text) - i);
 	new_node->next = NULL;
 	return (new_node);
@@ -229,90 +176,30 @@ void	store_assignment(t_ast *ast, t_assign_list **list)
 	t_assign_list	*new_node;
 
 	new_node = NULL;
-	if (ast == NULL || ast->token->type == T_PIPE
-		|| ast->token->type == T_IDENTIFIER)
+	if (ast == NULL)
 		return ;
 	if (ast->type == N_ASSIGN)
 	{
-		new_node = new_assignment(ast->token->value, *list);
+		new_node = new_assignment(ast->token->value);
 		ft_assign_add_back(list, new_node);
 	}
 	store_assignment(ast->left, list);
 	store_assignment(ast->right, list);
 }
 
-void	expand_quotes(t_ast *ast)
+void	ft_expanser(t_ast *ast)
 {
-	char	*str;
-	if (ast == NULL)
-		return ;
-	while (ast->token->value[0] == '\"' || ast->token->value[0] == '\'')
-	{
-		if (ast->token->value[0] == '\"')
-		{
-			str = ft_strtrim(ast->token->value, "\"");
-			free(ast->token->value);
-			ast->token->value = str;
-		}
-		if (ast->token->value[0] == '\'')
-		{
-			str = ft_strtrim(ast->token->value, "\'");
-			free(ast->token->value);
-			ast->token->value = str;
-		}
-	}
-	expand_quotes(ast->left);
-	expand_quotes(ast->right);
-}
+	t_ast			*ast_temp;
+	t_assign_list	*list;
 
-void	ft_store_env(t_assign_list **list, char **envp)
-{
-	t_assign_list	*new_node;
-	int	i;
-
-	new_node = NULL;
-	i = 0;
-	while (envp[i])
-	{
-		new_node = new_assignment(envp[i], *list);
-		ft_assign_add_back(list, new_node);
-		i++;
-	}
-}
-
-char	**ft_get_path(char **envp)
-{
-	int	i;
-	char	*str;
-	char	**split;
-
-	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
-		i++;
-	str = ft_substr(envp[i], 5, ft_strlen(envp[i]));
-	split = ft_split(str, ':');
-	free(str);
-	return (split);
-}
-
-void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
-{
-	t_ast	*ast_temp;
-	char	**path;
-	int		i;
-
-	i = 0;
-	path = ft_get_path(envp);
+	list = NULL;
 	ast_temp = ast;
 	expand_redir(ast, NULL, 0);
-	ft_dollar(ast, minishell->list);
-	expand_quotes(ast);
 	expand_assignment(ast, NULL);
 	expand_command(ast, NULL, 0);
 	expand_builtin(ast);
 	expand_command2(ast);
-	expand_command_3(ast, path);
-	store_assignment(ast, &minishell->list);
-	free_split(path);
-	//print_assignment(minishell->list);
+	print_ast(ast);
+	store_assignment(ast, &list);
+	print_assignment(list);
 }

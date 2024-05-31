@@ -70,6 +70,7 @@ int	main(int argc, char **argv, char **env)
 			minishell->input->pos = 0;
 			syntax = ft_expr(minishell->input);
 			ft_expanser(syntax, minishell, env);
+			ft_executer(syntax, &env, &(minishell->list));
 			print_ast(syntax);
 			free(minishell->input->line);
 			free_ast(&syntax);

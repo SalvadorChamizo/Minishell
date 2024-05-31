@@ -39,7 +39,6 @@ void	*free_split(char **str)
 	}
 	free(str);
 	return (NULL);
-}
 
 void	ft_list_clear(t_assign_list **list)
 {

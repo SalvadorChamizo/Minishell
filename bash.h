@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 14:52:54 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:34:03 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,14 @@ void		ft_putenv_fd(char *s);
 
 //executer
 void    ft_executer(t_ast *ast, char ***env);
+void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
+int 		var_len(char *str);
+void		ft_putenv_fd(char *s);
+void		export_free(char ***env, int i, int str);
+void		ft_unset(t_ast *ast, t_assign_list **list);
+
+//executer
+void    	ft_executer(t_ast *ast, char ***env, t_assign_list **list);
 
 t_ast		*ft_expr(t_input *input);
 void		ft_eat(t_input *input, t_tokentype type);
@@ -210,7 +218,6 @@ void		ft_exit(void);
 
 //memory
 void	free_ast(t_ast **ast);
-void	*free_split(char **str);
 void	ft_list_clear(t_assign_list **list);
 
 #endif
