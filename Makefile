@@ -30,6 +30,15 @@ FILES =	main \
 		expanser/expanser_utils \
 		expanser/expanser \
 		signal/sygnal \
+		builtin/cd \
+		builtin/cd_utils \
+		builtin/pwd \
+		builtin/echo \
+		builtin/env \
+		builtin/export \
+		builtin/export_utils \
+		builtin/unset \
+		executer/executer \
 		manage_memory/free_ast \
 
 BNS_FILES = 
