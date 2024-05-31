@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/30 12:59:20 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:01:30 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,9 @@ void	ft_open_infile(t_ast *ast)
 {
 	int	fd;
 
-	if (!check_files(ast->left))
+	if (!check_files(ast))
 	{
-		fd = open(ast->left->token->value, O_RDONLY);
+		fd = open(ast->token->value, O_RDONLY);
 		if (fd < 0)
 		{
 			perror("open");
@@ -141,15 +141,65 @@ void	ft_open_infile(t_ast *ast)
 	}
 }
 
+void	ft_open_outfile(t_ast *ast)
+{
+	int	fd;
+
+	if (access(ast->token->value, F_OK) != 0)
+	{
+		fd = open(ast->token->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd < 0)
+		{
+			perror("open");
+		}
+		dup2(fd, STDOUT_FILENO);
+	}
+	else
+	{
+		fd = open(ast->token->value, O_WRONLY | O_TRUNC, 0644);
+		if (fd < 0)
+		{
+			perror("open");
+		}
+		dup2(fd, STDOUT_FILENO);
+	}
+}
+
+void	ft_open_outfile_2(t_ast *ast)
+{
+	int	fd;
+
+	if (access(ast->token->value, F_OK) != 0)
+	{
+		fd = open(ast->token->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd < 0)
+		{
+			perror("open");
+		}
+		dup2(fd, STDOUT_FILENO);
+	}
+	else
+	{
+		fd = open(ast->token->value, O_WRONLY | O_APPEND, 0644);
+		if (fd < 0)
+		{
+			perror("open");
+		}
+		dup2(fd, STDOUT_FILENO);
+	}
+}
+
 void	ft_redirect(t_ast *ast, char ***env)
 {
 	if (ast->right)
 		ft_executer(ast->right, env);
 	if (ft_strcmp(ast->token->value, "<") == 0)
-		ft_open_infile(ast);
-	/*else if (ast->token->value == '>' || ast->token->value == '>>')
-		ft_open_outfile(ast);
-	else if (ast->token->value == '<<')
+		ft_open_infile(ast->left);
+	else if (ft_strcmp(ast->token->value, ">") == 0)
+		ft_open_outfile(ast->left);
+	else if (ft_strcmp(ast->token->value, ">>") == 0)
+		ft_open_outfile_2(ast->left);
+	/*else if (ast->token->value == '<<')
 		ft_open_heredoc(ast);*/
 }
 
@@ -175,9 +225,10 @@ void	ft_pipeline(t_ast *ast, char ***env)
 	}
 }
 
-
 void	ft_executer(t_ast *ast, char ***env)
 {
+	if (!ast)
+		return ;
 	if (ast->type == N_PIPELINE)
 	{
 		ft_pipeline(ast->left, env);
