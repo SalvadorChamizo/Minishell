@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:47:13 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:01:10 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:43:23 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	*free_split(char **str)
 	}
 	free(str);
 	return (NULL);
+}
 
 void	ft_list_clear(t_assign_list **list)
 {
