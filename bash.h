@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 12:59:03 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:47:39 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,10 @@ void		ft_env(char **env);
 void		ft_export(t_ast *ast, char ***env);
 int 		var_len(char *str);
 void		ft_putenv_fd(char *s);
+void		ft_unset(t_ast *ast, t_assign_list **list);
 
 //executer
-void    ft_executer(t_ast *ast, char ***env);
+void    	ft_executer(t_ast *ast, char ***env, t_assign_list **list);
 
 t_ast		*ft_expr(t_input *input);
 void		ft_eat(t_input *input, t_tokentype type);

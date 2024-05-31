@@ -36,6 +36,7 @@ FILES =	main \
 		builtin/env \
 		builtin/export \
 		builtin/export_utils \
+		builtin/unset \
 		executer/executer \
 		manage_memory/free_ast \
 
