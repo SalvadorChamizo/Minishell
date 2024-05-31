@@ -74,6 +74,7 @@ typedef struct s_input
 	char	*line;
 	char	**path;
 	int		pos;
+	int		error;
 }	t_input;
 
 typedef struct s_syntax
@@ -152,6 +153,7 @@ int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
 
 //Expanser
+void	ft_store_env(t_assign_list **list, char **envp);
 int		ft_check_dollar(char *text);
 char	*remove_dollar(t_ast *ast);
 char	*get_variable(char	*text, int *cur);
@@ -167,6 +169,12 @@ int			ft_chdir(char *order, char **env);
 void		ft_pwd(void);
 void		ft_echo(t_ast *ast);
 void		ft_env(char **env);
+void		ft_export(t_ast *ast, char ***env);
+int 		var_len(char *str);
+void		ft_putenv_fd(char *s);
+
+//executer
+void    ft_executer(t_ast *ast, char ***env);
 void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
 int 		var_len(char *str);
 void		ft_putenv_fd(char *s);
@@ -210,7 +218,6 @@ void		ft_exit(void);
 
 //memory
 void	free_ast(t_ast **ast);
-void	*free_split(char **str);
-
+void	ft_list_clear(t_assign_list **list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/29 15:34:31 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:09:44 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,15 @@ void	expand_builtin(t_ast *ast)
 
 void	expand_command2(t_ast *ast)
 {
+	char	*str;
 	if (ast == NULL)
 		return ;
-	if (ast->type == N_COMMAND)
-		ast->token->value = ft_strjoin("/", ast->token->value);
+	if (ast->type == N_COMMAND && ast->token->value[0] != '.')
+	{
+		str = ft_strjoin("/", ast->token->value);
+		free(ast->token->value);
+		ast->token->value = str;
+	}
 	expand_command2(ast->left);
 	expand_command2(ast->right);
 }
@@ -174,6 +179,7 @@ t_assign_list	*new_assignment(char *text, t_assign_list *list)
 	t_assign_list	*new_node;
 	t_assign_list	*temp;
 	char			*word;
+	char			*new_value;
 	int				i;
 
 	i = 0;
@@ -187,7 +193,10 @@ t_assign_list	*new_assignment(char *text, t_assign_list *list)
 		{
 			if (!ft_strcmp(word, temp->variable))
 			{
-				temp->value = ft_substr(text, i + 1, ft_strlen(text) - i);
+				new_value = ft_substr(text, i + 1, ft_strlen(text) - i);
+				free(temp->value);
+				free(word);
+				temp->value = new_value;
 				return (NULL);
 			}
 			temp = temp->next;
@@ -234,17 +243,22 @@ void	store_assignment(t_ast *ast, t_assign_list **list)
 
 void	expand_quotes(t_ast *ast)
 {
+	char	*str;
 	if (ast == NULL)
 		return ;
 	while (ast->token->value[0] == '\"' || ast->token->value[0] == '\'')
 	{
 		if (ast->token->value[0] == '\"')
 		{
-			ast->token->value = ft_strtrim(ast->token->value, "\"");
+			str = ft_strtrim(ast->token->value, "\"");
+			free(ast->token->value);
+			ast->token->value = str;
 		}
 		if (ast->token->value[0] == '\'')
 		{
-			ast->token->value = ft_strtrim(ast->token->value, "\'");
+			str = ft_strtrim(ast->token->value, "\'");
+			free(ast->token->value);
+			ast->token->value = str;
 		}
 	}
 	expand_quotes(ast->left);
@@ -283,14 +297,13 @@ char	**ft_get_path(char **envp)
 
 void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 {
-	t_ast			*ast_temp;
-	t_assign_list	*list;
-	int	i;
+	t_ast	*ast_temp;
+	char	**path;
+	int		i;
 
 	i = 0;
-	list = NULL;
+	path = ft_get_path(envp);
 	ast_temp = ast;
-	ft_store_env(&minishell->list, envp);
 	expand_redir(ast, NULL, 0);
 	ft_dollar(ast, minishell->list);
 	expand_quotes(ast);
@@ -298,7 +311,8 @@ void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 	expand_command(ast, NULL, 0);
 	expand_builtin(ast);
 	expand_command2(ast);
-	expand_command_3(ast, ft_get_path(envp));
+	expand_command_3(ast, path);
 	store_assignment(ast, &minishell->list);
+	free_split(path);
 	//print_assignment(minishell->list);
 }

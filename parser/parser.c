@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 12:55:47 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:39:08 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ t_ast	*ft_outfile(t_input *input, t_idenlst **list)
 		ft_eat_aux(input);
 		token2 = input->current_token;
 		ft_eat(input, T_IDENTIFIER);
+		if (input->error == 1)
+		{
+			return (NULL);
+		}
 		if (ast)
 			ast = bi_node(new_i_node(token2), token, ast);
 		else
@@ -116,7 +120,11 @@ t_ast	*ft_expr(t_input *input)
 	ast = ft_outfile(input, &list);
 	token = input->current_token;
 	if (input->current_token->type == T_PIPE)
+	{
 		ast = bi_node(ast, token, ft_expr(input));
+	}
 	ast = ft_expr_aux(ast, ast2, &list);
+	if (token->type == T_EOF)
+		free(token);
 	return (ast);
 }

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:13:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/29 12:34:51 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:37:59 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ void	ft_eat(t_input *input, t_tokentype type)
 {
 	if (input->current_token->type == type)
 	{
-		//free(input->current_token);
 		input->current_token = get_next_token(input);
+	}
+	else
+	{
+		input->error = 1;
 	}
 }
 
