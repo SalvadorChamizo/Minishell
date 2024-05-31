@@ -26,6 +26,9 @@ FILES =	main \
 		parser/parser_ast_nodes \
 		parser/parser_list \
 		parser/print_parser \
+		expanser/expanser_dollar \
+		expanser/expanser_utils \
+		expanser/expanser \
 		signal/sygnal \
 		manage_memory/free_ast \
 

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 19:08:58 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:29:34 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,6 @@ void		ft_exit(void);
 //memory
 void	free_ast(t_ast **ast);
 void	*free_split(char **str);
-
+void	ft_list_clear(t_assign_list **list);
 
 #endif
