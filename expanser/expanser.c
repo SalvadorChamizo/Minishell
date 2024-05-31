@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:04:17 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:50:58 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ t_assign_list	*new_assignment(char *text, t_assign_list *list)
 	t_assign_list	*new_node;
 	t_assign_list	*temp;
 	char			*word;
+	char			*new_value;
 	int				i;
 
 	i = 0;
@@ -192,7 +193,10 @@ t_assign_list	*new_assignment(char *text, t_assign_list *list)
 		{
 			if (!ft_strcmp(word, temp->variable))
 			{
-				temp->value = ft_substr(text, i + 1, ft_strlen(text) - i);
+				new_value = ft_substr(text, i + 1, ft_strlen(text) - i);
+				free(temp->value);
+				free(word);
+				temp->value = new_value;
 				return (NULL);
 			}
 			temp = temp->next;
