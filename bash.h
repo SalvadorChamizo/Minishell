@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 12:59:03 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:08:58 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_input
 	char	*line;
 	char	**path;
 	int		pos;
+	int		error;
 }	t_input;
 
 typedef struct s_syntax

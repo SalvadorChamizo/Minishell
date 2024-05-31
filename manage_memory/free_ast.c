@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:47:13 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/29 11:50:58 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:44:49 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	free_ast(t_ast **ast)
 {
-	if (*ast == NULL)
+	t_ast	*temp;
+
+	temp = *ast;
+	if (temp == NULL)
 		return ;
-	free_ast(&(*ast)->left);
-	free_ast(&(*ast)->right);
-	free((*ast)->token->value);
-	free((*ast)->token);
-	free(*ast);
+	free_ast(&temp->left);
+	free_ast(&temp->right);
+	free(temp->token->value);
+	free(temp->token);
+	free(temp);
 	ast = NULL;
 }
 
