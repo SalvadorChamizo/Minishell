@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 18:39:08 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:19:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	ft_enter(); //eslogan de entrada
 	//execve("/usr/bin/bash", path, env);
+	/*while (1)
+	{
+		printf("%i\n", i);
+		i++;
+	}*/
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (1);

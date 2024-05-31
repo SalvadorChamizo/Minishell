@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 16:30:49 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:11:39 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	expand_command2(t_ast *ast)
 	char	*str;
 	if (ast == NULL)
 		return ;
-	if (ast->type == N_COMMAND)
+	if (ast->type == N_COMMAND && ast->token->value[0] != '.')
 	{
 		str = ft_strjoin("/", ast->token->value);
 		free(ast->token->value);

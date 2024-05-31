@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 18:40:02 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:47:53 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**ft_command_args(t_ast *ast)
 		i++;
 	}
 	temp = ast;
-	args = malloc(sizeof(char *) * i);
+	args = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (temp)
 	{
@@ -50,6 +50,7 @@ char	**ft_command_args(t_ast *ast)
 		temp = temp->left;
 		i++;
 	}
+	args[i] = NULL;
 	return (args);
 }
 
