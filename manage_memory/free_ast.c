@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:47:13 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 13:28:35 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:01:10 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	ft_list_clear(t_assign_list **list)
 		return ;
 	while (*list)
 	{
+		free((*list)->value);
+		free((*list)->variable);
 		temp = (*list)->next;
 		free(*list);
 		*list = temp;

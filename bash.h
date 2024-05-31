@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 13:29:34 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:52:54 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
 
 //Expanser
+void	ft_store_env(t_assign_list **list, char **envp);
 int		ft_check_dollar(char *text);
 char	*remove_dollar(t_ast *ast);
 char	*get_variable(char	*text, int *cur);

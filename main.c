@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 14:22:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:53:22 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char **argv, char **env)
 	i = 0;
 	(void)argc;
 	(void)argv;
-	env = NULL;
 	signal(SIGINT, signal_c);
 	signal(SIGQUIT, SIG_IGN);
 	ft_enter(); //eslogan de entrada
@@ -47,6 +46,8 @@ int	main(int argc, char **argv, char **env)
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (1);
+	minishell->list = NULL;
+	ft_store_env(&minishell->list, env);
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
@@ -75,8 +76,8 @@ int	main(int argc, char **argv, char **env)
 		free(minishell->input);
 	}
 	rl_clear_history();
-	//if (minishell->list)
-	//	ft_list_clear(&minishell->list);
+	if (minishell->list)
+		ft_list_clear(&minishell->list);
 	free(minishell->input->line);
 	free(minishell->input);
 	free(minishell);

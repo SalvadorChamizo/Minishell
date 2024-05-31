@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 14:26:53 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:04:17 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,15 @@ void	expand_builtin(t_ast *ast)
 
 void	expand_command2(t_ast *ast)
 {
+	char	*str;
 	if (ast == NULL)
 		return ;
 	if (ast->type == N_COMMAND)
-		ast->token->value = ft_strjoin("/", ast->token->value);
+	{
+		str = ft_strjoin("/", ast->token->value);
+		free(ast->token->value);
+		ast->token->value = str;
+	}
 	expand_command2(ast->left);
 	expand_command2(ast->right);
 }
@@ -234,17 +239,22 @@ void	store_assignment(t_ast *ast, t_assign_list **list)
 
 void	expand_quotes(t_ast *ast)
 {
+	char	*str;
 	if (ast == NULL)
 		return ;
 	while (ast->token->value[0] == '\"' || ast->token->value[0] == '\'')
 	{
 		if (ast->token->value[0] == '\"')
 		{
-			ast->token->value = ft_strtrim(ast->token->value, "\"");
+			str = ft_strtrim(ast->token->value, "\"");
+			free(ast->token->value);
+			ast->token->value = str;
 		}
 		if (ast->token->value[0] == '\'')
 		{
-			ast->token->value = ft_strtrim(ast->token->value, "\'");
+			str = ft_strtrim(ast->token->value, "\'");
+			free(ast->token->value);
+			ast->token->value = str;
 		}
 	}
 	expand_quotes(ast->left);
@@ -258,10 +268,8 @@ void	ft_store_env(t_assign_list **list, char **envp)
 
 	new_node = NULL;
 	i = 0;
-	printf("Llega aquí\n");
 	while (envp[i])
 	{
-		printf("%d\n", i);
 		new_node = new_assignment(envp[i], *list);
 		ft_assign_add_back(list, new_node);
 		i++;
@@ -285,31 +293,22 @@ char	**ft_get_path(char **envp)
 
 void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 {
-	t_ast			*ast_temp;
-	int	i;
+	t_ast	*ast_temp;
+	char	**path;
+	int		i;
 
 	i = 0;
+	path = ft_get_path(envp);
 	ast_temp = ast;
-	printf("Entra\n");
-	ft_store_env(&minishell->list, envp);
-	printf("Entra 1\n");
 	expand_redir(ast, NULL, 0);
-	printf("Entra 2\n");
 	ft_dollar(ast, minishell->list);
-	printf("Entra 3\n");
 	expand_quotes(ast);
-	printf("Entra 4\n");
 	expand_assignment(ast, NULL);
-	printf("Entra 5\n");
 	expand_command(ast, NULL, 0);
-	printf("Entra 6\n");
 	expand_builtin(ast);
-	printf("Entra 7\n");
 	expand_command2(ast);
-	printf("Entra 8\n");
-	expand_command_3(ast, ft_get_path(envp));
-	printf("Entra 9\n");
+	expand_command_3(ast, path);
 	store_assignment(ast, &minishell->list);
-	printf("Entra 10\n");
-	//print_assignment(minishell->list);
+	free_split(path);
+	print_assignment(minishell->list);
 }
