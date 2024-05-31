@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:37:46 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 10:51:16 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:39:26 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_pwd(void)
 {
-    char	*pwd;
+	char	*pwd;
 
-    pwd = getcwd(NULL, 0);
-    ft_putendl_fd(pwd, 1);
-    free(pwd);
+	pwd = getcwd(NULL, 0);
+	ft_putendl_fd(pwd, 1);
+	free(pwd);
 }

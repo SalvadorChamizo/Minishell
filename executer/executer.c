@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/30 18:01:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:49:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-void	execute_builtin(t_ast *ast, char ***env)
+void	execute_builtin(t_ast *ast, char ***env, t_assign_list **list)
 {
 	if (!ft_strcmp(ast->token->value, "cd"))
 		ft_cd(ast, *env);
@@ -23,11 +23,9 @@ void	execute_builtin(t_ast *ast, char ***env)
 	else if (!ft_strcmp(ast->token->value, "env"))
 		ft_env(*env);
 	else if (!ft_strcmp(ast->token->value, "export"))
-		ft_export(ast, env);
-	/*else if (!ft_strcmp(ast->token->value, "unset"))
-		ft_unset(ast->right);
-	else if (!ft_strcmp(ast->token->value, "exit"))
-		ft_exit(ast->right);*/
+		ft_export(ast, env, *list);
+	else if (!ft_strcmp(ast->token->value, "unset"))
+		ft_unset(ast, list);
 }
 
 char	**ft_command_args(t_ast *ast)
@@ -55,12 +53,12 @@ char	**ft_command_args(t_ast *ast)
 	return (args);
 }
 
-void	ft_simple_command(t_ast *ast, char ***env)
+void	ft_simple_command(t_ast *ast, char ***env, t_assign_list **list)
 {
 	pid_t	pid;
 
 	if (ast->right)
-		ft_executer(ast->right, env);
+		ft_executer(ast->right, env, list);
 	if (access(ast->token->value, F_OK | X_OK) != 0)
 	{
 		printf("Command \"%s\" not found\n", ast->token->value);
@@ -78,7 +76,7 @@ void	ft_simple_command(t_ast *ast, char ***env)
 	}
 }
 
-void	ft_command(t_ast *ast, char ***env)
+void	ft_command(t_ast *ast, char ***env, t_assign_list **list)
 {
 	pid_t	pid;
 	char	**args;
@@ -91,7 +89,7 @@ void	ft_command(t_ast *ast, char ***env)
 	temp = ast;
 	if (ast->right)
 	{
-		ft_executer(ast->right, env);
+		ft_executer(ast->right, env, list);
 	}
 	if (access(ast->token->value, F_OK | X_OK) != 0)
 	{
@@ -189,10 +187,10 @@ void	ft_open_outfile_2(t_ast *ast)
 	}
 }
 
-void	ft_redirect(t_ast *ast, char ***env)
+void	ft_redirect(t_ast *ast, char ***env, t_assign_list **list)
 {
 	if (ast->right)
-		ft_executer(ast->right, env);
+		ft_executer(ast->right, env, list);
 	if (ft_strcmp(ast->token->value, "<") == 0)
 		ft_open_infile(ast->left);
 	else if (ft_strcmp(ast->token->value, ">") == 0)
@@ -203,13 +201,13 @@ void	ft_redirect(t_ast *ast, char ***env)
 		ft_open_heredoc(ast);*/
 }
 
-void	ft_pipeline(t_ast *ast, char ***env)
+void	ft_pipeline(t_ast *ast, char ***env, t_assign_list **list)
 {
 	
 	if (ast->type == N_PIPELINE)
 	{
-		ft_pipeline(ast->left, env);
-		ft_pipeline(ast->right, env);
+		ft_pipeline(ast->left, env, list);
+		ft_pipeline(ast->right, env, list);
 	}
 	if (ast->type == N_HEREDOC || ast->type == N_REDIRECTION)
 	{
@@ -217,33 +215,33 @@ void	ft_pipeline(t_ast *ast, char ***env)
 	}
 	if (ast->type == N_COMMAND)
 	{
-		ft_command(ast, env);
+		ft_command(ast, env, list);
 	}
 	if (ast->type == N_BUILTIN)
 	{
-		execute_builtin(ast, env);
+		execute_builtin(ast, env, list);
 	}
 }
 
-void	ft_executer(t_ast *ast, char ***env)
+void	ft_executer(t_ast *ast, char ***env, t_assign_list **list)
 {
 	if (!ast)
 		return ;
 	if (ast->type == N_PIPELINE)
 	{
-		ft_pipeline(ast->left, env);
-		ft_pipeline(ast->right, env);
+		ft_pipeline(ast->left, env, list);
+		ft_pipeline(ast->right, env, list);
 	}
 	if (ast->type == N_BUILTIN)
 	{
-		execute_builtin(ast, env);
+		execute_builtin(ast, env, list);
 	}
 	if (ast->type == N_COMMAND)
 	{
-		ft_simple_command(ast, env);
+		ft_simple_command(ast, env, list);
 	}
 	if (ast->type == N_REDIRECTION)
 	{
-		ft_redirect(ast, env);
+		ft_redirect(ast, env, list);
 	}
 }

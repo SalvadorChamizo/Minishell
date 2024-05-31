@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 12:58:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:33:21 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
-
-void	export_free(char ***env, int i, int str)
-{
-	if (!str)
-		free(*env);
-	else
-		free((*env)[i]);
-}
 
 int	mat_extenser(char **env)
 {
@@ -57,7 +49,7 @@ void	ft_newenv(char ***env, char *str)
 	*env = newenv;
 }
 
-int env_exist(char **env, char *str)
+int	env_exist(char **env, char *str)
 {
 	int	i;
 
@@ -75,7 +67,24 @@ int env_exist(char **env, char *str)
 	return (0);
 }
 
-void	ft_export(t_ast *ast, char ***env)
+void	list_check(char *var, t_assign_list *list, char ***env)
+{
+	t_assign_list	*temp;
+	char			*str;
+
+	temp = list;
+	while (temp)
+	{
+		if (!ft_strncmp(temp->variable, var, var_len(var)))
+		{
+			str = ft_strjoin(temp->variable, ft_strjoin("=", temp->value));
+			ft_newenv(env, str);
+		}
+		temp = temp->next;
+	}
+}
+
+void	ft_export(t_ast *ast, char ***env, t_assign_list *list)
 {
 	t_ast		*tmp;
 	int			i;
@@ -86,9 +95,7 @@ void	ft_export(t_ast *ast, char ***env)
 	{
 		while ((*env)[i] != NULL)
 		{
-			ft_putstr_fd("declare -x ", 1);
 			ft_putenv_fd((*env)[i]);
-			ft_putstr_fd("\n", 1);
 			i++;
 		}
 		return ;
@@ -96,8 +103,12 @@ void	ft_export(t_ast *ast, char ***env)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->token->value, '='))
+		{
 			if (!env_exist(*env, tmp->token->value))
 				ft_newenv(env, tmp->token->value);
+		}
+		else
+			list_check(tmp->token->value, list, env);
 		tmp = tmp->left;
 	}
 }
