@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 14:48:14 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:49:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	execute_builtin(t_ast *ast, char ***env, t_assign_list **list)
 	else if (!ft_strcmp(ast->token->value, "env"))
 		ft_env(*env);
 	else if (!ft_strcmp(ast->token->value, "export"))
-		ft_export(ast, env);
+		ft_export(ast, env, *list);
 	else if (!ft_strcmp(ast->token->value, "unset"))
 		ft_unset(ast, list);
 }

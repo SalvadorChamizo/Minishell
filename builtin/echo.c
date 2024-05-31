@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/28 13:08:46 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:38:41 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	ft_echo(t_ast *ast)
 {
 	t_ast	*tmp;
-	int 	flag;
+	int		flag;
 
 	tmp = ast->left;
 	flag = 0;
-	if(!ft_strcmp(tmp->token->value, "-n"))
+	if (!ft_strcmp(tmp->token->value, "-n"))
 	{
 		flag = 1;
 		tmp = tmp->left;

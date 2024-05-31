@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 12:47:39 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:34:03 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,10 @@ int			ft_chdir(char *order, char **env);
 void		ft_pwd(void);
 void		ft_echo(t_ast *ast);
 void		ft_env(char **env);
-void		ft_export(t_ast *ast, char ***env);
+void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
 int 		var_len(char *str);
 void		ft_putenv_fd(char *s);
+void		export_free(char ***env, int i, int str);
 void		ft_unset(t_ast *ast, t_assign_list **list);
 
 //executer
