@@ -39,7 +39,6 @@ int	main(int argc, char **argv, char **env)
 	i = 0;
 	(void)argc;
 	(void)argv;
-	env = NULL;
 	signal(SIGINT, signal_c);
 	signal(SIGQUIT, SIG_IGN);
 	ft_enter(); //eslogan de entrada
@@ -47,12 +46,15 @@ int	main(int argc, char **argv, char **env)
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (1);
+	minishell->list = NULL;
+	ft_store_env(&minishell->list, env);
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
 		if (input_init(minishell->input) == 1)
 		{
 			ft_exit();
+			ft_list_clear(&minishell->list);
 			free(minishell);
 			exit(0);
 		}
@@ -78,6 +80,8 @@ int	main(int argc, char **argv, char **env)
 		free(minishell->input);
 	}
 	rl_clear_history();
+	if (minishell->list)
+		ft_list_clear(&minishell->list);
 	free(minishell->input->line);
 	free(minishell->input);
 	free(minishell);
