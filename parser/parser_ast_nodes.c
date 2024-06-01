@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 13:11:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/29 12:34:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:16:49 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_nodetype	return_type(t_token *token)
 		return (N_IDENTIFIER);
 	else if (token->type == T_DLESS)
 		return (N_HEREDOC);
-	else if (is_redirection(token))
+	else if (is_redirection_2(token))
 		return (N_REDIRECTION);
 	else if (token->type == T_PIPE)
 		return (N_PIPELINE);

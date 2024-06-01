@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 18:43:46 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:29:24 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,11 +146,13 @@ int			is_operator(char c);
 t_tokentype	ft_operator(char *text);
 
 //parser
-int			is_redirection(t_token *token);
+int			is_redirection_2(t_token *token);
 int			ft_redirection(t_token *token, int state);
 int			ft_word(t_token *token, int state);
 int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
+
+int			ft_parser_fda(t_input *input);
 
 //Expanser
 void	ft_store_env(t_assign_list **list, char **envp);
