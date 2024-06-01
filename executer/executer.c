@@ -42,11 +42,12 @@ char	**ft_command_args(t_ast *ast)
 		i++;
 	}
 	temp = ast;
-	args = malloc(sizeof(char *) * (i + 1));
+	args = malloc(sizeof(char *) * i);
 	i = 0;
 	while (temp)
 	{
-		args[i] = temp->token->value;
+		if (temp->token->value != NULL)
+			args[i] = temp->token->value;
 		temp = temp->left;
 		i++;
 	}
