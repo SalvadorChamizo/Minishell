@@ -6,11 +6,23 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/01 19:30:28 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:16:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
+
+int	disable_signal(void)
+{
+	struct termios	term;
+
+	if (tcgetattr(STDIN_FILENO, &term) == -1) 
+	{
+		perror("tcgetattr");
+		exit(EXIT_FAILURE);
+    }
+return (0);
+}
 
 void	signal_c(int signal_number)
 {
@@ -26,9 +38,8 @@ void	signal_c(int signal_number)
 
 void	signal_slach(int signal_number)
 {
-	if (isatty(STDIN_FILENO) == 0 && signal_number == SIGQUIT)
+	if (isatty(STDIN_FILENO) && signal_number == SIGQUIT)
 	{
-		printf("Quit (core dumped)\n");
 		rl_on_new_line();
 		rl_redisplay();
 	}

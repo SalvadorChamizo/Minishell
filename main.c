@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/01 19:28:41 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:16:23 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **env)
 	i = 0;
 	(void)argc;
 	(void)argv;
+	disable_signal();
 	signal(SIGINT, signal_c);
 	signal(SIGQUIT, signal_slach);
 	ft_enter(); //eslogan de entrada
