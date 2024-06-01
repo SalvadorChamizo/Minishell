@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 18:51:29 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:35:37 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	**ft_command_args(t_ast *ast)
 		temp = temp->left;
 		i++;
 	}
+	args[i] = NULL;
 	return (args);
 }
 
@@ -71,21 +72,19 @@ void	ft_simple_command(t_ast *ast, char ***env, t_assign_list **list)
 		perror("fork");
 		exit(1);
 	}
-	else if (pid == 0)
+	else if (pid == 0
+		&& execve(ast->token->value, ft_command_args(ast), *env) == -1)
 	{
-		execve(ast->token->value, ft_command_args(ast), *env);
+		perror("execve");
+		exit(1);
 	}
-	else
-	{
+	else if (pid > 0)
 		waitpid(pid, NULL, 0);
-		//printf("\n");
-	}
 }
 
 void	ft_command(t_ast *ast, char ***env, t_assign_list **list)
 {
 	pid_t	pid;
-	char	**args;
 	t_ast	*temp;
 	int		cont;
 	int		i;
@@ -108,11 +107,14 @@ void	ft_command(t_ast *ast, char ***env, t_assign_list **list)
 		perror("fork");
 		exit(1);
 	}
-	else if (pid == 0)
+	else if (pid == 0
+		&& execve(ast->token->value, ft_command_args(ast), *env) == -1)
 	{
-		args = ft_command_args(ast);
-		execve(ast->token->value, args, *env);
+		perror("execve");
+		exit(1);
 	}
+	else if (pid > 0)
+		waitpid(pid, NULL, 0);
 }
 
 int	check_files(t_ast *ast)
