@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 15:34:03 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:29:24 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,11 +146,21 @@ int			is_operator(char c);
 t_tokentype	ft_operator(char *text);
 
 //parser
-int			is_redirection(t_token *token);
+int			is_redirection_2(t_token *token);
 int			ft_redirection(t_token *token, int state);
 int			ft_word(t_token *token, int state);
 int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
+
+int			ft_parser_fda(t_input *input);
+
+//Expanser
+void	ft_store_env(t_assign_list **list, char **envp);
+int		ft_check_dollar(char *text);
+char	*remove_dollar(t_ast *ast);
+char	*get_variable(char	*text, int *cur);
+void	ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag);
+void	ft_dollar(t_ast *ast, t_assign_list *list);
 
 //Expanser
 void	ft_store_env(t_assign_list **list, char **envp);
@@ -169,12 +179,6 @@ int			ft_chdir(char *order, char **env);
 void		ft_pwd(void);
 void		ft_echo(t_ast *ast);
 void		ft_env(char **env);
-void		ft_export(t_ast *ast, char ***env);
-int 		var_len(char *str);
-void		ft_putenv_fd(char *s);
-
-//executer
-void    ft_executer(t_ast *ast, char ***env);
 void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
 int 		var_len(char *str);
 void		ft_putenv_fd(char *s);
@@ -218,6 +222,7 @@ void		ft_exit(void);
 
 //memory
 void	free_ast(t_ast **ast);
+void	*free_split(char **str);
 void	ft_list_clear(t_assign_list **list);
 
 #endif
