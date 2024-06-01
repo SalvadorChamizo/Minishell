@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 12:39:08 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:55:02 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ t_ast	*ft_term(t_input *input, t_idenlst **list)
 	{
 		ft_eat_aux(input);
 		token2 = input->current_token;
-		ft_eat(input, T_IDENTIFIER);
+		if (token2->type == T_IDENTIFIER)
+			ft_eat(input, T_IDENTIFIER);
+		if (token2->type == T_ASSING)
+			ft_eat(input, T_ASSING);
 		if (ast)
 			ast = bi_node(new_i_node(token2), token, ast);
 		else
@@ -94,11 +97,10 @@ t_ast	*ft_outfile(t_input *input, t_idenlst **list)
 	{
 		ft_eat_aux(input);
 		token2 = input->current_token;
-		ft_eat(input, T_IDENTIFIER);
-		if (input->error == 1)
-		{
-			return (NULL);
-		}
+		if (token2->type == T_IDENTIFIER)
+			ft_eat(input, T_IDENTIFIER);
+		if (token2->type == T_ASSING)
+			ft_eat(input, T_ASSING);	
 		if (ast)
 			ast = bi_node(new_i_node(token2), token, ast);
 		else
