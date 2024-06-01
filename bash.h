@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 16:29:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:29:54 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 
 //sygnal
 void		signal_c(int signal_number);
+void		signal_slach(int signal_number);
 
 //others
 void		ft_enter(void);
