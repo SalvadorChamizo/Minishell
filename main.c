@@ -71,8 +71,11 @@ int	main(int argc, char **argv, char **env)
 			if (ft_parser_fda(minishell->input) == 1)
 			{
 				minishell->input->pos = 0;
+        syntax = ft_expr(minishell->input);
+        ft_expanser(syntax, minishell, env);
+			  ft_executer(syntax, &env, &minishell->list);
 				syntax = ft_expr(minishell->input);
-				print_ast(syntax);
+				//print_ast(syntax);
 				free_ast(&syntax);
 			}
 			free(minishell->input->line);

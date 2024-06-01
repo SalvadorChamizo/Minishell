@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 14:49:40 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:51:29 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ char	**ft_command_args(t_ast *ast)
 	i = 0;
 	while (temp)
 	{
-		args[i] = temp->token->value;
+		if (temp->token->value != NULL)
+			args[i] = temp->token->value;
 		temp = temp->left;
 		i++;
 	}
@@ -73,6 +74,11 @@ void	ft_simple_command(t_ast *ast, char ***env, t_assign_list **list)
 	else if (pid == 0)
 	{
 		execve(ast->token->value, ft_command_args(ast), *env);
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+		//printf("\n");
 	}
 }
 
