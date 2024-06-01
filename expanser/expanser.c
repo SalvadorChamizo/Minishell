@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:50:58 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:54:27 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	expand_command2(t_ast *ast)
 	char	*str;
 	if (ast == NULL)
 		return ;
-	if (ast->type == N_COMMAND)
+	if (ast->type == N_COMMAND && ast->token->value[0] != '.')
 	{
 		str = ft_strjoin("/", ast->token->value);
 		free(ast->token->value);
@@ -314,5 +314,5 @@ void	ft_expanser(t_ast *ast, t_minishell *minishell, char **envp)
 	expand_command_3(ast, path);
 	store_assignment(ast, &minishell->list);
 	free_split(path);
-	print_assignment(minishell->list);
+	//print_assignment(minishell->list);
 }
