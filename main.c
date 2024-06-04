@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/01 17:30:48 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:40:55 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ int	input_init(t_input *input)
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell			*minishell;
-	t_ast				*syntax;
-	int i;
+	int		original_stdin;
+	int		original_stdout;
 
-	i = 0;
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, signal_c);
@@ -48,6 +49,7 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	minishell->list = NULL;
 	ft_store_env(&minishell->list, env);
+	minishell->env = env;
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
@@ -60,7 +62,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);
-		if (!ft_strncmp(minishell->input->line, "exit", 4))
+		if (!ft_strcmp(minishell->input->line, "exit"))
         {
             ft_exit(); // eslogan de salida
             break;
@@ -71,12 +73,13 @@ int	main(int argc, char **argv, char **env)
 			if (ft_parser_fda(minishell->input) == 1)
 			{
 				minishell->input->pos = 0;
-        syntax = ft_expr(minishell->input);
-        ft_expanser(syntax, minishell, env);
-			  ft_executer(syntax, &env, &minishell->list);
-				syntax = ft_expr(minishell->input);
-				//print_ast(syntax);
-				free_ast(&syntax);
+				minishell->ast = ft_expr(minishell->input);
+				ft_expanser(minishell, env);
+				ft_executer(minishell->ast, minishell);
+				dup2(original_stdin, STDIN_FILENO);
+				dup2(original_stdout, STDOUT_FILENO);
+				//print_ast(minishell->ast);
+				free_ast(&minishell->ast);
 			}
 			free(minishell->input->line);
 		}
