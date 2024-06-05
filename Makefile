@@ -30,6 +30,8 @@ FILES =	main \
 		parser/print_parser \
 		expanser/expanser_dollar \
 		expanser/expanser_utils \
+		expanser/expanser_assign \
+		expanser/expanser_command \
 		expanser/expanser \
 		signal/sygnal \
 		builtin/cd \
@@ -41,6 +43,9 @@ FILES =	main \
 		builtin/export_utils \
 		builtin/unset \
 		executer/executer \
+		executer/executer_command \
+		executer/executer_pipe \
+		executer/executer_redirect \
 		manage_memory/free_ast \
 
 BNS_FILES = 
