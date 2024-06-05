@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 14:43:02 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:52:11 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@ void	echo_print(t_ast *tmp)
 		ft_putstr_fd(" ", 1);
 }
 
-void	ft_echo(t_ast *ast, t_minishell *minishell)
+void	ft_echo(t_ast *ast)
 {
 	t_ast	*tmp;
 	int		flag;
 
-	if (ast->right)
-		ft_redirect(ast->right, minishell);
 	tmp = ast->left;
 	if (!tmp)
 	{
