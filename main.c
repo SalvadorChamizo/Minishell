@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/04 19:05:42 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:09:28 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **env)
 	minishell->list = NULL;
 	ft_store_env(&minishell->list, env);
 	minishell->env = env;
+	minishell->line_number = 0;
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
@@ -63,6 +64,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);
+		minishell->line_number++;
 		if (!ft_strcmp(minishell->input->line, "exit"))
         {
             ft_exit(); // eslogan de salida
