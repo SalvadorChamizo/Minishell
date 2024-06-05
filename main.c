@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/04 19:05:42 by schamizo         ###   ########.fr       */
@@ -40,8 +40,9 @@ int	main(int argc, char **argv, char **env)
 	original_stdout = dup(STDOUT_FILENO);
 	(void)argc;
 	(void)argv;
+	disable_signal();
 	signal(SIGINT, signal_c);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, signal_slach);
 	ft_enter(); //eslogan de entrada
 	//execve("/usr/bin/bash", path, env);
 	minishell = malloc(sizeof(t_minishell));

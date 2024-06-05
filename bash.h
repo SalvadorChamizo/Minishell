@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/04 17:03:59 by schamizo         ###   ########.fr       */
@@ -252,7 +252,9 @@ void		ft_expanser(t_minishell *minishell, char **envp);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 
 //sygnal
+int			disable_signal(void);
 void		signal_c(int signal_number);
+void		signal_slach(int signal_number);
 
 //others
 void		ft_enter(void);
