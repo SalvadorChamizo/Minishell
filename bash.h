@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/04 17:03:59 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:43:32 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ char		*wish_ensambler(char const *s1, char const *s2);
 void		regret_basic(t_ast *tree, char **env);
 int			ft_chdir(char *order, char **env);
 void		ft_pwd(void);
-void		ft_echo(t_ast *ast);
+void		ft_echo(t_ast *ast, t_minishell *minishell);
 void		ft_env(char **env);
 void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
 int			var_len(char *str);
