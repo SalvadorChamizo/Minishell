@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:04:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 12:09:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:09:50 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ int	ft_isspace(char c)
 		return (0);
 }
 
-void	ft_skip_spaces(t_input *input, char *text)
+void	ft_skip_spaces(t_input *input, char *text, t_token *new_token)
 {
+	new_token->space = false;
 	if (ft_isspace(text[input->pos]))
 	{
 		while (ft_isspace(text[input->pos]))
 			input->pos++;
+		new_token->space = true;
 	}
 }

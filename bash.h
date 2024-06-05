@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 18:11:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:27:10 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_token
 {
 	char		*value;
 	t_tokentype	type;
+	bool		space;
 }	t_token;
 
 typedef struct s_input
@@ -133,9 +134,10 @@ typedef struct s_minishell
 
 //tokenizer
 t_token		*get_next_token(t_input *minishell);
-void		ft_skip_spaces(t_input *input, char *text);
+void		ft_skip_spaces(t_input *input, char *text, t_token *new_token);
 void		ft_sop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
 void		ft_dop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
+int			isquote(char c);
 void		s_quote_case(t_input *mshll, t_token *nt, char *rt);
 void		d_quote_case(t_input *mshll, t_token *nt, char *rt);
 t_token		*tokenizer(t_input minishell);
@@ -143,7 +145,6 @@ bool		isoperator(char c);
 
 //space control
 int			ft_isspace(char c);
-void		ft_skip_spaces(t_input *input, char *text);
 int			ft_skip_quote(t_input *input, char *text, t_token *new_token);
 int			is_operator(char c);
 t_tokentype	ft_operator(char *text);
