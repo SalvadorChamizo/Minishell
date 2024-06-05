@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 14:52:11 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:39:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	echo_print(t_ast *tmp)
 		ft_putstr_fd(tmp->token->value, 1);
 	else
 		ft_putstr_fd("", 1);
-	if (tmp->left)
+	if (tmp->left && tmp->left->token->space)
 		ft_putstr_fd(" ", 1);
 }
 
