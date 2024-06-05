@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 15:12:08 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:36:05 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ t_token		*get_next_token(t_input *minishell);
 void		ft_skip_spaces(t_input *input, char *text);
 void		ft_sop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
 void		ft_dop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-void		s_quote_case(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-void		d_quote_case(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
+void		s_quote_case(t_input *mshll, t_token *nt, char *rt);
+void		d_quote_case(t_input *mshll, t_token *nt, char *rt);
 t_token		*tokenizer(t_input minishell);
 bool		isoperator(char c);
 

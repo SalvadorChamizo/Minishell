@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 12:33:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:54:30 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ bool	isidentifier(char c)
 {
 	if (ft_isspace(c) || isoperator(c))
 		return (false);
+	else if (c == '\'' || c == '\"')
+		return (false);
 	return (true);
 }
 
@@ -60,9 +62,16 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 	int	start;
 
 	start = minishell->pos;
-	while (ret[minishell->pos] && isidentifier(ret[minishell->pos]))
-		minishell->pos++;
-	newtok->value = ft_substr(ret, start, minishell->pos - start);
+	if (ret[minishell->pos] == '\'')
+		s_quote_case(minishell, newtok, ret);
+	else if (ret[minishell->pos] == '\"')
+		d_quote_case(minishell, newtok, ret);
+	else
+	{
+		while (ret[minishell->pos] && isidentifier(ret[minishell->pos]))
+			minishell->pos++;
+		newtok->value = ft_substr(ret, start, minishell->pos - start);
+	}
 	if (!newtok->value)
 		return ;
 	if (ft_strchr(newtok->value, '=') && newtok->value[0] != '=')
