@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/05 15:02:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:29:01 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 		if (access(ast->token->value, F_OK | X_OK) != 0)
 		{
 			new_text = ft_remove_path(ast->token->value);
-			printf("Command \"%s\" not found\n", new_text);
+			printf("Command \'%s\' not found\n", new_text);
+			exit(1);
 			return ;
 		}
 		if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
@@ -93,8 +94,6 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 		}
 	}
 }
-
-
 
 void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 {
@@ -108,7 +107,7 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 	if (access(ast->token->value, F_OK | X_OK) != 0)
 	{
 		new_text = ft_remove_path(ast->token->value);
-		printf("Command \"%s\" not found\n", new_text);
+		printf("Command \'%s\' not found\n", new_text);
 		return ;
 	}
 	pid = fork();
