@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/04 17:03:59 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/05 17:36:05 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ t_token		*get_next_token(t_input *minishell);
 void		ft_skip_spaces(t_input *input, char *text);
 void		ft_sop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
 void		ft_dop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-void		s_quote_case(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-void		d_quote_case(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
+void		s_quote_case(t_input *mshll, t_token *nt, char *rt);
+void		d_quote_case(t_input *mshll, t_token *nt, char *rt);
 t_token		*tokenizer(t_input minishell);
 bool		isoperator(char c);
 
@@ -201,7 +201,7 @@ void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
 int			var_len(char *str);
 void		ft_putenv_fd(char *s);
 void		export_free(char ***env, int i, int str);
-void		ft_unset(t_ast *ast, t_assign_list **list);
+void		ft_unset(t_ast *ast, char ***env, t_assign_list **list);
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);
