@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:46:42 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 18:02:22 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:33:45 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	s_quote_case(t_input *mshll, t_token *nt, char *rt)
 		mshll->pos++;
 	if (mshll->line[mshll->pos] == '\'')
 	{
-		nt->value = ft_substr(rt, start, mshll->pos - start + 1);
+		nt->value = ft_substr(rt, start - 1, mshll->pos - start + 1);
 		mshll->pos++;
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 18:18:10 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:38:38 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	isidentifier(char c)
 	if (ft_isspace(c) || isoperator(c))
 		return (false);
 	else if (c == '\'' || c == '\"')
-		return (false);
+		return (true);
 	return (true);
 }
 
