@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fda.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/01 18:51:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:46:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	check_syntax(t_token *token, int state)
 
 void	syntax_problem(t_token *token)
 {
-	if (token->value)
+	if (!token->value)
+		return ;
+	else if (token->value)
 	{
 		printf("bash: syntax error near unexpected token `%s'\n", token->value);
 		free(token->value);
@@ -55,6 +57,11 @@ void	syntax_problem(t_token *token)
 
 int	parser_fda_aux(t_token **token, int state)
 {
+	if ((*token)->value == NULL)
+	{
+		state = 0;
+		return (state);
+	}
 	state = check_syntax(*token, state);
 	if (state == 0)
 		return (state);
@@ -88,7 +95,10 @@ int	ft_parser_fda(t_input *input)
 		token = get_next_token(input);
 	}
 	if ((state == 5 || state == 1 || state == 4) && level == 0)
+	{
+		free(token);
 		return (1);
+	}
 	else
 	{
 		syntax_problem(token);

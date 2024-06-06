@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/30 12:33:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:26:27 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,19 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 	int	start;
 
 	start = minishell->pos;
-	while (ret[minishell->pos] && isidentifier(ret[minishell->pos]))
-		minishell->pos++;
-	newtok->value = ft_substr(ret, start, minishell->pos - start);
+	if (ret[minishell->pos] == '\'')
+		s_quote_case(minishell, newtok, ret);
+	else if (ret[minishell->pos] == '\"')
+		d_quote_case(minishell, newtok, ret);
+	else
+	{
+		while (ret[minishell->pos] && !isquote(ret[minishell->pos]))
+			minishell->pos++;
+		newtok->value = ft_substr(ret, start, minishell->pos - start);
+	}
 	if (!newtok->value)
 		return ;
-	if (ft_strchr(newtok->value, '=') && newtok->value[0] != '=')
+	else if (ft_strchr(newtok->value, '=') && newtok->value[0] != '=')
 		newtok->type = T_ASSING;
 	else
 		newtok->type = T_IDENTIFIER;
@@ -82,7 +89,7 @@ t_token	*get_next_token(t_input *minishell)
 		return (NULL);
 	while (ret[minishell->pos])
 	{
-		ft_skip_spaces(minishell, ret);
+		ft_skip_spaces(minishell, ret, newtok);
 		if (isidentifier(ret[minishell->pos]))
 		{
 			identifer_case(minishell, newtok, ret);

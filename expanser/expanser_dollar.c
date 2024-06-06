@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/28 15:27:27 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:11:09 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,31 +81,44 @@ char	*get_variable(char	*text, int *cur)
 			i++;
 		}
 	}
+	variable[len] = '\0';
 	return (variable);
 }
+
+/*char	*ft_copy_value(char *new_text, char	*value, int	*k, int	*flag)
+{
+	int	j;
+
+	j = 0;
+	while (value[j])
+	{
+		new_text[*k] = value[j];
+		j++;
+		*k++;
+	}
+	*flag = 1;
+	j = 0;
+}*/
 
 void	ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag)
 {
 	t_assign_list	*temp;
-	char			*text;
 	char			*variable;
 	int				i;
 	int				j;
 	int				k;
 	char			*new_text;
 
-
 	temp = list;
-	text = ast->token->value;
 	i = 0;
 	j = 0;
 	k = 0;
 	new_text = malloc(sizeof(char) * 2048);
-	while (text[i])
+	while (ast->token->value[i])
 	{
-		if (text[i] == '$')
+		if (ast->token->value[i] == '$')
 		{
-			variable = get_variable(text, &i);
+			variable = get_variable(ast->token->value, &i);
 			while (temp)
 			{
 				if (ft_strcmp(variable, temp->variable) == 0)
@@ -124,22 +137,27 @@ void	ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag)
 			}
 			temp = list;
 		}
-		new_text[k] = text[i];
+		new_text[k] = ast->token->value[i];
 		k++;
 		i++;
 	}
 	ast->token->value = new_text;
 }
 
-void ft_dollar(t_ast *ast, t_assign_list *list)
+void	ft_dollar(t_ast *ast, t_assign_list *list, t_minishell *minishell)
 {
-	int				flag;
-	int				len;
+	int	flag;
+	int	len;
 
 	flag = 0;
 	len = 0;
 	if (ast == NULL)
 		return ;
+	if (ft_strcmp(ast->token->value, "$?") == 0)
+	{
+		ast->token->value = ft_itoa(minishell->status);
+		return ;
+	}
 	if (ft_check_dollar(ast->token->value) && ast->token->value[0] != '\'')
 	{
 		if (!list)
@@ -151,6 +169,6 @@ void ft_dollar(t_ast *ast, t_assign_list *list)
 				ast->token->value = remove_dollar(ast);
 		}
 	}
-	ft_dollar(ast->left, list);
-	ft_dollar(ast->right, list);
+	ft_dollar(ast->left, list, minishell);
+	ft_dollar(ast->right, list, minishell);
 }
