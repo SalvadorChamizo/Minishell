@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fda_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:19:19 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/01 17:52:29 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:24:26 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	ft_parents(t_token *token, int state)
 {
 	if (token->type == T_O_PARENT && (state == 1 || state == 6))
 		state = 1;
-	else if (token->type == T_C_PARENT && (state == 1 || state == 6))
+	else if (token->type == T_C_PARENT
+		&& (state == 1 || state == 6 || state == 4))
 		state = 5;
 	return (state);
 }

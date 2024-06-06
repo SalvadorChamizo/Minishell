@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:10:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 15:36:56 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:31:25 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../bash.h"
 
 char	*wish_ensambler(char const *s1, char const *s2)
 {

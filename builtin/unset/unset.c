@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:42:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 15:33:24 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:38:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../bash.h"
 
 void	list_case(t_assign_list **list, char *str)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:13:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 12:37:59 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:24:57 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,7 @@
 void	ft_eat(t_input *input, t_tokentype type)
 {
 	if (input->current_token->type == type)
-	{
 		input->current_token = get_next_token(input);
-	}
-	else
-	{
-		input->error = 1;
-	}
 }
 
 void	ft_eat_aux(t_input *input)
