@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 14:41:33 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:32:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	main(int argc, char **argv, char **env)
 	ft_store_env(&minishell->list, env);
 	minishell->env = env;
 	minishell->line_number = 0;
+	minishell->status = 0;
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 

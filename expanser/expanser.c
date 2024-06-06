@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/05 18:28:11 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:09:48 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	ast = minishell->ast;
 	path = ft_get_path(envp);
 	expand_redir(ast, NULL, 0);
-	ft_dollar(ast, minishell->list);
+	ft_dollar(ast, minishell->list, minishell);
 	expand_quotes(ast);
 	expand_assignment(ast, NULL);
 	expand_command(ast, NULL, 0);

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/04 16:49:15 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:03:53 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell)
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		pipefd[2];
+	int		status;
 
 	if (pipe(pipefd) == -1)
 		manage_error("pipe");
@@ -64,8 +65,9 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell)
 		{
 			close(pipefd[0]);
 			close(pipefd[1]);
-			waitpid(pid_left, NULL, 0);
-			waitpid(pid_right, NULL, 0);
+			waitpid(pid_left, &status, 0);
+			waitpid(pid_right, &status, 0);
+			minishell->status = WEXITSTATUS(status);
 		}
 	}
 }

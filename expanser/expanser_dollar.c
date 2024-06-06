@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/04 18:40:36 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:11:09 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag)
 	ast->token->value = new_text;
 }
 
-void	ft_dollar(t_ast *ast, t_assign_list *list)
+void	ft_dollar(t_ast *ast, t_assign_list *list, t_minishell *minishell)
 {
 	int	flag;
 	int	len;
@@ -153,6 +153,11 @@ void	ft_dollar(t_ast *ast, t_assign_list *list)
 	len = 0;
 	if (ast == NULL)
 		return ;
+	if (ft_strcmp(ast->token->value, "$?") == 0)
+	{
+		ast->token->value = ft_itoa(minishell->status);
+		return ;
+	}
 	if (ft_check_dollar(ast->token->value) && ast->token->value[0] != '\'')
 	{
 		if (!list)
@@ -164,6 +169,6 @@ void	ft_dollar(t_ast *ast, t_assign_list *list)
 				ast->token->value = remove_dollar(ast);
 		}
 	}
-	ft_dollar(ast->left, list);
-	ft_dollar(ast->right, list);
+	ft_dollar(ast->left, list, minishell);
+	ft_dollar(ast->right, list, minishell);
 }
