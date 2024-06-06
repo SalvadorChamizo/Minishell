@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 19:29:58 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:26:27 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,10 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 		while (ret[minishell->pos] && !isquote(ret[minishell->pos]))
 			minishell->pos++;
 		newtok->value = ft_substr(ret, start, minishell->pos - start);
-		printf("value: %s\n", newtok->value);
 	}
 	if (!newtok->value)
 		return ;
-	if (ft_strchr(newtok->value, '=') && newtok->value[0] != '=')
+	else if (ft_strchr(newtok->value, '=') && newtok->value[0] != '=')
 		newtok->type = T_ASSING;
 	else
 		newtok->type = T_IDENTIFIER;
