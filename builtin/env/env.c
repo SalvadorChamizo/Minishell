@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:30:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:36:04 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:35:28 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../bash.h"
 
 void	ft_env(char **env)
 {

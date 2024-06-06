@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 19:39:07 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:33:06 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../bash.h"
 
 void	echo_print(t_ast *tmp)
 {
