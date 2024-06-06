@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 19:29:58 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:51:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 		while (ret[minishell->pos] && !isquote(ret[minishell->pos]))
 			minishell->pos++;
 		newtok->value = ft_substr(ret, start, minishell->pos - start);
-		printf("value: %s\n", newtok->value);
 	}
 	if (!newtok->value)
 		return ;

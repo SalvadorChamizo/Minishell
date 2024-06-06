@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/05 17:19:39 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:21:30 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,35 +95,43 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 	}
 }
 
-void	ft_simple_command(t_ast *ast, t_minishell *minishell)
+void	simple_command_aux(t_ast *ast, t_minishell *minishell, char *new_text)
 {
-	pid_t	pid;
-	char	*new_text;
-
-	if (ast->right)
-		ft_executer(ast->right, minishell);
 	if (access(ast->token->value, F_OK | X_OK) != 0)
 	{
 		new_text = ft_remove_path(ast->token->value);
 		printf("Command \'%s\' not found\n", new_text);
-		return ;
+		exit(127);
 	}
+	if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
+	{
+		perror("execve");
+		exit(1);
+	}
+}
+
+void	ft_simple_command(t_ast *ast, t_minishell *minishell)
+{
+	pid_t	pid;
+	char	*new_text;
+	int		status;
+
+	new_text = NULL;
+	if (ast->right)
+		ft_executer(ast->right, minishell);
 	pid = fork();
 	if (pid == -1)
 	{
 		perror("fork");
 		exit(1);
 	}
-	else if (pid == 0)
+	if (!pid)
 	{
-		if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
-		{
-			perror("execve");
-			exit(1);
-		}
+		simple_command_aux(ast, minishell, new_text);
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		minishell->status = WEXITSTATUS(status);
 	}
 }

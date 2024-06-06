@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 19:27:10 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:09:59 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_minishell
 	t_assign_list	*list;
 	char			**env;
 	int				line_number;
+	int				status;
 }	t_minishell;
 
 //tokenizer
@@ -168,7 +169,7 @@ int			ft_check_dollar(char *text);
 char		*remove_dollar(t_ast *ast);
 char		*get_variable(char	*text, int *cur);
 void		ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag);
-void		ft_dollar(t_ast *ast, t_assign_list *list);
+void		ft_dollar(t_ast *ast, t_assign_list *list, t_minishell *minishell);
 
 //expanser_assign
 void		expand_assignment(t_ast *ast, t_ast *prev);
