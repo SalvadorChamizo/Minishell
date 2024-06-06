@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:55 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 15:06:39 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:10:48 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ void	exit_free(t_minishell **minishell, t_ast *ast)
 	free((*minishell));
 }
 
+int	ft_strisnumber(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	ft_exit(t_minishell **minishell, t_ast *ast)
 {
 	int	i;
@@ -31,9 +47,9 @@ void	ft_exit(t_minishell **minishell, t_ast *ast)
 	ft_putstr_fd("exit\n", 1);
 	if (ast->left)
 	{
-		if (isdigit(ft_atoi(ast->left->token->value)))
+		if (ft_strisnumber(ast->left->token->value))
 			i = ft_atoi(ast->left->token->value);
-		else
+		if (!ft_strisnumber(ast->left->token->value))
 		{
 			ft_putstr_fd("bash: exit: ", 2);
 			ft_putstr_fd(ast->left->token->value, 2);
@@ -41,9 +57,11 @@ void	ft_exit(t_minishell **minishell, t_ast *ast)
 			exit_free(minishell, ast);
 			exit (2);
 		}
-		if (ast->left->left)
+		else if (ast->left->left)
 		{
 			ft_putstr_fd("bash: exit: too many arguments\n", 2);
+			(*minishell)->status = 1;
+			return ;
 		}
 	}
 	exit_free(minishell, ast);

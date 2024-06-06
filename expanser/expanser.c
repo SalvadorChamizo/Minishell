@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 14:09:48 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:36:38 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,12 @@ void	expand_quotes(t_ast *ast)
 	{
 		if (ast->token->value[0] == '\"')
 		{
-			printf("Entra 1\n");
 			str = ft_strtrim(ast->token->value, "\"");
 			free(ast->token->value);
 			ast->token->value = str;
 		}
 		else if (ast->token->value[0] == '\'')
 		{
-			printf("Entra 2\n");
 			str = ft_strtrim(ast->token->value, "\'");
 			free(ast->token->value);
 			ast->token->value = str;
