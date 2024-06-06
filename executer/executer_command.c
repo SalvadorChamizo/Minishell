@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 14:21:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:58:52 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 		{
 			new_text = ft_remove_path(ast->token->value);
 			printf("Command \'%s\' not found\n", new_text);
-			exit(1);
-			return ;
+			exit(127);
 		}
 		if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
 		{
