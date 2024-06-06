@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 19:27:10 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:01:02 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ int			var_len(char *str);
 void		ft_putenv_fd(char *s);
 void		export_free(char ***env, int i, int str);
 void		ft_unset(t_ast *ast, char ***env, t_assign_list **list);
+void		ft_exit(t_minishell **minishell, t_ast *ast);
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);
@@ -260,7 +261,7 @@ void		signal_slach(int signal_number);
 
 //others
 void		ft_enter(void);
-void		ft_exit(void);
+void		ft_close(void);
 
 //memory
 void		free_ast(t_ast **ast);
