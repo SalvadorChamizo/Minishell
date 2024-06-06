@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:37:46 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 15:39:26 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:37:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../bash.h"
 
 void	ft_pwd(void)
 {

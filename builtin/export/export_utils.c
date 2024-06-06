@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:32:04 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/05/31 15:34:33 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:36:17 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../bash.h"
+#include "../../bash.h"
 
 int	var_len(char *str)
 {
