@@ -17,7 +17,7 @@ BOLD    = \033[1m
 RED     = \033[31;1m
 
 FILES =	main \
-		exit \
+		logo \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
 		tokenizer/tokenizer_quote \
@@ -34,14 +34,15 @@ FILES =	main \
 		expanser/expanser_command \
 		expanser/expanser \
 		signal/sygnal \
-		builtin/cd \
-		builtin/cd_utils \
-		builtin/pwd \
-		builtin/echo \
-		builtin/env \
-		builtin/export \
-		builtin/export_utils \
-		builtin/unset \
+		builtin/cd/cd \
+		builtin/cd/cd_utils \
+		builtin/pwd/pwd \
+		builtin/echo/echo \
+		builtin/env/env \
+		builtin/export/export \
+		builtin/export/export_utils \
+		builtin/unset/unset \
+		builtin/exit/exit \
 		executer/executer \
 		executer/executer_command \
 		executer/executer_pipe \
