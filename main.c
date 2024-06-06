@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/05 18:09:28 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:41:33 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 	disable_signal();
 	signal(SIGINT, signal_c);
 	signal(SIGQUIT, signal_slach);
-	ft_enter(); //eslogan de entrada
+	ft_enter();
 	//execve("/usr/bin/bash", path, env);
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 		minishell->input = malloc(sizeof(t_input)); 
 		if (input_init(minishell->input) == 1)
 		{
-			ft_exit();
+			ft_close();
 			ft_list_clear(&minishell->list);
 			free(minishell);
 			exit(0);
@@ -65,34 +65,20 @@ int	main(int argc, char **argv, char **env)
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);
 		minishell->line_number++;
-		if (!ft_strcmp(minishell->input->line, "exit"))
-        {
-            ft_exit(); // eslogan de salida
-            break;
-        }
-		else
+		minishell->input->pos = 0;
+		if (ft_parser_fda(minishell->input) == 1)
 		{
 			minishell->input->pos = 0;
-			if (ft_parser_fda(minishell->input) == 1)
-			{
-				minishell->input->pos = 0;
-				minishell->ast = ft_expr(minishell->input);
-				ft_expanser(minishell, env);
-				ft_executer(minishell->ast, minishell);
-				dup2(original_stdin, STDIN_FILENO);
-				dup2(original_stdout, STDOUT_FILENO);
-				//print_ast(minishell->ast);
-				free_ast(&minishell->ast);
-			}
-			free(minishell->input->line);
+			minishell->ast = ft_expr(minishell->input);
+			//print_ast(minishell->ast);
+			ft_expanser(minishell, env);
+			ft_executer(minishell->ast, minishell);
+			dup2(original_stdin, STDIN_FILENO);
+			dup2(original_stdout, STDOUT_FILENO);
+			free_ast(&minishell->ast);
 		}
+		free(minishell->input->line);
 		free(minishell->input);
 	}
-	rl_clear_history();
-	if (minishell->list)
-		ft_list_clear(&minishell->list);
-	free(minishell->input->line);
-	free(minishell->input);
-	free(minishell);
 	return (0);
 }

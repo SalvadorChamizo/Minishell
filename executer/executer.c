@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/05 15:11:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 13:55:54 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	execute_builtin(t_ast *ast, t_minishell *minishell)
 		ft_export(ast, &minishell->env, minishell->list);
 	else if (!ft_strcmp(ast->token->value, "unset"))
 		ft_unset(ast, &minishell->env, &minishell->list);
+	else if (!ft_strcmp(ast->token->value, "exit"))
+		ft_exit(&minishell, ast);
 }
 
 int	check_files(t_ast *ast)

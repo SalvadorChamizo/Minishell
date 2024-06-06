@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/01 20:16:40 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/05 19:26:23 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	disable_signal(void)
 		perror("tcgetattr");
 		exit(EXIT_FAILURE);
     }
-return (0);
+	return (0);
 }
 
 void	signal_c(int signal_number)

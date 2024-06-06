@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 12:23:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:46:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,10 @@ int	ft_parser_fda(t_input *input)
 		token = get_next_token(input);
 	}
 	if ((state == 5 || state == 1 || state == 4) && level == 0)
+	{
+		free(token);
 		return (1);
+	}
 	else
 	{
 		syntax_problem(token);
