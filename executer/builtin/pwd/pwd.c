@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 16:30:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/07 12:16:18 by saroca-f         ###   ########.fr       */
+/*   Created: 2024/05/28 10:37:46 by saroca-f          #+#    #+#             */
+/*   Updated: 2024/06/07 15:27:37 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
-void	ft_env(char **env, t_minishell *minishell)
+void	ft_pwd(t_minishell *minishell)
 {
-	int	i;
+	char	*pwd;
 
-	i = 0;
-	while (env[i])
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
+	pwd = getcwd(NULL, 0);
+	ft_putendl_fd(pwd, 1);
+	free(pwd);
 	minishell->status = 0;
 }

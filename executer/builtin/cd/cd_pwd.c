@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 09:53:32 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 11:26:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:27:51 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
 void	oldpwd_update(char **env)
 {

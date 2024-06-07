@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 12:19:55 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:25:30 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,18 +207,18 @@ void		gotouser(char **env);
 void		oldpwd_update(char **env);
 void		pwd_update(char **env);
 	//PWD
-void		ft_pwd(void);
+void		ft_pwd(t_minishell *minishell);
 	//ECHO
-void		ft_echo(t_ast *ast);
+void		ft_echo(t_ast *ast, t_minishell *minishell);
 	//ENV
 void		ft_env(char **env, t_minishell *minishell);
 	//EXPORT
-void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
+void		ft_export(t_ast *ast, char ***env, t_minishell *minishell);
 int			var_len(char *str);
 void		ft_putenv_fd(char *s);
 void		export_free(char ***env, int i, int str);
 	//UNSET
-void		ft_unset(t_ast *ast, char ***env, t_assign_list **list);
+void		ft_unset(t_ast *ast, t_minishell *minishell);
 void		ft_exit(t_minishell **minishell, t_ast *ast);
 
 //executer

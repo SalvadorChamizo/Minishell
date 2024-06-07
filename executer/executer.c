@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/07 12:20:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:23:47 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ void	execute_builtin(t_ast *ast, t_minishell *minishell)
 	if (!ft_strcmp(ast->token->value, "cd"))
 		ft_cd(ast, minishell->env, minishell);
 	else if (!ft_strcmp(ast->token->value, "pwd"))
-		ft_pwd();
+		ft_pwd(minishell);
 	else if (!ft_strcmp(ast->token->value, "echo"))
-		ft_echo(ast);
+		ft_echo(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "env"))
 		ft_env(minishell->env, minishell);
 	else if (!ft_strcmp(ast->token->value, "export"))
-		ft_export(ast, &minishell->env, minishell->list);
+		ft_export(ast, &minishell->env, minishell);
 	else if (!ft_strcmp(ast->token->value, "unset"))
-		ft_unset(ast, &minishell->env, &minishell->list);
+		ft_unset(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "exit"))
 		ft_exit(&minishell, ast);
 }

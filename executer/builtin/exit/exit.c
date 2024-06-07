@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:55 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 10:46:20 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:27:06 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
 void	exit_free(t_minishell **minishell, t_ast *ast)
 {
@@ -74,5 +74,5 @@ void	ft_exit(t_minishell **minishell, t_ast *ast)
 		}
 	}
 	exit_free(minishell, ast);
-    exit(i);
+	exit(i);
 }

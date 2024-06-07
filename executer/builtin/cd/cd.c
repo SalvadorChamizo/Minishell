@@ -6,15 +6,15 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 12:28:54 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:26:34 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
 bool	cd_absolute(t_ast *tree, char **path, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (access(tree->left->token->value, F_OK) < 0)
@@ -45,7 +45,7 @@ int	cd_relative_checker(t_ast *tree, char *rout)
 {
 	char	*wish;
 	char	*now;
-	
+
 	now = getcwd(NULL, 0);
 	wish = wish_ensambler(now, rout);
 	free(now);
@@ -122,7 +122,7 @@ void	ft_cd(t_ast *tree, char **env, t_minishell *minishell)
 	{
 		minishell->status = 0;
 		if (!cd_relative(tree, tree->left->token->value, env))
-			minishell->status = 1;		
+			minishell->status = 1;
 	}
 	ft_freepath(path);
 }

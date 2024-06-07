@@ -35,16 +35,16 @@ FILES =	main \
 		expanser/expanser_command \
 		expanser/expanser \
 		signal/sygnal \
-		builtin/cd/cd \
-		builtin/cd/cd_utils \
-		builtin/cd/cd_pwd \
-		builtin/pwd/pwd \
-		builtin/echo/echo \
-		builtin/env/env \
-		builtin/export/export \
-		builtin/export/export_utils \
-		builtin/unset/unset \
-		builtin/exit/exit \
+		executer/builtin/cd/cd \
+		executer/builtin/cd/cd_utils \
+		executer/builtin/cd/cd_pwd \
+		executer/builtin/pwd/pwd \
+		executer/builtin/echo/echo \
+		executer/builtin/env/env \
+		executer/builtin/export/export \
+		executer/builtin/export/export_utils \
+		executer/builtin/unset/unset \
+		executer/builtin/exit/exit \
 		executer/executer \
 		executer/executer_command \
 		executer/executer_pipe \
