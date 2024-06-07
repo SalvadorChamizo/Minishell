@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 14:50:22 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:13:03 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,17 @@
 
 int	input_init(t_input *input)
 {
+	char	*user;
+	char	*computer;
+
 	input->pos = 0;
 	input->error = 0;
 	input->line = NULL;
-	input->line = readline(RED"minishell> "RESET);
+	user = getenv("USER");
+	computer = getenv("SESSION_MANAGER");
+	computer = ft_substr(computer, 6, 6);
+	printf(RED"%s@%s", user, computer);
+	input->line = readline("> "RESET);
 	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
 	{
 		printf("exit\n");
@@ -49,11 +56,11 @@ char	**ft_env_init(char **env)
 	return (newenv);
 }
 
-t_minishell   *minishell_init(char **env)
+t_minishell	*minishell_init(char **env)
 {
 	t_minishell	*minishell;
 
-    minishell = malloc(sizeof(t_minishell));
+	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (NULL);
 	minishell->env = NULL;

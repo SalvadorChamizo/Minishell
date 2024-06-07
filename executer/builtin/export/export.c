@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 16:58:07 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:07:42 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ void	ft_export(t_ast *ast, char ***env, t_minishell *minishell)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->token->value, '='))
+		{
 			if (!env_exist(*env, tmp->token->value))
 				ft_newenv(env, tmp->token->value);
+		}
 		else
 			list_check(tmp->token->value, minishell->list, env);
 		tmp = tmp->left;
