@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 15:32:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:47:03 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ typedef struct s_minishell
 	int				status;
 }	t_minishell;
 
+//INIT
+int				input_init(t_input *input);
+t_minishell		*minishell_init(char **env);
+
 //tokenizer
 t_token		*get_next_token(t_input *minishell);
 void		ft_skip_spaces(t_input *input, char *text, t_token *new_token);
@@ -192,18 +196,28 @@ int			check_equal(char *text);
 void		ft_store_env(t_assign_list **list, char **envp);
 
 //Builtin
+	//CD
 void		ft_cd(t_ast *tree, char **env);
 void		cd_error(char *path);
 char		*wish_ensambler(char const *s1, char const *s2);
-void		regret_basic(t_ast *tree, char **env);
+void		ft_freepath(char **path);
+int			regret_basic(void);
 int			ft_chdir(char *order, char **env);
+void		gotouser(char **env);
+void		oldpwd_update(char **env);
+void		pwd_update(char **env);
+	//PWD
 void		ft_pwd(void);
+	//ECHO
 void		ft_echo(t_ast *ast);
+	//EVV
 void		ft_env(char **env);
+	//EXPORT
 void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
 int			var_len(char *str);
 void		ft_putenv_fd(char *s);
 void		export_free(char ***env, int i, int str);
+	//UNSET
 void		ft_unset(t_ast *ast, char ***env, t_assign_list **list);
 void		ft_exit(t_minishell **minishell, t_ast *ast);
 

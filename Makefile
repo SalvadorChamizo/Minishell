@@ -18,6 +18,7 @@ RED     = \033[31;1m
 
 FILES =	main \
 		logo \
+		init/minishell_init \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
 		tokenizer/tokenizer_quote \
@@ -36,6 +37,7 @@ FILES =	main \
 		signal/sygnal \
 		builtin/cd/cd \
 		builtin/cd/cd_utils \
+		builtin/cd/cd_pwd \
 		builtin/pwd/pwd \
 		builtin/echo/echo \
 		builtin/env/env \

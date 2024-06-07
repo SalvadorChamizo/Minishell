@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:10:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 12:31:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 10:59:25 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,56 @@ char	*wish_ensambler(char const *s1, char const *s2)
 	return (s3);
 }
 
-void	regret_basic(t_ast *tree, char **env)
+int	regret_basic(void)
 {
-	while (ft_strcmp(getcwd(NULL, 0), "/") != 0)
+	char *now;
+
+	now = getcwd(NULL, 0);
+	while (ft_strcmp(now, "/") != 0)
 	{
-		if (ft_chdir("..", env) == -1)
-		{
-			cd_error(tree->left->token->value);
-			break ;
-		}
+		if (chdir("..") == -1)
+			return (1);
+		free(now);
+		now = getcwd(NULL, 0);
 	}
+	free(now);
+	return (0);
 }
 
 int	ft_chdir(char *order, char **env)
 {
-	char	*oldpath;
 	int		i;
 
 	i = 0;
-	oldpath = getcwd(NULL, 0);
 	if (chdir(order) == -1)
 		return (-1);
-	while (env[i] != NULL)
+	pwd_update(env);
+	return (0);
+}
+
+void	ft_freepath(char **path)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
 	{
-		if (ft_strncmp(env[i], "PWD=", 4) == 0)
-			env[i] = ft_strjoin("PWD=", getcwd(NULL, 0));
-		if (ft_strncmp(env[i], "OLDPWD=", 7) == 0)
-			env[i] = ft_strjoin("OLDPWD=", oldpath);
+		free(path[i]);
 		i++;
 	}
-	return (0);
+	free(path);
+}
+
+void	gotouser(char **env)
+{
+	char	*user;
+
+	user = ft_strdup(getenv("USER"));
+	regret_basic();
+	if (chdir("home") == -1)
+		printf("bash: cd: HOME not set\n");
+	if (chdir(user) == -1)
+		printf("bash: cd: %s: No such file or directory\n", user);
+	free(user);
+	pwd_update(env);
 }
