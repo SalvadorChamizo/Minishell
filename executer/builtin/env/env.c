@@ -6,13 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:30:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 12:35:28 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:26:57 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
-void	ft_env(char **env)
+void	ft_env(char **env, t_minishell *minishell)
 {
 	int	i;
 
@@ -22,4 +22,5 @@ void	ft_env(char **env)
 		printf("%s\n", env[i]);
 		i++;
 	}
+	minishell->status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 16:42:01 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:00:54 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,7 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	ft_enter();
 	//execve("/usr/bin/bash", path, env);
-	minishell = malloc(sizeof(t_minishell));
-	if (minishell == NULL)
-		return (1);
-	minishell->list = NULL;
-	ft_store_env(&minishell->list, env);
-	minishell->env = env;
-	minishell->line_number = 0;
-	minishell->status = 0;
+	minishell = minishell_init(env);
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
@@ -85,7 +78,6 @@ int	main(int argc, char **argv, char **env)
 			minishell->ast = ft_expr(minishell->input);
 			//print_ast(minishell->ast);
 			ft_expanser(minishell, minishell->env);
-			//print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);
 			dup2(original_stdin, STDIN_FILENO);
 			dup2(original_stdout, STDOUT_FILENO);

@@ -6,11 +6,11 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:42:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 15:54:45 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:01:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
 void	list_case(t_assign **list, char *str)
 {
@@ -57,15 +57,16 @@ void	env_case(char ***env, char *str)
 	}
 }
 
-void	ft_unset(t_ast *ast, char ***env, t_assign **list)
+void	ft_unset(t_ast *ast, t_minishell *minishell)
 {
 	t_ast			*temp;
 
 	temp = ast->left;
 	while (temp)
 	{
-		list_case(list, temp->token->value);
-		env_case (env, temp->token->value);
+		list_case(&minishell->list, temp->token->value);
+		env_case (&minishell->env, temp->token->value);
 		temp = temp->left;
 	}
+	minishell->status = 0;
 }

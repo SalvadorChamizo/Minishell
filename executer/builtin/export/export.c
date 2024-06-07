@@ -6,46 +6,40 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 15:58:39 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:58:07 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
-int	mat_extenser(char **env)
+int	mat_extenser(char ***env)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while ((*env)[i])
 		i++;
 	return (i);
 }
 
 void	ft_newenv(char ***env, char *str)
 {
-	static int	i;
-	int			flag;
+	int			i;
 	char		**newenv;
 
-	flag = 0;
-	if (i)
-		flag = 1;
-	i = mat_extenser(*env) + 2;
+	i = mat_extenser(env) + 2;
 	newenv = malloc(sizeof(char *) * i);
 	i = 0;
 	while ((*env)[i])
 	{
 		newenv[i] = ft_strdup((*env)[i]);
-		if (flag)
-			export_free(env, i, 1);
+		free((*env)[i]);
 		i++;
 	}
 	newenv[i] = malloc(sizeof(char) * ft_strlen(str) + 1);
 	strcpy(newenv[i], str);
 	newenv[i + 1] = NULL;
-	if (flag)
-		export_free(env, 0, 0);
+	free(*env);
 	*env = newenv;
 }
 
@@ -70,21 +64,25 @@ int	env_exist(char **env, char *str)
 void	list_check(char *var, t_assign *list, char ***env)
 {
 	t_assign	*temp;
-	char			*str;
+	char		*strtemp;
+	char		*str;
 
 	temp = list;
 	while (temp)
 	{
 		if (!ft_strncmp(temp->variable, var, var_len(var)))
 		{
-			str = ft_strjoin(temp->variable, ft_strjoin("=", temp->value));
+			strtemp = ft_strjoin(temp->variable, "=");
+			str = ft_strjoin(temp->variable, strtemp);
 			ft_newenv(env, str);
+			free(strtemp);
+			free(str);
 		}
 		temp = temp->next;
 	}
 }
 
-void	ft_export(t_ast *ast, char ***env, t_assign *list)
+void	ft_export(t_ast *ast, char ***env, t_minishell *minishell)
 {
 	t_ast		*tmp;
 	int			i;
@@ -103,12 +101,11 @@ void	ft_export(t_ast *ast, char ***env, t_assign *list)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->token->value, '='))
-		{
 			if (!env_exist(*env, tmp->token->value))
 				ft_newenv(env, tmp->token->value);
-		}
 		else
-			list_check(tmp->token->value, list, env);
+			list_check(tmp->token->value, minishell->list, env);
 		tmp = tmp->left;
 	}
+	minishell->status = 0;
 }
