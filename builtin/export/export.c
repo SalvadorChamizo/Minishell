@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 12:36:11 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:58:39 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	env_exist(char **env, char *str)
 	return (0);
 }
 
-void	list_check(char *var, t_assign_list *list, char ***env)
+void	list_check(char *var, t_assign *list, char ***env)
 {
-	t_assign_list	*temp;
+	t_assign	*temp;
 	char			*str;
 
 	temp = list;
@@ -84,7 +84,7 @@ void	list_check(char *var, t_assign_list *list, char ***env)
 	}
 }
 
-void	ft_export(t_ast *ast, char ***env, t_assign_list *list)
+void	ft_export(t_ast *ast, char ***env, t_assign *list)
 {
 	t_ast		*tmp;
 	int			i;

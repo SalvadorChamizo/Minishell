@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:35:25 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/04 15:58:58 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:53:39 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	check_equal(char *text)
 	return (0);
 }
 
-void	ft_store_env(t_assign_list **list, char **envp)
+void	ft_store_env(t_assign **list, char **envp)
 {
-	t_assign_list	*new_node;
+	t_assign	*new_node;
 	int				i;
 
 	new_node = NULL;

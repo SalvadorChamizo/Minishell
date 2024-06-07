@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:47:13 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/31 18:43:23 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:23:59 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	*free_split(char **str)
 	return (NULL);
 }
 
-void	ft_list_clear(t_assign_list **list)
+void	ft_list_clear(t_assign **list)
 {
-	t_assign_list	*temp;
+	t_assign	*temp;
 
 	if (!list)
 		return ;
