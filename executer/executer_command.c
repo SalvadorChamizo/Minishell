@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 14:58:52 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:35:21 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ char	**ft_command_args(t_ast *ast)
 	i = 0;
 	while (temp)
 	{
-		if (temp->token->value != NULL && ft_strcmp(temp->token->value, "") != 0)
+		if (temp->token->value != NULL
+			&& ft_strcmp(temp->token->value, "") != 0)
 			args[i] = ft_remove_path(temp->token->value);
 		temp = temp->left;
 		i++;
