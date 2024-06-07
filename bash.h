@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 16:59:33 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:59:38 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,10 +229,10 @@ void		ft_echo(t_ast *ast, t_minishell *minishell);
 	//ENV
 void		ft_env(char **env, t_minishell *minishell);
 	//EXPORT
-void		ft_export(t_ast *ast, char ***env, t_minishell *minishell);
+void		ft_export(t_ast *ast, t_minishell *minishell);
 int			var_len(char *str);
+void		export_print(char **env);
 void		ft_putenv_fd(char *s);
-void		export_free(char ***env, int i, int str);
 	//UNSET
 void		ft_unset(t_ast *ast, t_minishell *minishell);
 void		ft_exit(t_minishell **minishell, t_ast *ast);

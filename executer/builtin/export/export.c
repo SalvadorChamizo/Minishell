@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 16:58:07 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:07:50 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	list_check(char *var, t_assign *list, char ***env)
 		if (!ft_strncmp(temp->variable, var, var_len(var)))
 		{
 			strtemp = ft_strjoin(temp->variable, "=");
-			str = ft_strjoin(temp->variable, strtemp);
+			str = ft_strjoin(strtemp, temp->value);
 			ft_newenv(env, str);
 			free(strtemp);
 			free(str);
@@ -82,7 +82,7 @@ void	list_check(char *var, t_assign *list, char ***env)
 	}
 }
 
-void	ft_export(t_ast *ast, char ***env, t_minishell *minishell)
+void	ft_export(t_ast *ast, t_minishell *minishell)
 {
 	t_ast		*tmp;
 	int			i;
@@ -90,21 +90,16 @@ void	ft_export(t_ast *ast, char ***env, t_minishell *minishell)
 	tmp = ast->left;
 	i = 0;
 	if (!tmp)
-	{
-		while ((*env)[i] != NULL)
-		{
-			ft_putenv_fd((*env)[i]);
-			i++;
-		}
-		return ;
-	}
+	export_print(minishell->env);
 	while (tmp)
 	{
 		if (ft_strchr(tmp->token->value, '='))
-			if (!env_exist(*env, tmp->token->value))
-				ft_newenv(env, tmp->token->value);
+		{
+			if (!env_exist(minishell->env, tmp->token->value))
+				ft_newenv(&minishell->env, tmp->token->value);
+		}
 		else
-			list_check(tmp->token->value, minishell->list, env);
+			list_check(tmp->token->value, minishell->list, &minishell->env);
 		tmp = tmp->left;
 	}
 	minishell->status = 0;

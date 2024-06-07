@@ -44,6 +44,7 @@ FILES =	main \
 		executer/builtin/env/env \
 		executer/builtin/export/export \
 		executer/builtin/export/export_utils \
+		executer/builtin/export/export_print \
 		executer/builtin/unset/unset \
 		executer/builtin/exit/exit \
 		executer/executer \
