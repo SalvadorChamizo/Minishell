@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 15:53:09 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:25:30 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ typedef struct s_minishell
 	int				status;
 }	t_minishell;
 
+//INIT
+int				input_init(t_input *input);
+t_minishell		*minishell_init(char **env);
+
 //tokenizer
 t_token		*get_next_token(t_input *minishell);
 void		ft_skip_spaces(t_input *input, char *text, t_token *new_token);
@@ -192,19 +196,29 @@ int			check_equal(char *text);
 void		ft_store_env(t_assign_list **list, char **envp);
 
 //Builtin
-void		ft_cd(t_ast *tree, char **env);
+	//CD
+void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
 void		cd_error(char *path);
 char		*wish_ensambler(char const *s1, char const *s2);
-void		regret_basic(t_ast *tree, char **env);
+void		ft_freepath(char **path);
+int			regret_basic(void);
 int			ft_chdir(char *order, char **env);
-void		ft_pwd(void);
-void		ft_echo(t_ast *ast);
-void		ft_env(char **env);
-void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
+void		gotouser(char **env);
+void		oldpwd_update(char **env);
+void		pwd_update(char **env);
+	//PWD
+void		ft_pwd(t_minishell *minishell);
+	//ECHO
+void		ft_echo(t_ast *ast, t_minishell *minishell);
+	//ENV
+void		ft_env(char **env, t_minishell *minishell);
+	//EXPORT
+void		ft_export(t_ast *ast, char ***env, t_minishell *minishell);
 int			var_len(char *str);
 void		ft_putenv_fd(char *s);
 void		export_free(char ***env, int i, int str);
-void		ft_unset(t_ast *ast, char ***env, t_assign_list **list);
+	//UNSET
+void		ft_unset(t_ast *ast, t_minishell *minishell);
 void		ft_exit(t_minishell **minishell, t_ast *ast);
 
 //executer

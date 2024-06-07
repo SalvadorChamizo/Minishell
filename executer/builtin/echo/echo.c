@@ -6,11 +6,11 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 12:33:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:26:45 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
 void	echo_print(t_ast *tmp)
 {
@@ -22,7 +22,7 @@ void	echo_print(t_ast *tmp)
 		ft_putstr_fd(" ", 1);
 }
 
-void	ft_echo(t_ast *ast)
+void	ft_echo(t_ast *ast, t_minishell *minishell)
 {
 	t_ast	*tmp;
 	int		flag;
@@ -46,4 +46,5 @@ void	ft_echo(t_ast *ast)
 	}
 	if (!flag)
 		ft_putstr_fd("\n", 1);
+	minishell->status = 0;
 }

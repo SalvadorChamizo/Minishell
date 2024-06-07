@@ -6,20 +6,29 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:55 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 16:10:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:27:06 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
 void	exit_free(t_minishell **minishell, t_ast *ast)
 {
+	int	i;
+
+	i = 0;
 	rl_clear_history();
 	free_ast(&ast);
 	if ((*minishell)->list)
 		ft_list_clear(&(*minishell)->list);
 	free((*minishell)->input->line);
 	free((*minishell)->input);
+	while ((*minishell)->env[i])
+	{
+		free((*minishell)->env[i]);
+		i++;
+	}
+	free((*minishell)->env);
 	free((*minishell));
 }
 
@@ -65,5 +74,5 @@ void	ft_exit(t_minishell **minishell, t_ast *ast)
 		}
 	}
 	exit_free(minishell, ast);
-    exit(i);
+	exit(i);
 }

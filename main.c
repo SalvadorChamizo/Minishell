@@ -6,29 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 15:32:40 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:52:59 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bash.h"
 
 volatile sig_atomic_t g_signal = 0;
-
-int	input_init(t_input *input)
-{
-	input->pos = 0;
-	input->error = 0;
-	input->line = readline(RED"minishell> "RESET);
-	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
-	{
-		printf("exit\n");
-		free(input->line);
-		free(input);
-		return (1);
-	}
-	return (0);
-}
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -45,14 +29,7 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, signal_slach);
 	ft_enter();
 	//execve("/usr/bin/bash", path, env);
-	minishell = malloc(sizeof(t_minishell));
-	if (minishell == NULL)
-		return (1);
-	minishell->list = NULL;
-	ft_store_env(&minishell->list, env);
-	minishell->env = env;
-	minishell->line_number = 0;
-	minishell->status = 0;
+	minishell = minishell_init(env);
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 
@@ -72,7 +49,7 @@ int	main(int argc, char **argv, char **env)
 			minishell->input->pos = 0;
 			minishell->ast = ft_expr(minishell->input);
 			//print_ast(minishell->ast);
-			ft_expanser(minishell, env);
+			ft_expanser(minishell, minishell->env);
 			ft_executer(minishell->ast, minishell);
 			dup2(original_stdin, STDIN_FILENO);
 			dup2(original_stdout, STDOUT_FILENO);

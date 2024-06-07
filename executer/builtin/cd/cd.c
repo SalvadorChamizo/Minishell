@@ -6,82 +6,125 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 12:31:22 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:26:34 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../bash.h"
+#include "../../../bash.h"
 
-void	cd_error(char *path)
+bool	cd_absolute(t_ast *tree, char **path, char **env)
 {
-	char	*wish;
+	int	i;
 
-	wish = wish_ensambler(getcwd(NULL, 0), path);
-	if (access(wish, F_OK) == 0)
-	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-	}
-	else
-	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-	}
-}
-
-void	cd_complete_path(t_ast *tree, char **path, int i, char **env)
-{
+	i = 0;
 	if (access(tree->left->token->value, F_OK) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(tree->left->token->value, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		return ;
+		return (false);
 	}
 	else if (access(tree->left->token->value, X_OK) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(tree->left->token->value, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
-		return ;
+		return (false);
 	}
-	regret_basic(tree, env);
+	oldpwd_update(env);
+	regret_basic();
 	while (path[i])
 	{
 		ft_chdir(path[i], env);
 		i++;
 	}
+	return (true);
 }
 
-void	ft_cd(t_ast *tree, char **env)
+int	cd_relative_checker(t_ast *tree, char *rout)
+{
+	char	*wish;
+	char	*now;
+
+	now = getcwd(NULL, 0);
+	wish = wish_ensambler(now, rout);
+	free(now);
+	if (access(tree->left->token->value, F_OK) < 0)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(tree->left->token->value, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		free(wish);
+		return (0);
+	}
+	else if (access(tree->left->token->value, X_OK) < 0)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(tree->left->token->value, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		free(wish);
+		return (0);
+	}
+	free(wish);
+	return (1);
+}
+
+bool	cd_relative(t_ast *tree, char *rout, char **env)
 {
 	char	**path;
 	int		i;
+
+	i = 0;
+	path = ft_split(rout, '/');
+	if (!cd_relative_checker(tree, rout))
+	{
+		while (path[i])
+		{
+			ft_chdir(path[i], env);
+			free(path[i]);
+			i++;
+		}
+		free(path);
+		return (false);
+	}
+	oldpwd_update(env);
+	while (path[i])
+	{
+		ft_chdir(path[i], env);
+		free(path[i]);
+		i++;
+	}
+	free(path);
+	return (true);
+}
+
+void	ft_cd(t_ast *tree, char **env, t_minishell *minishell)
+{
+	char	**path;
 
 	path = NULL;
 	if (tree->left)
 		path = ft_split(tree->left->token->value, '/');
 	else
 	{
-		regret_basic(tree, env);
-		if (chdir("home") == -1 || chdir(getenv("USER")) == -1)
-			printf("bash: cd: HOME not set\n");
+		oldpwd_update(env);
+		gotouser(env);
+		minishell->status = 0;
 		return ;
 	}
-	i = 0;
 	if (tree->left->token->value[0] == '/')
-		cd_complete_path(tree, path, i, env);
+	{
+		minishell->status = 0;
+		if (!cd_absolute(tree, path, env))
+			minishell->status = 1;
+	}
 	else
 	{
-		while (path[i])
-		{
-			if (ft_chdir(path[i], env) == -1)
-				cd_error(tree->left->token->value);
-			i++;
-		}
+		minishell->status = 0;
+		if (!cd_relative(tree, tree->left->token->value, env))
+			minishell->status = 1;
 	}
+	ft_freepath(path);
 }
 
 /*int main()

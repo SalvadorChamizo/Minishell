@@ -18,6 +18,7 @@ RED     = \033[31;1m
 
 FILES =	main \
 		logo \
+		init/minishell_init \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
 		tokenizer/tokenizer_quote \
@@ -34,15 +35,16 @@ FILES =	main \
 		expanser/expanser_command \
 		expanser/expanser \
 		signal/sygnal \
-		builtin/cd/cd \
-		builtin/cd/cd_utils \
-		builtin/pwd/pwd \
-		builtin/echo/echo \
-		builtin/env/env \
-		builtin/export/export \
-		builtin/export/export_utils \
-		builtin/unset/unset \
-		builtin/exit/exit \
+		executer/builtin/cd/cd \
+		executer/builtin/cd/cd_utils \
+		executer/builtin/cd/cd_pwd \
+		executer/builtin/pwd/pwd \
+		executer/builtin/echo/echo \
+		executer/builtin/env/env \
+		executer/builtin/export/export \
+		executer/builtin/export/export_utils \
+		executer/builtin/unset/unset \
+		executer/builtin/exit/exit \
 		executer/executer \
 		executer/executer_command \
 		executer/executer_pipe \
