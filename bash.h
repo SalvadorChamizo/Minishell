@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 16:59:38 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:38:31 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,19 +128,15 @@ typedef struct s_minishell
 	t_input			*input;
 	t_ast			*ast;
 	t_assign		*list;
-	struct	termios	termios;
+	struct termios	termios;
 	char			**env;
 	int				line_number;
 	int				status;
 }	t_minishell;
 
-//INIT
-int				input_init(t_input *input);
-t_minishell		*minishell_init(char **env);
-
 //EXPANSER
 
-typedef struct	s_dollar
+typedef struct s_dollar
 {
 	char	*variable;
 	char	*new_text;
@@ -148,6 +144,10 @@ typedef struct	s_dollar
 	int		k;
 	int		*flag;
 }	t_dollar;
+
+//INIT
+int			input_init(t_input *input);
+t_minishell	*minishell_init(char **env);
 
 //tokenizer
 t_token		*get_next_token(t_input *minishell);
@@ -188,8 +188,8 @@ void		ft_dollar_list(t_ast *ast, t_assign *list, int *flag);
 void		ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell);
 
 //expanser_dollar_utils
-void	check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text);
-void	check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell, int *i);
+void		check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text);
+void		check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell, int *i);
 
 //expanser_assign
 void		expand_assignment(t_ast *ast, t_ast *prev);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fda.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 14:46:58 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:27:46 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,36 @@ int	is_identifier(t_token *token)
 
 int	check_syntax(t_token *token, int state)
 {
-	if ((state == 1 || state == 5) && token->type != T_O_PARENT
-		&& !is_redirection_2(token) && !is_identifier(token))
-		return (0);
-	if (state == 2 && token->type != T_O_PARENT
-		&& !is_redirection_2(token) && !is_identifier(token))
-		return (0);
-	if (state == 6 && token->type != T_O_PARENT
-		&& !is_redirection_2(token) && !is_identifier(token))
-		return (0);
-	if ((state == 4 || state == 5) && token->type != T_PIPE
-		&& !is_redirection_2(token) && !is_identifier(token))
-		return (0);
-	if ((state == 3 || state == 7) && !is_identifier(token))
-		return (0);
+	if (token->type != T_C_PARENT)
+	{
+		if ((state == 1) && token->type != T_O_PARENT
+			&& !is_redirection_2(token) && !is_identifier(token))
+			return (0);
+		if (state == 2 && token->type != T_O_PARENT
+			&& !is_redirection_2(token) && !is_identifier(token))
+			return (0);
+		if (state == 6 && token->type != T_O_PARENT
+			&& !is_redirection_2(token) && !is_identifier(token))
+			return (0);
+		if ((state == 4 || state == 5) && token->type != T_PIPE
+			&& !is_redirection_2(token) && !is_identifier(token))
+			return (0);
+		if ((state == 3 || state == 7) && !is_identifier(token))
+			return (0);
+	}
+	else
+	{
+		return (state);
+	}
 	return (state);
 }
 
-void	syntax_problem(t_token *token)
+void	syntax_problem(t_token *token, int level, int state)
 {
+	if (level < 0)
+		printf("bash: syntax error near unexpected token `)'\n");
+	if (level > 0 || state == 6)
+		printf("bash: syntax error: unexpected end of file\n");
 	if (!token->value)
 		return ;
 	else if (token->value)
@@ -74,6 +85,21 @@ int	parser_fda_aux(t_token **token, int state)
 	return (state);
 }
 
+int	finish_fda(t_token **token, int state, int level)
+{
+	if ((state == 5 || state == 1 || state == 4) && level == 0)
+	{
+		free((*token)->value);
+		free(*token);
+		return (1);
+	}
+	else
+	{
+		syntax_problem(*token, level, state);
+		return (0);
+	}
+}
+
 int	ft_parser_fda(t_input *input)
 {
 	t_token	*token;
@@ -87,21 +113,16 @@ int	ft_parser_fda(t_input *input)
 	{
 		if (token->type == T_O_PARENT && (state == 1 || state == 6))
 			level++;
-		else if (token->type == T_C_PARENT && (state == 1 || state == 6))
+		else if (token->type == T_C_PARENT
+			&& (state == 1 || state == 6 || state == 4))
 			level--;
 		state = parser_fda_aux(&token, state);
 		if (state == 0)
 			break ;
 		token = get_next_token(input);
 	}
-	if ((state == 5 || state == 1 || state == 4) && level == 0)
-	{
-		free(token);
+	if (finish_fda(&token, state, level) == 1)
 		return (1);
-	}
 	else
-	{
-		syntax_problem(token);
 		return (0);
-	}
 }
