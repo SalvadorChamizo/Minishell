@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/07 16:59:38 by saroca-f         ###   ########.fr       */
@@ -106,7 +106,7 @@ typedef struct s_assign_list
 	char					*variable;
 	char					*value;
 	struct s_assign_list	*next;
-}	t_assign_list;
+}	t_assign;
 
 typedef struct s_ast
 {
@@ -127,7 +127,8 @@ typedef struct s_minishell
 {
 	t_input			*input;
 	t_ast			*ast;
-	t_assign_list	*list;
+	t_assign		*list;
+	struct	termios	termios;
 	char			**env;
 	int				line_number;
 	int				status;
@@ -136,6 +137,17 @@ typedef struct s_minishell
 //INIT
 int				input_init(t_input *input);
 t_minishell		*minishell_init(char **env);
+
+//EXPANSER
+
+typedef struct	s_dollar
+{
+	char	*variable;
+	char	*new_text;
+	int		j;
+	int		k;
+	int		*flag;
+}	t_dollar;
 
 //tokenizer
 t_token		*get_next_token(t_input *minishell);
@@ -172,14 +184,18 @@ void		ft_expanser(t_minishell *minishell, char **envp);
 int			ft_check_dollar(char *text);
 char		*remove_dollar(t_ast *ast);
 char		*get_variable(char	*text, int *cur);
-void		ft_dollar_list(t_ast *ast, t_assign_list *list, int *flag);
-void		ft_dollar(t_ast *ast, t_assign_list *list, t_minishell *minishell);
+void		ft_dollar_list(t_ast *ast, t_assign *list, int *flag);
+void		ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell);
+
+//expanser_dollar_utils
+void	check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text);
+void	check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell, int *i);
 
 //expanser_assign
 void		expand_assignment(t_ast *ast, t_ast *prev);
-t_assign_list	*new_assignment(char *text, t_assign_list *list);
-void		ft_assign_add_back(t_assign_list **lst, t_assign_list *new);
-void		store_assignment(t_ast *ast, t_assign_list **list);
+t_assign	*new_assignment(char *text, t_assign *list);
+void		ft_assign_add_back(t_assign **lst, t_assign *new);
+void		store_assignment(t_ast *ast, t_assign **list);
 
 //expanser_command
 char		**ft_get_path(char **envp);
@@ -193,7 +209,7 @@ int			check_builtin(char *text);
 int			check_prev(t_ast *prev);
 int			check_prev2(t_ast *prev);
 int			check_equal(char *text);
-void		ft_store_env(t_assign_list **list, char **envp);
+void		ft_store_env(t_assign **list, char **envp);
 
 //Builtin
 	//CD
@@ -247,7 +263,7 @@ void		ft_redirect(t_ast *ast, t_minishell *minishell);
 t_ast		*ft_expr(t_input *input);
 void		ft_eat(t_input *input, t_tokentype type);
 
-void		print_assignment(t_assign_list *list);
+void		print_assignment(t_assign *list);
 void		print_ast(t_ast *root);
 void		print_ast_helper(t_ast *node, int depth, char *side);
 void		print_list(t_idenlst *list);
@@ -281,6 +297,6 @@ void		ft_close(void);
 //memory
 void		free_ast(t_ast **ast);
 void		*free_split(char **str);
-void		ft_list_clear(t_assign_list **list);
+void		ft_list_clear(t_assign **list);
 
 #endif

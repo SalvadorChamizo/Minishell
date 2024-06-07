@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:10:25 by schamizo          #+#    #+#             */
-/*   Updated: 2024/05/17 19:39:53 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:23:06 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	print_ast(t_ast *root)
 	print_ast_helper(root, 0, "root: ");
 }
 
-void	print_assignment(t_assign_list *list)
+void	print_assignment(t_assign *list)
 {
-	t_assign_list	*temp;
+	t_assign	*temp;
 	int				i;
 
 	i = 1;

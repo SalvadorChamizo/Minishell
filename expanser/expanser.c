@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 15:36:38 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:36:21 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,25 @@ void	expand_quotes(t_ast *ast)
 	expand_quotes(ast->right);
 }
 
+void	remove_empty_node(t_ast *ast, t_ast *prev)
+{
+	if (!ast)
+		return ;
+	if (!ast->left && !ast->right)
+	{
+		if (ft_strcmp(ast->token->value, "") == 0)
+		{
+			free(ast->token->value);
+			free(ast->token);
+			if (prev)
+				prev->left = NULL;
+			return ;
+		}
+	}
+	remove_empty_node(ast->left, ast);
+	remove_empty_node(ast->right, ast);
+}
+
 void	ft_expanser(t_minishell *minishell, char **envp)
 {
 	t_ast			*ast;
@@ -62,6 +81,7 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 
 	ast = minishell->ast;
 	path = ft_get_path(envp);
+	remove_empty_node(ast, NULL);
 	expand_redir(ast, NULL, 0);
 	ft_dollar(ast, minishell->list, minishell);
 	expand_quotes(ast);

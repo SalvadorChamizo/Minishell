@@ -3,16 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 14:52:59 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:00:54 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bash.h"
 
 volatile sig_atomic_t g_signal = 0;
+
+int	input_init(t_input *input)
+{
+	int	i;
+	char	*user;
+	char	*computer;
+
+	i = 0;
+	input->pos = 0;
+	input->error = 0;
+	user = getenv("USER");
+	computer = getenv("SESSION_MANAGER");
+	computer = ft_substr(computer, 6, 6);
+	printf(RED"%s@%s"RESET, user, computer);
+	input->line = readline(RED"> "RESET);
+	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
+	{
+		printf("exit\n");
+		free(input->line);
+		free(input);
+		return (1);
+	}
+	while (input->line[i])
+		i++;
+	input->line[i] = '\0';
+	return (0);
+}
+
 
 int	main(int argc, char **argv, char **env)
 {
@@ -26,7 +54,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	disable_signal();
 	signal(SIGINT, signal_c);
-	signal(SIGQUIT, signal_slach);
+	signal(SIGQUIT, SIG_IGN);
 	ft_enter();
 	//execve("/usr/bin/bash", path, env);
 	minishell = minishell_init(env);

@@ -30,6 +30,7 @@ FILES =	main \
 		parser/parser_list \
 		parser/print_parser \
 		expanser/expanser_dollar \
+		expanser/expanser_dollar_utils \
 		expanser/expanser_utils \
 		expanser/expanser_assign \
 		expanser/expanser_command \

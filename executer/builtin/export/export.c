@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/07 19:07:50 by saroca-f         ###   ########.fr       */
@@ -61,11 +61,11 @@ int	env_exist(char **env, char *str)
 	return (0);
 }
 
-void	list_check(char *var, t_assign_list *list, char ***env)
+void	list_check(char *var, t_assign *list, char ***env)
 {
-	t_assign_list	*temp;
-	char			*strtemp;
-	char			*str;
+	t_assign	*temp;
+	char		*strtemp;
+	char		*str;
 
 	temp = list;
 	while (temp)

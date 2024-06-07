@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:42:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 15:27:45 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:01:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
 
-void	list_case(t_assign_list **list, char *str)
+void	list_case(t_assign **list, char *str)
 {
-	t_assign_list	*templ;
-	t_assign_list	*templ2;
+	t_assign	*templ;
+	t_assign	*templ2;
 
 	templ = *list;
 	while (templ)

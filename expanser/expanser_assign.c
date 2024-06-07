@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/04 15:54:04 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 16:37:20 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	expand_assignment(t_ast *ast, t_ast *prev)
 	expand_assignment(ast->right, ast);
 }
 
-t_assign_list	*new_assignment(char *text, t_assign_list *list)
+t_assign	*new_assignment(char *text, t_assign *list)
 {
-	t_assign_list	*new_node;
-	t_assign_list	*temp;
-	char			*word;
-	char			*new_value;
-	int				i;
+	t_assign	*new_node;
+	t_assign	*temp;
+	char		*word;
+	char		*new_value;
+	int			i;
 
 	i = 0;
 	while (text[i] != '=')
@@ -56,16 +56,16 @@ t_assign_list	*new_assignment(char *text, t_assign_list *list)
 			temp = temp->next;
 		}
 	}
-	new_node = malloc(sizeof(t_assign_list));
+	new_node = malloc(sizeof(t_assign));
 	new_node->variable = word;
 	new_node->value = ft_substr(text, i + 1, ft_strlen(text) - i);
 	new_node->next = NULL;
 	return (new_node);
 }
 
-void	ft_assign_add_back(t_assign_list **lst, t_assign_list *new)
+void	ft_assign_add_back(t_assign **lst, t_assign *new)
 {
-	t_assign_list	*last;
+	t_assign	*last;
 
 	last = *lst;
 	if (!last)
@@ -78,9 +78,9 @@ void	ft_assign_add_back(t_assign_list **lst, t_assign_list *new)
 	}
 }
 
-void	store_assignment(t_ast *ast, t_assign_list **list)
+void	store_assignment(t_ast *ast, t_assign **list)
 {
-	t_assign_list	*new_node;
+	t_assign	*new_node;
 
 	new_node = NULL;
 	if (ast == NULL || ast->token->type == T_PIPE
