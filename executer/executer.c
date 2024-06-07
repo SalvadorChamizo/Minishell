@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/07 18:21:26 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:38:43 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	execute_builtin(t_ast *ast, t_minishell *minishell)
 	else if (!ft_strcmp(ast->token->value, "env"))
 		ft_env(minishell->env, minishell);
 	else if (!ft_strcmp(ast->token->value, "export"))
-		ft_export(ast, &minishell->env, minishell);
+		ft_export(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "unset"))
 		ft_unset(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "exit"))
