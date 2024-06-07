@@ -6,18 +6,18 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 12:46:41 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:45:44 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../bash.h"
 
-int	mat_extenser(char **env)
+int	mat_extenser(char ***env)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
+	while ((*env)[i])
 		i++;
 	return (i);
 }
@@ -27,7 +27,7 @@ void	ft_newenv(char ***env, char *str)
 	int			i;
 	char		**newenv;
 
-	i = mat_extenser(*env) + 2;
+	i = mat_extenser(env) + 2;
 	newenv = malloc(sizeof(char *) * i);
 	i = 0;
 	while ((*env)[i])
