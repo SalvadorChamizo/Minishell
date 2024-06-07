@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 11:47:03 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 14:52:59 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ int	main(int argc, char **argv, char **env)
 	ft_enter();
 	//execve("/usr/bin/bash", path, env);
 	minishell = minishell_init(env);
-	/*minishell = malloc(sizeof(t_minishell));
-	if (minishell == NULL)
-		return (1);
-	minishell->list = NULL;
-	ft_store_env(&minishell->list, env);
-	minishell->env = env;
-	minishell->line_number = 0;
-	minishell->status = 0;*/
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input)); 

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/06 12:36:11 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:46:41 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,22 @@ int	mat_extenser(char **env)
 
 void	ft_newenv(char ***env, char *str)
 {
-	static int	i;
-	int			flag;
+	int			i;
 	char		**newenv;
 
-	flag = 0;
-	if (i)
-		flag = 1;
 	i = mat_extenser(*env) + 2;
 	newenv = malloc(sizeof(char *) * i);
 	i = 0;
 	while ((*env)[i])
 	{
 		newenv[i] = ft_strdup((*env)[i]);
-		if (flag)
-			export_free(env, i, 1);
+		free((*env)[i]);
 		i++;
 	}
 	newenv[i] = malloc(sizeof(char) * ft_strlen(str) + 1);
 	strcpy(newenv[i], str);
 	newenv[i + 1] = NULL;
-	if (flag)
-		export_free(env, 0, 0);
+	free(*env);
 	*env = newenv;
 }
 
@@ -70,6 +64,7 @@ int	env_exist(char **env, char *str)
 void	list_check(char *var, t_assign_list *list, char ***env)
 {
 	t_assign_list	*temp;
+	char			*strtemp;
 	char			*str;
 
 	temp = list;
@@ -77,8 +72,11 @@ void	list_check(char *var, t_assign_list *list, char ***env)
 	{
 		if (!ft_strncmp(temp->variable, var, var_len(var)))
 		{
-			str = ft_strjoin(temp->variable, ft_strjoin("=", temp->value));
+			strtemp = ft_strjoin(temp->variable, "=");
+			str = ft_strjoin(temp->variable, strtemp);
 			ft_newenv(env, str);
+			free(strtemp);
+			free(str);
 		}
 		temp = temp->next;
 	}
