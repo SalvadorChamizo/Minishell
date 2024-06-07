@@ -6,27 +6,30 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 11:07:09 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:28:54 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../bash.h"
 
-void	cd_absolute(t_ast *tree, char **path, int i, char **env)
+bool	cd_absolute(t_ast *tree, char **path, char **env)
 {
+	int i;
+
+	i = 0;
 	if (access(tree->left->token->value, F_OK) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(tree->left->token->value, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		return ;
+		return (false);
 	}
 	else if (access(tree->left->token->value, X_OK) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(tree->left->token->value, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
-		return ;
+		return (false);
 	}
 	oldpwd_update(env);
 	regret_basic();
@@ -35,6 +38,7 @@ void	cd_absolute(t_ast *tree, char **path, int i, char **env)
 		ft_chdir(path[i], env);
 		i++;
 	}
+	return (true);
 }
 
 int	cd_relative_checker(t_ast *tree, char *rout)
@@ -65,10 +69,12 @@ int	cd_relative_checker(t_ast *tree, char *rout)
 	return (1);
 }
 
-void cd_relative(t_ast *tree, char *rout, int i, char **env)
+bool	cd_relative(t_ast *tree, char *rout, char **env)
 {
 	char	**path;
+	int		i;
 
+	i = 0;
 	path = ft_split(rout, '/');
 	if (!cd_relative_checker(tree, rout))
 	{
@@ -79,7 +85,7 @@ void cd_relative(t_ast *tree, char *rout, int i, char **env)
 			i++;
 		}
 		free(path);
-		return ;
+		return (false);
 	}
 	oldpwd_update(env);
 	while (path[i])
@@ -89,28 +95,35 @@ void cd_relative(t_ast *tree, char *rout, int i, char **env)
 		i++;
 	}
 	free(path);
+	return (true);
 }
 
-void	ft_cd(t_ast *tree, char **env)
+void	ft_cd(t_ast *tree, char **env, t_minishell *minishell)
 {
 	char	**path;
-	int		i;
 
 	path = NULL;
-	i = 0;
 	if (tree->left)
 		path = ft_split(tree->left->token->value, '/');
 	else
 	{
 		oldpwd_update(env);
 		gotouser(env);
+		minishell->status = 0;
 		return ;
 	}
-	i = 0;
 	if (tree->left->token->value[0] == '/')
-		cd_absolute(tree, path, i, env);
+	{
+		minishell->status = 0;
+		if (!cd_absolute(tree, path, env))
+			minishell->status = 1;
+	}
 	else
-		cd_relative(tree, tree->left->token->value, i, env);
+	{
+		minishell->status = 0;
+		if (!cd_relative(tree, tree->left->token->value, env))
+			minishell->status = 1;		
+	}
 	ft_freepath(path);
 }
 

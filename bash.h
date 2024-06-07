@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 11:40:58 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/07 12:19:55 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ void		ft_store_env(t_assign_list **list, char **envp);
 
 //Builtin
 	//CD
-void		ft_cd(t_ast *tree, char **env);
+void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
 void		cd_error(char *path);
 char		*wish_ensambler(char const *s1, char const *s2);
 void		ft_freepath(char **path);
@@ -210,8 +210,8 @@ void		pwd_update(char **env);
 void		ft_pwd(void);
 	//ECHO
 void		ft_echo(t_ast *ast);
-	//EVV
-void		ft_env(char **env);
+	//ENV
+void		ft_env(char **env, t_minishell *minishell);
 	//EXPORT
 void		ft_export(t_ast *ast, char ***env, t_assign_list *list);
 int			var_len(char *str);
