@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 19:38:31 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 10:23:14 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ void		ft_store_env(t_assign **list, char **envp);
 //Builtin
 	//CD
 void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
+bool		cd_home(char **env);
 void		cd_error(char *path);
 char		*wish_ensambler(char const *s1, char const *s2);
 void		ft_freepath(char **path);
