@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 10:10:25 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/08 10:54:14 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/08 11:35:00 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ bool	cd_home(char **env)
 		free(home);
 		return (false);
 	}
+	oldpwd_update(env);
 	if (chdir(home) < 0)
 	{
 		ft_putstr_fd("bash: cd: HOME not set\n", 2);
 		return (false);
 	}
 	free(home);
+	pwd_update(env);
 	return (true);
 }

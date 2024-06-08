@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/08 10:23:14 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:14:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,8 +287,9 @@ void		ft_expanser(t_minishell *minishell, char **envp);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 
 //sygnal
+void		ft_signal(void);
 int			disable_signal(void);
-void		signal_c(int signal_number);
+//int			signal_c(void);
 void		signal_slach(int signal_number);
 
 //others

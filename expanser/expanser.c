@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 18:36:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:58:06 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	expand_command_3(ast, path);
 	store_assignment(ast, &minishell->list);
 	free_split(path);
-	//print_assignment(minishell->list);
+	print_assignment(minishell->list);
 }

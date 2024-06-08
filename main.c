@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 18:53:33 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:26:25 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	main(int argc, char **argv, char **env)
 	original_stdout = dup(STDOUT_FILENO);
 	(void)argc;
 	(void)argv;
-	disable_signal();
-	signal(SIGINT, signal_c);
-	signal(SIGQUIT, signal_slach);
+	//ft_signal();
+	//disable_signal();
+	//sigaction(SIGINT, signal_c);
+	//signal(SIGQUIT, signal_slach);
 	ft_enter();
 	//execve("/usr/bin/bash", path, env);
 	minishell = minishell_init(env);
@@ -48,9 +49,11 @@ int	main(int argc, char **argv, char **env)
 		{
 			minishell->input->pos = 0;
 			minishell->ast = ft_expr(minishell->input);
-			//print_ast(minishell->ast);
+			print_ast(minishell->ast);
 			ft_expanser(minishell, minishell->env);
+			print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);
+			print_ast(minishell->ast);
 			dup2(original_stdin, STDIN_FILENO);
 			dup2(original_stdout, STDOUT_FILENO);
 			free_ast(&minishell->ast);
