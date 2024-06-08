@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 19:38:31 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:31:02 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef enum e_nodetype
 	N_DELIMITER,
 	N_PIPELINE,
 	N_ASSIGN,
+	N_DIRECTORY,
 }	t_nodetype;
 
 typedef struct s_assign_list

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:13:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/07 15:19:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:49:04 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	ft_check_dollar(char *text)
 
 void	check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text)
 {
+	dollar->j = 0;
+	dollar->k = 0;
 	while (temp)
 	{
 		if (ft_strcmp(dollar->variable, temp->variable) == 0)

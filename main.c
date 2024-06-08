@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 18:53:33 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:49:25 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	main(int argc, char **argv, char **env)
 			minishell->ast = ft_expr(minishell->input);
 			//print_ast(minishell->ast);
 			ft_expanser(minishell, minishell->env);
+			//print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);
 			dup2(original_stdin, STDIN_FILENO);
 			dup2(original_stdout, STDOUT_FILENO);
