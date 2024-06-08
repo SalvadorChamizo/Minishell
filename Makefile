@@ -39,6 +39,7 @@ FILES =	main \
 		executer/builtin/cd/cd \
 		executer/builtin/cd/cd_utils \
 		executer/builtin/cd/cd_pwd \
+		executer/builtin/cd/cd_home \
 		executer/builtin/pwd/pwd \
 		executer/builtin/echo/echo \
 		executer/builtin/env/env \

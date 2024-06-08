@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 19:38:20 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:51:32 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,17 @@ void	ft_newenv(char ***env, char *str)
 int	env_exist(char **env, char *str)
 {
 	int	i;
+	int j;
 
 	i = 0;
+	j = 0;
+	while (str[j] != '=' && str[j] != '\0')
+		j++;
+	if (str[j] == '\0')
+		return (0);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], str, var_len(str)))
+		if (!ft_strncmp(env[i], str, j))
 		{
 			free(env[i]);
 			env[i] = ft_strdup(str);
@@ -74,7 +80,8 @@ void	list_check(char *var, t_assign *list, char ***env)
 		{
 			strtemp = ft_strjoin(temp->variable, "=");
 			str = ft_strjoin(strtemp, temp->value);
-			ft_newenv(env, str);
+			if (!env_exist(*env, str))
+				ft_newenv(env, str);
 			free(strtemp);
 			free(str);
 		}

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 09:53:32 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 15:27:51 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/08 12:13:10 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	oldpwd_update(char **env)
 		}
 		i++;
 	}
+	free(oldpwd);
 }
 
 void	pwd_update(char **env)
@@ -50,4 +51,5 @@ void	pwd_update(char **env)
 		}
 		i++;
 	}
+	free(pwd);
 }

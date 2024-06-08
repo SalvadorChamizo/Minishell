@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 17:13:03 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 10:58:39 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	input_init(t_input *input)
 	computer = getenv("SESSION_MANAGER");
 	computer = ft_substr(computer, 6, 6);
 	printf(RED"%s@%s", user, computer);
-	input->line = readline("> "RESET);
+	input->line = readline(RED"> "RESET);
 	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
 	{
 		printf("exit\n");
@@ -32,6 +32,7 @@ int	input_init(t_input *input)
 		free(input);
 		return (1);
 	}
+	free(computer);
 	return (0);
 }
 
