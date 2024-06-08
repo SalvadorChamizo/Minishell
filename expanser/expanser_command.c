@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:29:35 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/04 17:57:41 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 15:33:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,20 @@
 char	**ft_get_path(char **envp)
 {
 	int		i;
+	int		flag;
 	char	*str;
 	char	**split;
 
 	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
+	flag = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+	{
 		i++;
+		if (envp[i] && ft_strncmp(envp[i], "PATH=", 5) == 0)
+			flag = 1;
+	}
+	if (flag == 0)
+		return (NULL);
 	str = ft_substr(envp[i], 5, ft_strlen(envp[i]));
 	split = ft_split(str, ':');
 	free(str);
@@ -71,7 +79,10 @@ void	expand_command2(t_ast *ast)
 
 	if (ast == NULL)
 		return ;
-	if (ast->type == N_COMMAND && ast->token->value[0] != '.')
+	if (ast->token->value[0] == '/')
+		ast->type = N_DIRECTORY;
+	if (ast->type == N_COMMAND && ast->token->value[0] != '.'
+		&& ast->token->value[0] != '/')
 	{
 		str = ft_strjoin("/", ast->token->value);
 		free(ast->token->value);

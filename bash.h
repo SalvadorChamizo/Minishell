@@ -6,6 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
+
 /*   Updated: 2024/06/08 16:14:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -99,6 +100,7 @@ typedef enum e_nodetype
 	N_DELIMITER,
 	N_PIPELINE,
 	N_ASSIGN,
+	N_DIRECTORY,
 }	t_nodetype;
 
 typedef struct s_assign_list

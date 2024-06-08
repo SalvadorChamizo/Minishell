@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 18:35:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 12:23:23 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,24 @@ char	**ft_command_args(t_ast *ast)
 	return (args);
 }
 
+int	ft_check_path(char **envp)
+{
+	int		i;
+	int		flag;
+
+	i = 0;
+	flag = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+	{
+		i++;
+		if (envp[i] && ft_strncmp(envp[i], "PATH=", 5) == 0)
+			flag = 1;
+	}
+	if (flag == 0)
+		return (0);
+	return (1);
+}
+
 void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 {
 	char	*new_text;
@@ -84,7 +102,10 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 		if (access(ast->token->value, F_OK | X_OK) != 0)
 		{
 			new_text = ft_remove_path(ast->token->value);
-			printf("Command \'%s\' not found\n", new_text);
+			if (!ft_check_path(minishell->env))
+				printf("bash: %s: No such file or directory\n", new_text);
+			else
+				printf("Command \'%s\' not found\n", new_text);
 			exit(127);
 		}
 		if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
@@ -100,7 +121,10 @@ void	simple_command_aux(t_ast *ast, t_minishell *minishell, char *new_text)
 	if (access(ast->token->value, F_OK | X_OK) != 0)
 	{
 		new_text = ft_remove_path(ast->token->value);
-		printf("Command \'%s\' not found\n", new_text);
+		if (!ft_check_path(minishell->env))
+			printf("bash: %s: No such file or directory\n", new_text);
+		else
+			printf("Command \'%s\' not found\n", new_text);
 		exit(127);
 	}
 	if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)

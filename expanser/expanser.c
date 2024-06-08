@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/08 15:58:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:10:21 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,35 @@ void	remove_empty_node(t_ast *ast, t_ast *prev)
 	remove_empty_node(ast->right, ast);
 }
 
+int	check_assign_env(t_ast *ast, char **env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (!ast)
+		return (0);
+	if (ast->type == N_ASSIGN)
+	{
+		while (ast->token->value[i] != '=')
+		i++;
+		while (env[j])
+		{
+			if (!ft_strncmp(env[j], ast->token->value, i))
+			{
+				free(env[j]);
+				env[j] = ft_strdup(ast->token->value);
+				return (1);
+			}
+			j++;
+		}
+	}
+	check_assign_env(ast->left, env);
+	check_assign_env(ast->right, env);
+	return (0);
+}
+
 void	ft_expanser(t_minishell *minishell, char **envp)
 {
 	t_ast			*ast;
@@ -89,7 +118,10 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	expand_command(ast, NULL, 0);
 	expand_builtin(ast);
 	expand_command2(ast);
+	if (!path)
+		return ;
 	expand_command_3(ast, path);
+	check_assign_env(ast, minishell->env);
 	store_assignment(ast, &minishell->list);
 	free_split(path);
 	print_assignment(minishell->list);

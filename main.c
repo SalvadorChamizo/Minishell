@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **env)
 			minishell->ast = ft_expr(minishell->input);
 			print_ast(minishell->ast);
 			ft_expanser(minishell, minishell->env);
-			print_ast(minishell->ast);
+			//print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);
 			print_ast(minishell->ast);
 			dup2(original_stdin, STDIN_FILENO);
