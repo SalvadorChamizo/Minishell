@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/08 15:48:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:23:36 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	ft_dollar_list(t_ast *ast, t_assign *list, int *flag)
 	dollar = malloc(sizeof(t_dollar));
 	new_text = malloc(sizeof(char) * 2048);
 	dollar->flag = flag;
+	if (!ft_check_dollar(ast->token->value))
+		return ;
 	while (ast->token->value[i])
 	{
 		if (ast->token->value[i] == '$')
@@ -120,6 +122,73 @@ void	dollar_exit_status(t_ast *ast, t_minishell *minishell)
 	ast->token->value = new_text;
 }
 
+char	*get_variable_env(char	*text)
+{
+	char	*variable;
+	int		i;
+
+	variable = NULL;
+	i = 0;
+	while (text[i] != '=')
+		i++;
+	variable = ft_substr(text, 0, i);
+	return (variable);
+}
+
+void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
+{
+	int	i;
+	char *env_var;
+
+	dollar->j = 0;
+	dollar->k = 0;
+	i = 0;
+	while (env[i])
+	{
+		env_var = get_variable_env(env[i]);
+		if (ft_strcmp(dollar->variable, env_var) == 0)
+		{
+			while (env[i][dollar->j] != '=')
+				dollar->j++;
+			dollar->j++;
+			while (env[i][dollar->j])
+				new_text[dollar->k++] = env[i][dollar->j++];
+			*(dollar->flag) = 1;
+			dollar->j = 0;
+			break ;
+		}
+		free(env_var);
+		i++;
+	}
+	free(env_var);
+}
+
+void	ft_dollar_env(t_ast *ast, char **env, int *flag)
+{
+	t_dollar	*dollar;
+	char		*new_text;
+	int				i;
+
+	i = 0;
+	dollar = malloc(sizeof(t_dollar));
+	new_text = malloc(sizeof(char) * 2048);
+	dollar->flag = flag;
+	while (ast->token->value[i])
+	{
+		if (ast->token->value[i] == '$')
+		{
+			dollar->variable = get_variable(ast->token->value, &i);
+			check_variable_env(env, dollar, new_text);
+		}
+		new_text[dollar->k++] = ast->token->value[i++];
+	}
+	new_text[dollar->k] = '\0';
+	flag = dollar->flag;
+	free(dollar->variable);
+	free(dollar);
+	ast->token->value = new_text;
+}
+
 void	ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell)
 {
 	int	flag;
@@ -137,6 +206,7 @@ void	ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell)
 			ast->token->value = remove_dollar(ast);
 		else if (list)
 		{
+			ft_dollar_env(ast, minishell->env, &flag);
 			ft_dollar_list(ast, list, &flag);
 			if (flag == 0)
 				ast->token->value = remove_dollar(ast);

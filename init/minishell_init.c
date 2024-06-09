@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 17:13:03 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:54:47 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ t_minishell	*minishell_init(char **env)
 	ft_store_env(&minishell->list, env);
 	minishell->line_number = 0;
 	minishell->status = 0;
+	minishell->stdin_fd = dup(STDIN_FILENO);
+	minishell->stdout_fd = dup(STDOUT_FILENO);
 	return (minishell);
 }

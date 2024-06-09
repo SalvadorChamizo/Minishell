@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/08 15:31:02 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:53:26 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/ioctl.h>
 # include <signal.h>
 # include <termios.h>
 # include <curses.h>
@@ -133,6 +134,8 @@ typedef struct s_minishell
 	char			**env;
 	int				line_number;
 	int				status;
+	int				stdin_fd;
+	int				stdout_fd;
 }	t_minishell;
 
 //EXPANSER
@@ -252,7 +255,7 @@ void		ft_simple_command(t_ast *ast, t_minishell *minishell);
 //executer_pipe
 void		ft_pipe_child_left(t_ast *ast, t_minishell *minishell, int pipefd[2]);
 void		ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int pipefd[2]);
-void		ft_pipeline(t_ast *ast, t_minishell *minishell);
+void		ft_pipeline(t_ast *ast, t_minishell *minishell, int pipe_in[2], int flag);
 
 //executer_redirect
 void		ft_open_infile(t_ast *ast);

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/08 15:49:25 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:58:46 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ volatile	sig_atomic_t g_signal = 0;
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell	*minishell;
-	int			original_stdin;
-	int			original_stdout;
 
-	original_stdin = dup(STDIN_FILENO);
-	original_stdout = dup(STDOUT_FILENO);
 	(void)argc;
 	(void)argv;
 	disable_signal();
@@ -52,8 +48,8 @@ int	main(int argc, char **argv, char **env)
 			ft_expanser(minishell, minishell->env);
 			//print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);
-			dup2(original_stdin, STDIN_FILENO);
-			dup2(original_stdout, STDOUT_FILENO);
+			dup2(minishell->stdin_fd, STDIN_FILENO);
+			dup2(minishell->stdout_fd, STDOUT_FILENO);
 			free_ast(&minishell->ast);
 		}
 		free(minishell->input->line);
