@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sygnal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 19:35:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:10:06 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,65 +16,33 @@
 #define ECHOCTL 0x00000040
 #endif
 
-int	disable_signal(void)
-{
-	struct termios	term;
-
-	if (tcgetattr(STDIN_FILENO, &term) == -1) 
-	{
-		perror("tcgetattr");
-		exit(EXIT_FAILURE);
-    }
-	term.c_lflag &= ~ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
-	{
-         perror("tcsetattr");
-	}
-	return (0);
-}
-
 void	signal_c(int signal_number)
 {
-	char	*user;
-	char	*computer;
-	
-	user = getenv("USER");
-	computer = getenv("SESSION_MANAGER");
-	computer = ft_substr(computer, 6, 6);
-	if (isatty(STDIN_FILENO) && signal_number == SIGINT)
+	(void)signal_number;
+	if (isatty(STDIN_FILENO))
 	{
-		rl_replace_line("", 0);
+		printf("\n");
 		rl_on_new_line();
-		printf(RED"%s@%s ^C\n"RESET, user, computer);
-		write(1, RED"^C\n", 9);
+		rl_replace_line("", 0);
 		rl_redisplay();
-		g_signal = 1;
+	}
+	else
+	{
+		printf("Quit (core dumped)");
 	}
 }
 
-void	signal_slach(int signal_number)
+void	ft_signal(void)
 {
-	char	*user;
-	char	*computer;
-	
-	user = getenv("USER");
-	computer = getenv("SESSION_MANAGER");
-	computer = ft_substr(computer, 6, 6);
-	if (isatty(STDIN_FILENO) && signal_number == SIGQUIT)
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = signal_c;
+	if(sigaction(SIGINT, &sa, NULL) == -1)
 	{
-		rl_on_new_line();
-		printf(RED"%s@%s"RESET, user, computer);
-		rl_redisplay();
+		perror("sigaction");
+		exit(EXIT_FAILURE);
 	}
-	/*if (signal_number == SIGQUIT)
-	{
-		if (isatty(STDIN_FILENO))
-			signal(SIGQUIT, SIG_IGN);
-		else
-		{
-			printf("ENTRA SLACH "RED"NO"RESET" INTERACTIVO\n");
-			signal(SIGQUIT, SIG_DFL);
-			printf("Quit (core dumped)");
-		}
-	}*/
+	printf("Signal SIGINT handled\n");
 }

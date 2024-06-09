@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/09 18:58:46 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:23:34 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	disable_signal();
-	signal(SIGINT, signal_c);
-	signal(SIGQUIT, signal_slach);
+	//ft_signal();
+	//disable_signal();
+	//sigaction(SIGINT, signal_c);
+	//signal(SIGQUIT, signal_slach);
 	ft_enter();
 	//execve("/usr/bin/bash", path, env);
 	minishell = minishell_init(env);
@@ -44,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			minishell->input->pos = 0;
 			minishell->ast = ft_expr(minishell->input);
-			//print_ast(minishell->ast);
+			print_ast(minishell->ast);
 			ft_expanser(minishell, minishell->env);
 			//print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);

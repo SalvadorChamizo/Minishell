@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/09 18:54:47 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:23:44 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	input_init(t_input *input)
 	computer = getenv("SESSION_MANAGER");
 	computer = ft_substr(computer, 6, 6);
 	printf(RED"%s@%s", user, computer);
-	input->line = readline("> "RESET);
+	input->line = readline(RED"> "RESET);
 	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
 	{
 		printf("exit\n");
@@ -32,6 +32,7 @@ int	input_init(t_input *input)
 		free(input);
 		return (1);
 	}
+	free(computer);
 	return (0);
 }
 

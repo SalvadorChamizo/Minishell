@@ -6,13 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 15:26:34 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/08 12:11:43 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
 
-bool	cd_absolute(t_ast *tree, char **path, char **env)
+bool	cd_absolute(t_ast *tree, char *path, char **env)
 {
 	int	i;
 
@@ -32,12 +32,8 @@ bool	cd_absolute(t_ast *tree, char **path, char **env)
 		return (false);
 	}
 	oldpwd_update(env);
-	regret_basic();
-	while (path[i])
-	{
-		ft_chdir(path[i], env);
-		i++;
-	}
+	chdir(path);
+	pwd_update(env);
 	return (true);
 }
 
@@ -107,15 +103,15 @@ void	ft_cd(t_ast *tree, char **env, t_minishell *minishell)
 		path = ft_split(tree->left->token->value, '/');
 	else
 	{
-		oldpwd_update(env);
-		gotouser(env);
 		minishell->status = 0;
+		if (!cd_home(env))
+			minishell->status = 1;
 		return ;
 	}
 	if (tree->left->token->value[0] == '/')
 	{
 		minishell->status = 0;
-		if (!cd_absolute(tree, path, env))
+		if (!cd_absolute(tree, tree->left->token->value, env))
 			minishell->status = 1;
 	}
 	else

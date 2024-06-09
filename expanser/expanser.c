@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
 /*   Updated: 2024/06/08 17:10:21 by schamizo         ###   ########.fr       */
@@ -124,5 +124,5 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	check_assign_env(ast, minishell->env);
 	store_assignment(ast, &minishell->list);
 	free_split(path);
-	//print_assignment(minishell->list);
+	print_assignment(minishell->list);
 }

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/09 18:53:26 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/09 19:23:52 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void		ft_store_env(t_assign **list, char **envp);
 //Builtin
 	//CD
 void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
+bool		cd_home(char **env);
 void		cd_error(char *path);
 char		*wish_ensambler(char const *s1, char const *s2);
 void		ft_freepath(char **path);
@@ -290,8 +291,9 @@ void		ft_expanser(t_minishell *minishell, char **envp);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 
 //sygnal
+void		ft_signal(void);
 int			disable_signal(void);
-void		signal_c(int signal_number);
+//int			signal_c(void);
 void		signal_slach(int signal_number);
 
 //others
