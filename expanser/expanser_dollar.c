@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 18:46:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:02:46 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,15 @@ char	*get_variable(char	*text, int *cur)
 	i = *cur + 1;
 	if (text[*cur] == '$')
 	{
-		while (text[*cur] != ' ' && text[*cur] != '\0')
+		while (text[*cur] != ' ' && text[*cur] != '\0' 
+			&& text[*cur] != '\'' && text[*cur] != '\"')
 		{
 			*cur = *cur + 1;
 			len++;
 		}
-		variable = malloc(sizeof(char) * len);
 		len = 0;
-		while (text[i] != ' ' && text[i] != '\0' && text[i] != '\"')
-		{
-			variable[len] = text[i];
-			len++;
-			i++;
-		}
+		variable = ft_substr(text, i, *cur - i);
 	}
-	variable[len] = '\0';
 	return (variable);
 }
 
@@ -141,7 +135,6 @@ void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 	char *env_var;
 
 	dollar->j = 0;
-	dollar->k = 0;
 	i = 0;
 	while (env[i])
 	{
@@ -157,11 +150,10 @@ void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 			dollar->j = 0;
 			break ;
 		}
-		free(env_var);
+		//free(env_var);
 		i++;
 	}
-	if (env_var)
-		free(env_var);
+	free(env_var);
 }
 
 void	ft_dollar_env(t_ast *ast, char **env, int *flag)

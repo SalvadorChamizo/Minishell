@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 18:43:28 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:16:55 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	main(int argc, char **argv, char **env)
 	t_minishell	*minishell;
 
 	command_sig = 0;
-	original_stdin = dup(STDIN_FILENO);
-	original_stdout = dup(STDOUT_FILENO);
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, sigint_signal);

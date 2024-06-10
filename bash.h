@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 18:00:18 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:17:55 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,13 @@ int			ft_parser_fda(t_input *input);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 void		expand_quotes(t_ast *ast);
 void		ft_expanser(t_minishell *minishell, char **envp);
+
+//expanser_heredoc
+char	*remove_dollar_heredoc(char	*str);
+char	*heredoc_dollar_env(char *str, char **env, int *flag);
+char	*heredoc_dollar_list(char *str, t_assign *list, int *flag);
+char	*expand_status_heredoc(char *str, t_minishell *minishell);
+char	*ft_expand_heredoc(char *str, t_minishell *minishell);
 
 //expanser_dollar
 
