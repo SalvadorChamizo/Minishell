@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executer_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
 /*   Updated: 2024/06/10 15:58:34 by schamizo         ###   ########.fr       */

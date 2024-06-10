@@ -6,24 +6,26 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 16:57:25 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:43:28 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bash.h"
 
-volatile	sig_atomic_t g_signal = 0;
+//GLOBAL
+int		command_sig;
 
+//PROGRAM
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell	*minishell;
 
+	command_sig = 0;
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
 	(void)argc;
 	(void)argv;
-	//ft_signal();
-	//disable_signal();
-	//sigaction(SIGINT, signal_c);
-	//signal(SIGQUIT, signal_slach);
+	signal(SIGINT, sigint_signal);
 	ft_enter();
 	//execve("/usr/bin/bash", path, env);
 	minishell = minishell_init(env);
@@ -33,7 +35,7 @@ int	main(int argc, char **argv, char **env)
 		if (input_init(minishell->input, minishell) == 1)
 		{
 			ft_close();
-			exit(0);
+			exit(130);
 		}
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);

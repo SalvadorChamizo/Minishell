@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 15:58:58 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:59:38 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	execute_builtin(t_ast *ast, t_minishell *minishell)
 	if (!ft_strcmp(ast->token->value, "cd"))
 		ft_cd(ast, minishell->env, minishell);
 	else if (!ft_strcmp(ast->token->value, "pwd"))
-		ft_pwd(minishell);
+		ft_pwd(minishell, minishell->env);
 	else if (!ft_strcmp(ast->token->value, "echo"))
 		ft_echo(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "env"))

@@ -83,8 +83,10 @@ int	check_assign_env(t_ast *ast, char **env)
 	j = 0;
 	if (!ast)
 		return (0);
-	if (ast->type == N_ASSIGN)
+	if (ast->type == N_ASSIGN || ast->type == N_ARGUMENT)
 	{
+		if (ft_strchr(ast->token->value, '=') == NULL)
+			return (0);
 		while (ast->token->value[i] != '=')
 		i++;
 		while (env[j])

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executer_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
 /*   Updated: 2024/06/10 18:47:08 by schamizo         ###   ########.fr       */

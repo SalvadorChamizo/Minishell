@@ -1,7 +1,7 @@
 NAME = minishell
 CC = clang
 FLAGS = -g -Wall -Werror -Wextra -Iinclude
-READLINE = -lreadline
+READLINE = -lreadline -ltinfo
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
 
@@ -38,6 +38,7 @@ FILES =	main \
 		signal/sygnal \
 		executer/builtin/cd/cd \
 		executer/builtin/cd/cd_utils \
+		executer/builtin/cd/cd_relative \
 		executer/builtin/cd/cd_pwd \
 		executer/builtin/cd/cd_home \
 		executer/builtin/pwd/pwd \

@@ -17,6 +17,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 	char	*user;
 	char	*computer;
 
+	sigquit_signal(0);
 	input->pos = 0;
 	input->error = 0;
 	input->line = NULL;
@@ -25,7 +26,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 	computer = ft_substr(computer, 6, 6);
 	printf(RED"%s@%s", user, computer);
 	input->line = readline(RED"> "RESET);
-	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
+	if (input->line == NULL && isatty(STDIN_FILENO))
 	{
 		printf("exit\n");
 		free(computer);
@@ -37,6 +38,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 		return (1);
 	}
 	free(computer);
+	sigquit_signal(1);
 	return (0);
 }
 
