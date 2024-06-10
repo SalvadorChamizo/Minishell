@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/09 18:58:12 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:33:31 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 char	*ft_remove_path(char *command)
 {
 	char	*new_text;
-	int	i;
-	int len;
-	
+	int		i;
+	int		len;
+
 	i = 0;
 	if (command[i] != '/')
-		return (command);
+	{
+		new_text = ft_strdup(command);
+		return (new_text);
+	}
 	while (command[i])
 		i++;
 	len = i;
@@ -28,15 +31,7 @@ char	*ft_remove_path(char *command)
 		i--;
 	i++;
 	len = len - i;
-	new_text = malloc(sizeof(char) * len);
-	len = 0;
-	while (command[i])
-	{
-		new_text[len] = command[i];
-		len++;
-		i++;
-	}
-	new_text[len] = '\0';
+	new_text = ft_substr(command, i, len);
 	return (new_text);
 }
 
@@ -47,7 +42,7 @@ char	**ft_command_args(t_ast *ast)
 	int		i;
 
 	temp = ast;
-	i = 0;
+	i = 1;
 	while (temp)
 	{
 		temp = temp->left;

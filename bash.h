@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/09 19:23:52 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:00:18 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ typedef struct s_minishell
 	int				status;
 	int				stdin_fd;
 	int				stdout_fd;
+	int				pipe_in[2];
+	int				pipe_out[2];
 }	t_minishell;
 
 //EXPANSER
@@ -150,7 +152,7 @@ typedef struct s_dollar
 }	t_dollar;
 
 //INIT
-int			input_init(t_input *input);
+int			input_init(t_input *input, t_minishell *minishell);
 t_minishell	*minishell_init(char **env);
 
 //tokenizer
@@ -185,6 +187,11 @@ void		expand_quotes(t_ast *ast);
 void		ft_expanser(t_minishell *minishell, char **envp);
 
 //expanser_dollar
+
+void		dollar_exit_status(t_ast *ast, t_minishell *minishell);
+char		*get_variable_env(char	*text);
+void		check_variable_env(char **env, t_dollar *dollar, char *new_text);
+void		ft_dollar_env(t_ast *ast, char **env, int *flag);
 int			ft_check_dollar(char *text);
 char		*remove_dollar(t_ast *ast);
 char		*get_variable(char	*text, int *cur);
@@ -254,15 +261,15 @@ void		ft_simple_command2(t_ast *ast, t_minishell *minishell);
 void		ft_simple_command(t_ast *ast, t_minishell *minishell);
 
 //executer_pipe
-void		ft_pipe_child_left(t_ast *ast, t_minishell *minishell, int pipefd[2]);
-void		ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int pipefd[2]);
-void		ft_pipeline(t_ast *ast, t_minishell *minishell, int pipe_in[2], int flag);
+void		ft_pipe_child_left(t_ast *ast, t_minishell *minishell);
+void		ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int flag);
+void		ft_pipeline(t_ast *ast, t_minishell *minishell, int flag);
 
 //executer_redirect
 void		ft_open_infile(t_ast *ast);
 void		ft_open_outfile(t_ast *ast);
 void		ft_open_outfile_2(t_ast *ast);
-void		ft_open_heredoc(t_ast *ast);
+void		ft_open_heredoc(t_ast *ast, t_minishell *minishell);
 void		ft_redirect(t_ast *ast, t_minishell *minishell);
 
 t_ast		*ft_expr(t_input *input);

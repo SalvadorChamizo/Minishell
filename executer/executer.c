@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/09 18:00:07 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:58:58 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	manage_error(char *error)
 
 void	ft_directory(t_ast *ast)
 {
-	DIR *dir;
+	DIR	*dir;
 
 	if (!ast)
 		return ;
@@ -72,18 +72,10 @@ void	ft_directory(t_ast *ast)
 
 void	ft_executer(t_ast *ast, t_minishell *minishell)
 {
-	int	pipefd[2];
-
 	if (!ast)
 		return ;
 	if (ast->type == N_PIPELINE)
-	{
-		if (pipe(pipefd) == -1)
-			manage_error("pipe");
-		ft_pipeline(ast, minishell, pipefd, 0);
-		//close(pipefd[0]);
-		//close(pipefd[1]);
-	}
+		ft_pipeline(ast, minishell, 0);
 	if (ast->type == N_DIRECTORY)
 		ft_directory(ast);
 	if (ast->type == N_BUILTIN)

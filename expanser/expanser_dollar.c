@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/08 19:23:36 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:46:21 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,8 @@ void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 		free(env_var);
 		i++;
 	}
-	free(env_var);
+	if (env_var)
+		free(env_var);
 }
 
 void	ft_dollar_env(t_ast *ast, char **env, int *flag)

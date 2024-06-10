@@ -6,13 +6,13 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/09 19:23:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:43:24 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-int	input_init(t_input *input)
+int	input_init(t_input *input, t_minishell *minishell)
 {
 	char	*user;
 	char	*computer;
@@ -28,8 +28,12 @@ int	input_init(t_input *input)
 	if (input->line == NULL && isatty(STDIN_FILENO)) // Detectar Ctrl+D cuando es interactivo
 	{
 		printf("exit\n");
+		free(computer);
 		free(input->line);
 		free(input);
+		ft_list_clear(&minishell->list);
+		free_split(minishell->env);
+		free(minishell);
 		return (1);
 	}
 	free(computer);
