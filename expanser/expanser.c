@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/08 17:10:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/08 18:15:52 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,10 @@ int	check_assign_env(t_ast *ast, char **env)
 	j = 0;
 	if (!ast)
 		return (0);
-	if (ast->type == N_ASSIGN)
+	if (ast->type == N_ASSIGN || ast->type == N_ARGUMENT)
 	{
+		if (ft_strchr(ast->token->value, '=') == NULL)
+			return (0);
 		while (ast->token->value[i] != '=')
 		i++;
 		while (env[j])
@@ -124,5 +126,5 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	check_assign_env(ast, minishell->env);
 	store_assignment(ast, &minishell->list);
 	free_split(path);
-	print_assignment(minishell->list);
+	//print_assignment(minishell->list);
 }

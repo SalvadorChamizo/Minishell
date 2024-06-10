@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/08 12:23:23 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:21:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 	if (ast->right)
 		ft_executer(ast->right, minishell);
 	pid = fork();
+	command_sig = pid;
 	if (pid == -1)
 	{
 		perror("fork");
@@ -151,6 +152,7 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 	}
 	if (!pid)
 	{
+		printf("");
 		simple_command_aux(ast, minishell, new_text);
 	}
 	else
