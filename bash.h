@@ -291,7 +291,7 @@ void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 
 //sygnal
 void		sigint_signal(int signal_number);
-void		sigquit_signal(int signal_number);
+void		sigquit_signal(int flag);
 
 //others
 void		ft_enter(void);

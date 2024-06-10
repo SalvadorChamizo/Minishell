@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 12:06:26 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:31:48 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ int	input_init(t_input *input)
 	char	*user;
 	char	*computer;
 
-	signal(SIGQUIT, SIG_IGN);
+	sigquit_signal(0);
 	input->pos = 0;
 	input->error = 0;
 	input->line = NULL;
 	user = getenv("USER");
 	computer = getenv("SESSION_MANAGER");
 	computer = ft_substr(computer, 6, 6);
-	input->line = readline(RED"MINISHELL > "RESET);
+	printf(RED"%s@%s", user, computer);
+	input->line = readline(RED"> "RESET);
 	if (input->line == NULL && isatty(STDIN_FILENO))
 	{
 		printf("exit\n");
@@ -33,7 +34,7 @@ int	input_init(t_input *input)
 		exit (130);
 	}
 	free(computer);
-	signal(SIGQUIT, sigquit_signal);
+	sigquit_signal(1);
 	return (0);
 }
 
