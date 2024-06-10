@@ -218,8 +218,8 @@ void		ft_store_env(t_assign **list, char **envp);
 	//CD
 void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
 bool		cd_home(char **env);
+bool		cd_relative(char *rout, char **env);
 void		cd_error(char *path);
-char		*wish_ensambler(char const *s1, char const *s2);
 void		ft_freepath(char **path);
 int			regret_basic(void);
 int			ft_chdir(char *order, char **env);
@@ -227,7 +227,7 @@ void		gotouser(char **env);
 void		oldpwd_update(char **env);
 void		pwd_update(char **env);
 	//PWD
-void		ft_pwd(t_minishell *minishell);
+void		ft_pwd(t_minishell *minishell, char **env);
 	//ECHO
 void		ft_echo(t_ast *ast, t_minishell *minishell);
 	//ENV

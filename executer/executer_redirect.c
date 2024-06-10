@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/08 19:23:02 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:46:42 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,32 +77,29 @@ void	ft_open_outfile_2(t_ast *ast)
 
 void	ft_open_heredoc(t_ast *ast)
 {
-	int		fd;
 	char	*buffer;
+	pid_t	pid;
+	int		pipe_doc[2];
 
-	fd = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
-		manage_error("open");
-	while (1)
+	pipe(pipe_doc);
+	pid = fork();
+	if (!pid)
 	{
-		ft_printf("> ");
-		buffer = get_next_line(STDIN_FILENO);
-		if (!ft_strncmp(ast->left->token->value, buffer, ft_strlen(ast->left->token->value))
-			&& ft_strlen(buffer) - 1 == ft_strlen(ast->left->token->value))
-			break ;
-		write(fd, buffer, ft_strlen(buffer));
-		free(buffer);
+		close(pipe_doc[0]);
+		while (1)
+		{
+			buffer = readline("> ");
+			if (!ft_strcmp(ast->left->token->value, buffer))
+				break ;
+			write(pipe_doc[1], buffer, ft_strlen(buffer));
+		}
+		close(pipe_doc[1]);
+		exit(0);
 	}
-	free(buffer);
-	close(fd);
-	fd = open(".heredoc_tmp", O_RDONLY);
-	if (fd < 0)
-	{
-		unlink(".heredoc_tmp");
-		manage_error("open");
-	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	waitpid(pid, NULL, 0);
+	close(pipe_doc[0]);
+	dup2(pipe_doc[1], STDIN_FILENO);
+	close(pipe_doc[1]);
 }
 
 void	ft_redirect(t_ast *ast, t_minishell *minishell)

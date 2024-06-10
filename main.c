@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 12:13:49 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:43:28 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **env)
 			minishell->ast = ft_expr(minishell->input);
 			//print_ast(minishell->ast);
 			ft_expanser(minishell, minishell->env);
-			//print_ast(minishell->ast);
+			print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);
 			//print_ast(minishell->ast);
 			dup2(original_stdin, STDIN_FILENO);

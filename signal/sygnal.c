@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 12:58:27 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:45:29 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	sigint_signal(int signal_number)
 		{
 			write(STDOUT_FILENO, "\n", 1);
 			rl_on_new_line();
-			rl_replace_line("cat", 0);
+			rl_replace_line("", 0);
 			rl_redisplay();
 		}
 	}
