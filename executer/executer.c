@@ -55,7 +55,7 @@ void	manage_error(char *error)
 
 void	ft_directory(t_ast *ast)
 {
-	DIR *dir;
+	DIR	*dir;
 
 	if (!ast)
 		return ;
@@ -75,23 +75,13 @@ void	ft_executer(t_ast *ast, t_minishell *minishell)
 	if (!ast)
 		return ;
 	if (ast->type == N_PIPELINE)
-	{
-		ft_pipeline(ast, minishell);
-	}
+		ft_pipeline(ast, minishell, 0);
 	if (ast->type == N_DIRECTORY)
-	{
 		ft_directory(ast);
-	}
 	if (ast->type == N_BUILTIN)
-	{
 		execute_builtin(ast, minishell);
-	}
 	if (ast->type == N_COMMAND)
-	{
 		ft_simple_command(ast, minishell);
-	}
 	if (ast->type == N_REDIRECTION || ast->type == N_HEREDOC)
-	{
 		ft_redirect(ast, minishell);
-	}
 }

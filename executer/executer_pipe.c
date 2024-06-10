@@ -6,66 +6,103 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 15:36:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:58:34 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell, int pipefd[2])
+void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 {
-	close(pipefd[0]);
-	dup2(pipefd[1], STDOUT_FILENO);
-	close(pipefd[1]);
+	close(minishell->pipe_in[1]);
+	dup2(minishell->pipe_in[0], STDIN_FILENO);
+	close(minishell->pipe_out[0]);
+	dup2(minishell->pipe_out[1], STDOUT_FILENO);
+	close(minishell->pipe_in[0]);
+	close(minishell->pipe_out[1]);
 	ft_simple_command2(ast, minishell);
-	//execve(ast->token->value, ft_command_args(ast), *env);
 }
 
-void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int pipefd[2])
+void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 {
-	int		original_stdin;
-	int		original_stdout;
-
-	original_stdin = dup(STDIN_FILENO);
-	original_stdout = dup(STDOUT_FILENO);
-	close(pipefd[1]);
-	dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
-		ft_simple_command2(ast, minishell);
-		dup2(original_stdin, STDIN_FILENO);
-		close(original_stdin);
-		dup2(original_stdout, STDOUT_FILENO);
-		close(original_stdin);
-	//execve(ast->token->value, ft_command_args(ast), *env);
+	close(minishell->pipe_out[0]);
+	close(minishell->pipe_out[1]);
+	close(minishell->pipe_in[0]);
+	dup2(minishell->pipe_in[1], STDOUT_FILENO);
+	close(minishell->pipe_in[1]);
+	ft_simple_command2(ast, minishell);
 }
 
-void	ft_pipeline(t_ast *ast, t_minishell *minishell)
+void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int flag)
+{
+	if (flag == 1)
+	{
+		close(minishell->pipe_in[0]);
+		close(minishell->pipe_in[1]);
+		close(minishell->pipe_out[1]);
+		dup2(minishell->pipe_out[0], STDIN_FILENO);
+		close(minishell->pipe_out[0]);
+	}
+	if (flag == 0)
+	{
+		close(minishell->pipe_out[0]);
+		close(minishell->pipe_out[1]);
+		close(minishell->pipe_in[1]);
+		dup2(minishell->pipe_in[0], STDIN_FILENO);
+		close(minishell->pipe_in[0]);
+	}
+	ft_simple_command2(ast, minishell);
+}
+
+void	ft_pipeline(t_ast *ast, t_minishell *minishell, int flag)
 {
 	pid_t	pid_left;
 	pid_t	pid_right;
-	int		pipefd[2];
 
-	if (pipe(pipefd) == -1)
-		manage_error("pipe");
+	if (flag == 0)
+	{
+		if (pipe(minishell->pipe_in) == -1)
+			manage_error("pipe");
+		if (pipe(minishell->pipe_out) == -1)
+			manage_error("pipe");
+	}
 	pid_left = fork();
 	if (!pid_left)
-		ft_pipe_child_left(ast->left, minishell, pipefd);
+	{
+		if (flag == 1)
+			ft_pipe_middle(ast->left, minishell);
+		else
+			ft_pipe_child_left(ast->left, minishell);
+	}
 	else
 	{
 		if (ast->right->type == N_PIPELINE)
-			ft_pipeline(ast->right, minishell);
+		{
+			ft_pipeline(ast->right, minishell, 1);
+			while (wait(NULL) > 0)
+				continue ;
+		}
 		else
 		{
+			if (flag == 0)
+			{
+				close(minishell->pipe_in[1]);
+				close(minishell->pipe_out[0]);
+				close(minishell->pipe_out[1]);
+			}
 			pid_right = fork();
 			if (!pid_right)
-				ft_pipe_child_right(ast->right, minishell, pipefd);	
+				ft_pipe_child_right(ast->right, minishell, flag);
 			else
 			{
-				close(pipefd[0]);
-				close(pipefd[1]);
-				waitpid(pid_left, NULL, 0);
-				waitpid(pid_right, NULL, 0);
-			}		
+				close(minishell->pipe_in[0]);
+				close(minishell->pipe_in[1]);
+				close(minishell->pipe_out[0]);
+				close(minishell->pipe_out[1]);
+				if (flag == 0)
+					while (wait(NULL) > 0)
+						continue ;
+			}
 		}
 	}
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/10 18:43:28 by saroca-f         ###   ########.fr       */
@@ -19,8 +19,6 @@ int		command_sig;
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell	*minishell;
-	int			original_stdin;
-	int			original_stdout;
 
 	command_sig = 0;
 	original_stdin = dup(STDIN_FILENO);
@@ -34,12 +32,10 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		minishell->input = malloc(sizeof(t_input));
-		if (input_init(minishell->input) == 130)
+		if (input_init(minishell->input, minishell) == 1)
 		{
 			ft_close();
-			ft_list_clear(&minishell->list);
-			free(minishell);
-			exit(0);
+			exit(130);
 		}
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);
@@ -53,9 +49,8 @@ int	main(int argc, char **argv, char **env)
 			ft_expanser(minishell, minishell->env);
 			print_ast(minishell->ast);
 			ft_executer(minishell->ast, minishell);
-			//print_ast(minishell->ast);
-			dup2(original_stdin, STDIN_FILENO);
-			dup2(original_stdout, STDOUT_FILENO);
+			dup2(minishell->stdin_fd, STDIN_FILENO);
+			dup2(minishell->stdout_fd, STDOUT_FILENO);
 			free_ast(&minishell->ast);
 		}
 		free(minishell->input->line);

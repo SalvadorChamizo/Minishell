@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 12:31:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:43:24 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-int	input_init(t_input *input)
+int	input_init(t_input *input, t_minishell *minishell)
 {
 	char	*user;
 	char	*computer;
@@ -29,9 +29,13 @@ int	input_init(t_input *input)
 	if (input->line == NULL && isatty(STDIN_FILENO))
 	{
 		printf("exit\n");
+		free(computer);
 		free(input->line);
 		free(input);
-		exit (130);
+		ft_list_clear(&minishell->list);
+		free_split(minishell->env);
+		free(minishell);
+		return (1);
 	}
 	free(computer);
 	sigquit_signal(1);
@@ -72,5 +76,7 @@ t_minishell	*minishell_init(char **env)
 	ft_store_env(&minishell->list, env);
 	minishell->line_number = 0;
 	minishell->status = 0;
+	minishell->stdin_fd = dup(STDIN_FILENO);
+	minishell->stdout_fd = dup(STDOUT_FILENO);
 	return (minishell);
 }
