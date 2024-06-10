@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 18:47:08 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:11:51 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ static void	ft_heredoc_sigint_handler(int signum)
 {
 	(void)signum;
 	//ft_clean_ms();
-	exit(SIGINT);
+	if (command_sig == 0)
+	{
+		write(1, "\n", 1);
+		exit(SIGINT);
+	}
 }
 
 char	*heredoc_dollar_env(char *str, char **env, int *flag)
@@ -226,6 +230,7 @@ void	ft_open_heredoc(t_ast *ast, t_minishell *minishell)
 	signal(SIGINT, ft_heredoc_sigint_handler);
 	pipe(pipe_doc);
 	pid = fork();
+	command_sig = pid;
 	if (!pid)
 	{
 		close(pipe_doc[0]);
@@ -261,5 +266,8 @@ void	ft_redirect(t_ast *ast, t_minishell *minishell)
 	else if (ft_strcmp(ast->token->value, ">>") == 0)
 		ft_open_outfile_2(ast->left);
 	else if (ft_strcmp(ast->token->value, "<<") == 0)
+	{
 		ft_open_heredoc(ast, minishell);
+		signal(SIGINT, sigint_signal);
+	}
 }

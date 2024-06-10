@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 16:43:24 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:03:35 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	input_init(t_input *input, t_minishell *minishell)
 	user = getenv("USER");
 	computer = getenv("SESSION_MANAGER");
 	computer = ft_substr(computer, 6, 6);
-	printf(RED"%s@%s", user, computer);
-	input->line = readline(RED"> "RESET);
+	//printf(RED"%s@%s", user, computer);
+	input->line = readline(RED"PRUEBA > "RESET);
 	if (input->line == NULL && isatty(STDIN_FILENO))
 	{
 		printf("exit\n");
