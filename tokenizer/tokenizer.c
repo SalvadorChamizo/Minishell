@@ -64,11 +64,6 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 		s_quote_case(minishell, newtok, ret);
 	else if (ret[minishell->pos] == '\"')
 		d_quote_case(minishell, newtok, ret);
-	/*else if (ass_detection(minishell, ret))
-	{
-		ass_case(minishell, newtok, ret);
-		return ;
-	}*/
 	else
 	{
 		while (ret[minishell->pos] && !isquote(ret[minishell->pos]))
