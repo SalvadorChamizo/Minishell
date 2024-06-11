@@ -85,16 +85,16 @@ $(NAME_BNS): $(LIBFT) $(BNS_OBJS) $(OBJS)
 	@$(CC) $(BNS_OBJS) $(LIBFT) $(FLAGS) -o $(NAME)
 
 $(LIBFT):
-	@make -C $(LIBFT_PATH) all
+	@make -C $(LIBFT_PATH) all > /dev/null 2>&1
 
 clean: 
 	@rm -f $(OBJS) $(BNS_OBJS)
-	@make -C $(LIBFT_PATH) clean
+	@make -C $(LIBFT_PATH) clean > /dev/null 2>&1
 	@echo "$(RED)Cleaning minishell objects. $(RESET)"
 
 fclean: clean
 	@rm -f $(NAME) $(NAME_BNS)
-	@make -C $(LIBFT_PATH) fclean
+	@make -C $(LIBFT_PATH) fclean > /dev/null 2>&1
 	@echo "$(RED)Cleaning minishell executables.$(RESET)"
 
 re: fclean all
