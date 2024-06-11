@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 14:51:19 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:57:22 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	ft_heredoc_sigint_handler(int signum)
 {
 	(void)signum;
 	//ft_clean_ms();
-	if (command_sig == 0)
+	if (g_command_sig == 0)
 	{
 		write(1, "\n", 1);
 		exit(SIGINT);
@@ -123,7 +123,7 @@ void	ft_open_heredoc(t_ast *ast, t_minishell *minishell)
 	signal(SIGINT, ft_heredoc_sigint_handler);
 	pipe(pipe_doc);
 	pid = fork();
-	command_sig = pid;
+	g_command_sig = pid;
 	if (!pid)
 	{
 		close(pipe_doc[0]);

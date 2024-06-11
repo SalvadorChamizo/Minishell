@@ -13,6 +13,7 @@
 #ifndef BASH_H
 # define BASH_H
 
+# include "include/structs.h"
 # include "libft/include/libft.h"
 # include <unistd.h>
 # include <stdio.h>
@@ -27,7 +28,6 @@
 # include <readline/history.h>
 # include <sys/ioctl.h>
 # include <signal.h>
-# include <termios.h>
 # include <termcap.h>
 # include <curses.h>
 # include <dirent.h>
@@ -47,111 +47,7 @@
 # define CLEAR      "\033[2J"
 
 //GLOBAL
-extern int		command_sig;
-
-//TOKENIZER
-
-typedef enum e_tokentype
-{
-	T_IDENTIFIER,
-	T_LESS,
-	T_GREAT,
-	T_DLESS,
-	T_DGREAT,
-	T_PIPE,
-	T_O_PARENT,
-	T_C_PARENT,
-	T_ASSING,
-	T_EOF,
-}	t_tokentype;
-
-typedef struct s_token
-{
-	char		*value;
-	t_tokentype	type;
-	bool		space;
-}	t_token;
-
-typedef struct s_input
-{
-	t_token	*current_token;
-	char	*line;
-	char	**path;
-	int		pos;
-	int		error;
-}	t_input;
-
-typedef struct s_syntax
-{
-	t_token			*token;
-	struct s_syntax	*left;
-	struct s_syntax	*right;
-}	t_syntax;
-
-//PARSER
-
-typedef enum e_nodetype
-{
-	N_IDENTIFIER,
-	N_COMMAND,
-	N_ARGUMENT,
-	N_BUILTIN,
-	N_REDIRECTION,
-	N_FILE,
-	N_HEREDOC,
-	N_DELIMITER,
-	N_PIPELINE,
-	N_ASSIGN,
-	N_DIRECTORY,
-}	t_nodetype;
-
-typedef struct s_assign_list
-{
-	char					*variable;
-	char					*value;
-	struct s_assign_list	*next;
-}	t_assign;
-
-typedef struct s_ast
-{
-	t_nodetype		type;
-	t_token			*token;
-	struct s_ast	*left;
-	struct s_ast	*right;
-}	t_ast;
-
-typedef struct s_idenlst
-{
-	t_token				*token;
-	struct s_idenlst	*next;
-	struct s_idenlst	*prev;
-}	t_idenlst;
-
-typedef struct s_minishell
-{
-	t_input			*input;
-	t_ast			*ast;
-	t_assign		*list;
-	struct termios	termios;
-	char			**env;
-	int				line_number;
-	int				status;
-	int				stdin_fd;
-	int				stdout_fd;
-	int				pipe_in[2];
-	int				pipe_out[2];
-}	t_minishell;
-
-//EXPANSER
-
-typedef struct s_dollar
-{
-	char	*variable;
-	char	*new_text;
-	int		j;
-	int		k;
-	int		*flag;
-}	t_dollar;
+extern int		g_command_sig;
 
 //INIT
 int			input_init(t_input *input, t_minishell *minishell);
@@ -236,7 +132,7 @@ void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
 bool		cd_home(char **env);
 bool		cd_relative(char *rout, char **env);
 void		cd_error(char *path);
-char		*point_maker(char *point, char *step);
+void		point_maker(char **point, char *step);
 void		ft_cd_free_mat(char **path);
 int			ft_chdir(char *order, char **env);
 void		oldpwd_update(char **env);

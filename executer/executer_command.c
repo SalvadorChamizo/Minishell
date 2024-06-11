@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 16:33:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:58:30 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 	if (ast->right)
 		ft_executer(ast->right, minishell);
 	pid = fork();
-	command_sig = pid;
+	g_command_sig = pid;
 	if (pid == -1)
 	{
 		perror("fork");
