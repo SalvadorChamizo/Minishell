@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 15:58:34 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:24:32 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell, int flag)
 {
 	pid_t	pid_left;
 	pid_t	pid_right;
+	int		status;
 
+	status = 0;
 	if (flag == 0)
 	{
 		if (pipe(minishell->pipe_in) == -1)
@@ -79,7 +81,7 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell, int flag)
 		if (ast->right->type == N_PIPELINE)
 		{
 			ft_pipeline(ast->right, minishell, 1);
-			while (wait(NULL) > 0)
+			while (wait(&status) > 0)
 				continue ;
 		}
 		else
@@ -100,9 +102,10 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell, int flag)
 				close(minishell->pipe_out[0]);
 				close(minishell->pipe_out[1]);
 				if (flag == 0)
-					while (wait(NULL) > 0)
+					while (wait(&status) > 0)
 						continue ;
 			}
 		}
 	}
+	minishell->status = WEXITSTATUS(status);
 }

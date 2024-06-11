@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 12:29:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:21:47 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*remove_dollar(t_ast *ast)
 	int		j;
 
 	text = ft_strdup(ast->token->value);
+	free(ast->token->value);
 	new_text = malloc(sizeof(char) * ft_strlen(text));
 	i = 0;
 	j = 0;
@@ -36,6 +37,7 @@ char	*remove_dollar(t_ast *ast)
 		j++;
 	}
 	new_text[j] = '\0';
+	free(text);
 	return (new_text);
 }
 
@@ -74,7 +76,11 @@ void	ft_dollar_list(t_ast *ast, t_assign *list, int *flag)
 	new_text = malloc(sizeof(char) * 2048);
 	dollar->flag = flag;
 	if (!ft_check_dollar(ast->token->value))
+	{
+		free(new_text);
+		free(dollar);
 		return ;
+	}
 	while (ast->token->value[i])
 	{
 		if (ast->token->value[i] == '$')
@@ -89,7 +95,13 @@ void	ft_dollar_list(t_ast *ast, t_assign *list, int *flag)
 	new_text[dollar->k] = '\0';
 	free(dollar->variable);
 	free(dollar);
-	ast->token->value = new_text;
+	if (ft_strcmp(new_text, "") != 0)
+	{
+		free(ast->token->value);
+		ast->token->value = new_text;
+	}
+	else
+		free(new_text);
 }
 
 void	dollar_exit_status(t_ast *ast, t_minishell *minishell)
@@ -110,12 +122,19 @@ void	dollar_exit_status(t_ast *ast, t_minishell *minishell)
 			dollar->variable = get_variable(ast->token->value, &i);
 			check_variable_copy(dollar, new_text, minishell, &i);
 		}
-		new_text[dollar->j++] = ast->token->value[i++];
+		if (ast->token->value[i])
+			new_text[dollar->j++] = ast->token->value[i++];
 	}
 	new_text[dollar->j] = '\0';
-	free(ast->token->value);
 	free(dollar->variable);
-	ast->token->value = new_text;
+	free(dollar);
+	if (ft_strcmp(new_text, "") != 0)
+	{
+		free(ast->token->value);
+		ast->token->value = new_text;
+	}
+	else
+		free(new_text);
 }
 
 char	*get_variable_env(char	*text)
@@ -150,12 +169,12 @@ void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 				new_text[dollar->k++] = env[i][dollar->j++];
 			*(dollar->flag) = 1;
 			dollar->j = 0;
+			free(env_var);
 			break ;
 		}
 		free(env_var);
 		i++;
 	}
-	//free(env_var);
 }
 
 void	ft_dollar_env(t_ast *ast, char **env, int *flag)

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 11:29:37 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:51:19 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ void	ft_child_heredoc(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
 		buffer = readline("> ");
 		if (buffer == NULL && isatty(STDIN_FILENO))
 		{
-			printf("bash: warning: here-document at line ");
-			printf("%d delimited by end of file\n", minishell->line_number);
+			ft_putstr_fd("bash: warning: here-document at line ", 2);
+			ft_putnbr_fd(minishell->line_number, 2);
+			ft_putstr_fd(" delimited by end of file\n", 2);
+			exit (0);
 		}
 		if (!ft_strcmp(delimiter, buffer))
 			break ;

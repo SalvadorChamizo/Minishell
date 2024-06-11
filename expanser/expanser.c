@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 12:13:49 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:41:23 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	remove_empty_node(t_ast *ast, t_ast *prev)
 		{
 			free(ast->token->value);
 			free(ast->token);
+			free(ast);
 			if (prev)
 				prev->left = NULL;
 			return ;
