@@ -6,26 +6,36 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 12:36:35 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:59:14 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bash.h"
 
 //GLOBAL
-int		command_sig;
+int		g_command_sig;
 
-//PROGRAM
+void	eg(t_minishell	*minishell)
+{
+	minishell->input->pos = 0;
+	minishell->ast = ft_expr(minishell->input);
+	print_ast(minishell->ast);
+	ft_expanser(minishell, minishell->env);
+	print_ast(minishell->ast);
+	ft_executer(minishell->ast, minishell);
+	dup2(minishell->stdin_fd, STDIN_FILENO);
+	dup2(minishell->stdout_fd, STDOUT_FILENO);
+	free_ast(&minishell->ast);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_minishell	*minishell;
 
-	command_sig = 0;
+	g_command_sig = 0;
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, sigint_signal);
-	ft_enter();
-	//execve("/usr/bin/bash", path, env);
 	minishell = minishell_init(env);
 	while (1)
 	{
@@ -40,17 +50,7 @@ int	main(int argc, char **argv, char **env)
 		minishell->line_number++;
 		minishell->input->pos = 0;
 		if (ft_parser_fda(minishell->input) == 1)
-		{
-			minishell->input->pos = 0;
-			minishell->ast = ft_expr(minishell->input);
-			print_ast(minishell->ast);
-			ft_expanser(minishell, minishell->env);
-			print_ast(minishell->ast);
-			ft_executer(minishell->ast, minishell);
-			dup2(minishell->stdin_fd, STDIN_FILENO);
-			dup2(minishell->stdout_fd, STDOUT_FILENO);
-			free_ast(&minishell->ast);
-		}
+			eg(minishell);
 		free(minishell->input->line);
 		free(minishell->input);
 	}

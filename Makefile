@@ -90,12 +90,14 @@ $(LIBFT):
 clean: 
 	@rm -f $(OBJS) $(BNS_OBJS)
 	@make -C $(LIBFT_PATH) clean > /dev/null 2>&1
+	@echo
 	@echo "$(RED)Cleaning minishell objects. $(RESET)"
 
 fclean: clean
 	@rm -f $(NAME) $(NAME_BNS)
 	@make -C $(LIBFT_PATH) fclean > /dev/null 2>&1
 	@echo "$(RED)Cleaning minishell executables.$(RESET)"
+	@echo
 
 re: fclean all
 

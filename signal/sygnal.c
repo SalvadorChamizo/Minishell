@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sygnal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 11:46:25 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:58:03 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	sigint_signal(int signal_number)
 {
 	if (signal_number == SIGINT)
 	{
-		if (command_sig)
+		if (g_command_sig)
 		{
 			printf("\n");
-			kill(command_sig, SIGINT);
-			command_sig = 0;
+			kill(g_command_sig, SIGINT);
+			g_command_sig = 0;
 		}
-		else if (!command_sig)
+		else if (!g_command_sig)
 		{
 			write(STDOUT_FILENO, "\n", 1);
 			rl_on_new_line();
@@ -36,7 +36,7 @@ void	quit_signal(int signal_number)
 {
 	(void)signal_number;
 	printf("Quit (core dumped)\n");
-	kill (command_sig, SIGQUIT);
+	kill (g_command_sig, SIGQUIT);
 }
 
 void	sigquit_signal(int flag)
