@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:18:19 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 19:17:12 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:03:20 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	export_print(char **env)
 {
 	int		i;
 	char	*str;
-	char 	*ret;
+	char	*ret;
 
 	i = 0;
 	str = env[i];

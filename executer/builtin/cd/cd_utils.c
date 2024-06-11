@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:10:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 17:07:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:26:16 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,14 @@ int	ft_chdir(char *order, char **env)
 	return (0);
 }
 
-void	ft_freepath(char **path)
+char	*point_maker(char *point, char *step)
+{
+	point = ft_strjoin(point, "/");
+	point = ft_strjoin(point, step);
+	return (point);
+}
+
+void	ft_cd_free_mat(char **path)
 {
 	int	i;
 
@@ -35,17 +42,3 @@ void	ft_freepath(char **path)
 	}
 	free(path);
 }
-
-/*void	gotouser(char **env)
-{
-	char	*user;
-
-	user = ft_strdup(getenv("USER"));
-	regret_basic();
-	if (chdir("home") == -1)
-		printf("bash: cd: HOME not set\n");
-	if (chdir(user) == -1)
-		printf("bash: cd: %s: No such file or directory\n", user);
-	free(user);
-	pwd_update(env);
-}*/

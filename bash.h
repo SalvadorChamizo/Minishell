@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 18:29:18 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:42:02 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,10 +236,9 @@ void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
 bool		cd_home(char **env);
 bool		cd_relative(char *rout, char **env);
 void		cd_error(char *path);
-void		ft_freepath(char **path);
-int			regret_basic(void);
+char		*point_maker(char *point, char *step);
+void		ft_cd_free_mat(char **path);
 int			ft_chdir(char *order, char **env);
-void		gotouser(char **env);
 void		oldpwd_update(char **env);
 void		pwd_update(char **env);
 	//PWD
