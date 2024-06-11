@@ -34,6 +34,7 @@ FILES =	main \
 		expanser/expanser_utils \
 		expanser/expanser_assign \
 		expanser/expanser_command \
+		expanser/expanser_heredoc \
 		expanser/expanser \
 		signal/sygnal \
 		executer/builtin/cd/cd \

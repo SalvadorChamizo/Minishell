@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 18:46:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:29:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,15 @@ char	*get_variable(char	*text, int *cur)
 	i = *cur + 1;
 	if (text[*cur] == '$')
 	{
-		while (text[*cur] != ' ' && text[*cur] != '\0')
+		while (text[*cur] != ' ' && text[*cur] != '\0' 
+			&& text[*cur] != '\'' && text[*cur] != '\"')
 		{
 			*cur = *cur + 1;
 			len++;
 		}
-		variable = malloc(sizeof(char) * len);
 		len = 0;
-		while (text[i] != ' ' && text[i] != '\0' && text[i] != '\"')
-		{
-			variable[len] = text[i];
-			len++;
-			i++;
-		}
+		variable = ft_substr(text, i, *cur - i);
 	}
-	variable[len] = '\0';
 	return (variable);
 }
 
@@ -89,8 +83,10 @@ void	ft_dollar_list(t_ast *ast, t_assign *list, int *flag)
 			temp = list;
 			check_variable_copy2(temp, dollar, new_text);
 		}
-		new_text[dollar->k++] = ast->token->value[i++];
+		if (ast->token->value[i])
+			new_text[dollar->k++] = ast->token->value[i++];
 	}
+	new_text[dollar->k] = '\0';
 	free(dollar->variable);
 	free(dollar);
 	ast->token->value = new_text;
@@ -141,7 +137,6 @@ void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 	char *env_var;
 
 	dollar->j = 0;
-	dollar->k = 0;
 	i = 0;
 	while (env[i])
 	{
@@ -160,34 +155,43 @@ void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 		free(env_var);
 		i++;
 	}
-	if (env_var)
-		free(env_var);
+	//free(env_var);
 }
 
 void	ft_dollar_env(t_ast *ast, char **env, int *flag)
 {
 	t_dollar	*dollar;
 	char		*new_text;
+	char		*str;
 	int				i;
 
 	i = 0;
+	str = ast->token->value;
 	dollar = malloc(sizeof(t_dollar));
 	new_text = malloc(sizeof(char) * 2048);
 	dollar->flag = flag;
-	while (ast->token->value[i])
+	dollar->k = 0;
+	while (str[i])
 	{
-		if (ast->token->value[i] == '$')
+		if (str[i] == '$')
 		{
-			dollar->variable = get_variable(ast->token->value, &i);
+			dollar->variable = get_variable(str, &i);
 			check_variable_env(env, dollar, new_text);
 		}
-		new_text[dollar->k++] = ast->token->value[i++];
+		if (str[i])
+			new_text[dollar->k++] = str[i++];
 	}
 	new_text[dollar->k] = '\0';
 	flag = dollar->flag;
 	free(dollar->variable);
 	free(dollar);
-	ast->token->value = new_text;
+	if (ft_strcmp(new_text, "") != 0)
+	{
+		free(ast->token->value);
+		ast->token->value = new_text;
+	}
+	else
+		free(new_text);
 }
 
 void	ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell)

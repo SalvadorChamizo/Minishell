@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 11:49:14 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:13:49 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_assign_env(t_ast *ast, char **env)
 		return (0);
 	if (ast->type == N_ASSIGN || ast->type == N_ARGUMENT)
 	{
-		if (ft_strchr(ast->token->value, '=') == NULL)
+		if (check_equal(ast->token->value) == 0)
 			return (0);
 		while (ast->token->value[i] != '=')
 		i++;

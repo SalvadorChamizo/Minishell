@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   sygnal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/11 11:46:25 by saroca-f         ###   ########.fr       */
