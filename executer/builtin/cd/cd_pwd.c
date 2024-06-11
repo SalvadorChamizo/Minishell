@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 09:53:32 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 11:03:57 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:50:47 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	oldpwd_update(char **env)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("OLDPWD=", oldpwd);
+			free(oldpwd);
 			return ;
 		}
 		i++;
@@ -55,6 +56,7 @@ void	pwd_update(char **env)
 		{
 			free(env[i]);
 			env[i] = ft_strjoin("PWD=", pwd);
+			free(pwd);
 			return ;
 		}
 		i++;

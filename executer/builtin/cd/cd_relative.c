@@ -6,14 +6,21 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:57:10 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 11:26:46 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:29:51 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
 
-void	print_cd_error(char *road, int flag)
+void	cd_relative_free(char **step, char *point)
 {
+	ft_cd_free_mat(step);
+	free(point);
+}
+
+void	print_cd_error(char *road, int flag, char **step, char *point)
+{
+	cd_relative_free(step, point);
 	if (flag == 1)
 	{
 		ft_putstr_fd("cd: error retrieving current directory: getcwd:", 2);
@@ -39,21 +46,21 @@ int	archive_checker(char *road, char *now)
 	point = now;
 	while (step[i])
 	{
-		point = ft_strjoin(point, "/");
-		point = ft_strjoin(point, step[i]);
+		point = point_maker(point, step[i]);
 		if (access(point, F_OK) < 0 && (!ft_strcmp(step[i], "..")
 				|| !ft_strcmp(step[i], ".")))
 		{
-			print_cd_error(road, 1);
+			print_cd_error(road, 1, step, point);
 			return (0);
 		}
 		else if (access(point, F_OK) < 0)
 		{
-			print_cd_error(road, 2);
+			print_cd_error(road, 2, step, point);
 			return (0);
 		}
 		i++;
 	}
+	cd_relative_free(step, point);
 	return (1);
 }
 
