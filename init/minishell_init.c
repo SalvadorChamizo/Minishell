@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 16:43:24 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:06:31 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_minishell	*minishell_init(char **env)
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (NULL);
+	minishell->ast = NULL;
 	minishell->env = NULL;
 	minishell->env = ft_env_init(env);
 	minishell->list = NULL;

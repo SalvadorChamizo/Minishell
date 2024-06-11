@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sygnal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 15:45:29 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:35:32 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	sigquit_signal(int flag)
 {
 	struct sigaction sa;
 
+	memset(&sa, 0, sizeof(sa));
 	if (flag == 1)
 		sa.sa_handler = quit_signal;
 	else

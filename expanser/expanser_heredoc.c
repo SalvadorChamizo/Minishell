@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:03:54 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/10 20:17:27 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:28:37 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,12 @@ char	*heredoc_dollar_env(char *str, char **env, int *flag)
 	flag = dollar->flag;
 	free(dollar->variable);
 	free(dollar);
-	free(str);
-	return (new_text);
+	if (ft_strcmp(new_text, "") != 0)
+	{
+		free(str);
+		str = new_text;
+	}
+	return (str);
 }
 
 char	*heredoc_dollar_list(char *str, t_assign *list, int *flag)
