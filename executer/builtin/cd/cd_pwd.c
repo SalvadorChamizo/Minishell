@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 09:53:32 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 18:37:08 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:03:57 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	oldpwd_update(char **env)
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 	{
-		//ft_putstr_fd("bash: cd: OLDPWD not set\n", 2);
+		ft_putstr_fd("bash: cd: OLDPWD not set\n", 2);
 		return ;
 	}
 	while (env[i])

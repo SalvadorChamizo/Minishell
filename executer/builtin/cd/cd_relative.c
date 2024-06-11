@@ -6,11 +6,27 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:57:10 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 10:26:20 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:26:46 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
+
+void	print_cd_error(char *road, int flag)
+{
+	if (flag == 1)
+	{
+		ft_putstr_fd("cd: error retrieving current directory: getcwd:", 2);
+		ft_putstr_fd(" cannot access parent directories:", 2);
+		ft_putstr_fd(" No such file or directory\n", 2);
+	}
+	else if (flag == 2)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(road, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+}
 
 int	archive_checker(char *road, char *now)
 {
@@ -21,23 +37,19 @@ int	archive_checker(char *road, char *now)
 	i = 0;
 	step = ft_split(road, '/');
 	point = now;
-	while(step[i])
+	while (step[i])
 	{
 		point = ft_strjoin(point, "/");
 		point = ft_strjoin(point, step[i]);
 		if (access(point, F_OK) < 0 && (!ft_strcmp(step[i], "..")
-			|| !ft_strcmp(step[i], ".")))
+				|| !ft_strcmp(step[i], ".")))
 		{
-			ft_putstr_fd("cd: error retrieving current directory: getcwd:", 2);
-			ft_putstr_fd(" cannot access parent directories:", 2);
-			ft_putstr_fd(" No such file or directory\n", 2);
+			print_cd_error(road, 1);
 			return (0);
 		}
 		else if (access(point, F_OK) < 0)
 		{
-			ft_putstr_fd("bash: cd: ", 2);
-			ft_putstr_fd(road, 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
+			print_cd_error(road, 2);
 			return (0);
 		}
 		i++;
@@ -47,16 +59,17 @@ int	archive_checker(char *road, char *now)
 
 int	cd_relative_checker(char *road, char **env)
 {
-	char *now;
+	char	*now;
+	int		i;
 
-	int i = 0;
+	i = 0;
 	now = NULL;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PWD=", 4) == 0)
 		{
 			now = ft_strdup(env[i] + 4);
-			break;
+			break ;
 		}
 		i++;
 	}

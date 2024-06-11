@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/08 16:51:32 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:02:50 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_newenv(char ***env, char *str)
 int	env_exist(char **env, char *str)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -97,7 +97,7 @@ void	ft_export(t_ast *ast, t_minishell *minishell)
 	tmp = ast->left;
 	i = 0;
 	if (!tmp)
-	export_print(minishell->env);
+		export_print(minishell->env);
 	while (tmp)
 	{
 		if (ft_strchr(tmp->token->value, '='))

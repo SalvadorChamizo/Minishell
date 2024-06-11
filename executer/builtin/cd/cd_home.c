@@ -6,13 +6,13 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 10:10:25 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/08 11:35:00 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:19:39 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
 
-char   *get_home(char **env)
+char	*get_home(char **env)
 {
 	int		i;
 	int		j;
