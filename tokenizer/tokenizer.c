@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 13:25:13 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:39:12 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,6 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 		s_quote_case(minishell, newtok, ret);
 	else if (ret[minishell->pos] == '\"')
 		d_quote_case(minishell, newtok, ret);
-	/*else if (ass_detection(minishell, ret))
-	{
-		ass_case(minishell, newtok, ret);
-		return ;
-	}*/
 	else
 	{
 		while (ret[minishell->pos] && !isquote(ret[minishell->pos]))
