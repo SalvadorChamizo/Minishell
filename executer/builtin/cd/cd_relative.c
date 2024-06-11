@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:57:10 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 18:00:41 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:26:20 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	archive_checker(char *road, char *now)
 	{
 		point = ft_strjoin(point, "/");
 		point = ft_strjoin(point, step[i]);
-		if (access(point, F_OK) < 0 && !ft_strcmp(step[i], ".."))
+		if (access(point, F_OK) < 0 && (!ft_strcmp(step[i], "..")
+			|| !ft_strcmp(step[i], ".")))
 		{
 			ft_putstr_fd("cd: error retrieving current directory: getcwd:", 2);
 			ft_putstr_fd(" cannot access parent directories:", 2);
