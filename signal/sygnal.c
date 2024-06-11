@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 15:45:29 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:43:46 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	sigint_signal(int signal_number)
 			kill(command_sig, SIGINT);
 			command_sig = 0;
 		}
-		else if(!command_sig)
+		else if (!command_sig)
 		{
 			write(STDOUT_FILENO, "\n", 1);
 			rl_on_new_line();
@@ -32,7 +32,7 @@ void	sigint_signal(int signal_number)
 	}
 }
 
-void quit_signal(int signal_number)
+void	quit_signal(int signal_number)
 {
 	(void)signal_number;
 	printf("Quit (core dumped)\n");
@@ -41,7 +41,7 @@ void quit_signal(int signal_number)
 
 void	sigquit_signal(int flag)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	if (flag == 1)
 		sa.sa_handler = quit_signal;
@@ -49,7 +49,7 @@ void	sigquit_signal(int flag)
 		sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 	{
-        perror("sigaction");
-        return ;
-    }
+		perror("sigaction");
+		return ;
+	}
 }
