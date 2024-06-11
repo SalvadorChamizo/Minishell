@@ -97,8 +97,10 @@ void	ft_child_heredoc(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
 		buffer = readline("> ");
 		if (buffer == NULL && isatty(STDIN_FILENO))
 		{
-			printf("bash: warning: here-document at line ");
-			printf("%d delimited by end of file\n", minishell->line_number);
+			ft_putstr_fd("bash: warning: here-document at line ", 2);
+			ft_putnbr_fd(minishell->line_number, 2);
+			ft_putstr_fd(" delimited by end of file\n", 2);
+			exit (0);
 		}
 		if (!ft_strcmp(delimiter, buffer))
 			break ;

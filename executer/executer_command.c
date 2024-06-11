@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executer_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
 /*   Updated: 2024/06/11 17:58:30 by saroca-f         ###   ########.fr       */
@@ -55,7 +55,12 @@ char	**ft_command_args(t_ast *ast)
 	{
 		if (temp->token->value != NULL
 			&& ft_strcmp(temp->token->value, "") != 0)
-			args[i] = ft_remove_path(temp->token->value);
+		{
+			if (i == 0)
+				args[i] = ft_remove_path(temp->token->value);
+			else
+				args[i] = temp->token->value;
+		}
 		temp = temp->left;
 		i++;
 	}
@@ -81,10 +86,28 @@ int	ft_check_path(char **envp)
 	return (1);
 }
 
+void	print_error_command(t_minishell *minishell, char *text)
+{
+	if (!ft_check_path(minishell->env))
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(text, 2);
+		ft_putstr_fd(": No such file or directoty\n", 2);
+	}
+	else
+	{
+		ft_putstr_fd("Command \'", 2);
+		ft_putstr_fd(text, 2);
+		ft_putstr_fd("\' not found\n", 2);
+	}
+}
+
 void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 {
 	char	*new_text;
 
+	if (ast->type != N_COMMAND)
+		ft_executer(ast, minishell);
 	if (ast->right)
 		ft_executer(ast->right, minishell);
 	if (ast->type == N_BUILTIN)
@@ -97,10 +120,7 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 		if (access(ast->token->value, F_OK | X_OK) != 0)
 		{
 			new_text = ft_remove_path(ast->token->value);
-			if (!ft_check_path(minishell->env))
-				printf("bash: %s: No such file or directory\n", new_text);
-			else
-				printf("Command \'%s\' not found\n", new_text);
+			print_error_command(minishell, new_text);
 			exit(127);
 		}
 		if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
@@ -116,10 +136,7 @@ void	simple_command_aux(t_ast *ast, t_minishell *minishell, char *new_text)
 	if (access(ast->token->value, F_OK | X_OK) != 0)
 	{
 		new_text = ft_remove_path(ast->token->value);
-		if (!ft_check_path(minishell->env))
-			printf("bash: %s: No such file or directory\n", new_text);
-		else
-			printf("Command \'%s\' not found\n", new_text);
+		print_error_command(minishell, new_text);
 		exit(127);
 	}
 	if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
@@ -146,10 +163,7 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 		exit(1);
 	}
 	if (!pid)
-	{
-		printf("");
 		simple_command_aux(ast, minishell, new_text);
-	}
 	else
 	{
 		waitpid(pid, &status, 0);

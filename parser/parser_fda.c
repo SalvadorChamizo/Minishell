@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/07 18:27:46 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:28:59 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,47 @@ int	check_syntax(t_token *token, int state)
 	return (state);
 }
 
-void	syntax_problem(t_token *token, int level, int state)
+void	print_error_syntax(int level, int state)
 {
 	if (level < 0)
-		printf("bash: syntax error near unexpected token `)'\n");
+	{
+		ft_putstr_fd("bash: syntax error near ", 2);
+		ft_putstr_fd("unexpected token `)'\n", 2);
+	}
 	if (level > 0 || state == 6)
-		printf("bash: syntax error: unexpected end of file\n");
+	{
+		ft_putstr_fd("bash: syntax error: ", 2);
+		ft_putstr_fd("unexpected end of file\n", 2);
+	}
+	if (state == 3)
+	{
+		ft_putstr_fd("bash: syntax error near ", 2);
+		ft_putstr_fd("unexpected token `newline'\n", 2);
+	}
+}
+
+void	syntax_problem(t_token *token, int level, int state)
+{
+	print_error_syntax(level, state);
 	if (!token->value)
+	{
+		free(token);
 		return ;
+	}
 	else if (token->value)
 	{
-		printf("bash: syntax error near unexpected token `%s'\n", token->value);
+		ft_putstr_fd("bash: syntax error near ", 2);
+		ft_putstr_fd("unexpected token `", 2);
+		ft_putstr_fd(token->value, 2);
+		ft_putstr_fd("'\n", 2);
 		free(token->value);
 		free(token);
 	}
 	else
 	{
 		free(token);
-		printf("bash: syntax error near unexpected token `newline'\n");
+		ft_putstr_fd("bash: syntax error near ", 2);
+		ft_putstr_fd("unexpected token `newline'\n", 2);
 	}
 }
 
@@ -100,6 +123,20 @@ int	finish_fda(t_token **token, int state, int level)
 	}
 }
 
+/*void	ft_update_underscore(t_token *token, t_minishell *minishell)
+{
+	int		i;
+
+	i = 0;
+	while (ft_strncmp(minishell->env[i], "_=", 2))
+		i++;
+	free(minishell->env[i]);
+	minishell->env[i] = ft_strjoin("_=", token->value);
+	if (!minishell->env[i])
+		return ;
+	printf("%s\n", minishell->env[i]);
+}*/
+
 int	ft_parser_fda(t_input *input)
 {
 	t_token	*token;
@@ -116,6 +153,7 @@ int	ft_parser_fda(t_input *input)
 		else if (token->type == T_C_PARENT
 			&& (state == 1 || state == 6 || state == 4))
 			level--;
+		//ft_update_underscore(token, minishell);
 		state = parser_fda_aux(&token, state);
 		if (state == 0)
 			break ;
