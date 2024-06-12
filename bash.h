@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 13:04:49 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:55:22 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define BASH_H
 
 # include "include/structs.h"
+# include "include/builtin.h"
 # include "libft/include/libft.h"
 # include <unistd.h>
 # include <stdio.h>
@@ -79,9 +80,7 @@ int			ft_parents(t_token *token, int state);
 int			ft_parser_fda(t_minishell *minishell);
 
 //Expanser
-void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 void		expand_quotes(t_ast *ast);
-void		ft_expanser(t_minishell *minishell, char **envp);
 
 //expanser_heredoc
 char	*remove_dollar_heredoc(char	*str);
@@ -123,34 +122,7 @@ void		expand_command_3(t_ast *ast, char **path);
 int			check_builtin(char *text);
 int			check_prev(t_ast *prev);
 int			check_prev2(t_ast *prev);
-int			check_equal(char *text);
 void		ft_store_env(t_assign **list, char **envp);
-
-//Builtin
-	//CD
-void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
-bool		cd_home(char **env);
-bool		cd_relative(char *rout, char **env);
-void		cd_error(char *path);
-void		point_maker(char **point, char *step);
-void		ft_cd_free_mat(char **path);
-int			ft_chdir(char *order, char **env);
-void		oldpwd_update(char **env);
-void		pwd_update(char **env);
-	//PWD
-void		ft_pwd(t_minishell *minishell, char **env);
-	//ECHO
-void		ft_echo(t_ast *ast, t_minishell *minishell);
-	//ENV
-void		ft_env(char **env, t_minishell *minishell);
-	//EXPORT
-void		ft_export(t_ast *ast, t_minishell *minishell);
-int			var_len(char *str);
-void		export_print(char **env);
-void		ft_putenv_fd(char *s);
-	//UNSET
-void		ft_unset(t_ast *ast, t_minishell *minishell);
-void		ft_exit(t_minishell **minishell, t_ast *ast);
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);
@@ -197,8 +169,6 @@ t_ast		*ft_expr_aux(t_ast *ast, t_ast *ast2, t_idenlst **list);
 t_idenlst	*ft_lstnew_identifier(t_token *token);
 void		ft_lstadd_identifier(t_idenlst **lst, t_idenlst *new);
 void		ft_add_identifier_front(t_idenlst **lst, t_idenlst *new);
-
-t_token		*get_next_token(t_input *input);
 
 int			check_equal(char *text);
 void		ft_expanser(t_minishell *minishell, char **envp);
