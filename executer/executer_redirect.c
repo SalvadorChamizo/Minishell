@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 17:57:22 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 12:28:39 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	ft_child_heredoc(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
 		buffer = readline("> ");
 		if (buffer == NULL && isatty(STDIN_FILENO))
 		{
+			free(buffer);
 			ft_putstr_fd("bash: warning: here-document at line ", 2);
 			ft_putnbr_fd(minishell->line_number, 2);
 			ft_putstr_fd(" delimited by end of file\n", 2);
@@ -108,7 +109,9 @@ void	ft_child_heredoc(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
 			buffer = ft_expand_heredoc(buffer, minishell);
 		write(pipe_doc[1], buffer, ft_strlen(buffer));
 		write(pipe_doc[1], "\n", 1);
+		free(buffer);
 	}
+	free(buffer);
 	close(pipe_doc[1]);
 	exit(0);	
 }
@@ -121,18 +124,32 @@ void	ft_open_heredoc(t_ast *ast, t_minishell *minishell)
 
 	buffer = NULL;
 	signal(SIGINT, ft_heredoc_sigint_handler);
-	pipe(pipe_doc);
-	pid = fork();
-	g_command_sig = pid;
-	if (!pid)
-	{
+	//if (minishell->pipe_check != 1)
+	//{
+		pipe(pipe_doc);
+		pid = fork();
+		g_command_sig = pid;
+		if (!pid)
+		{
+			close(pipe_doc[0]);
+			ft_child_heredoc(ast, minishell, pipe_doc);
+		}
+		waitpid(pid, NULL, 0);
+		dup2(pipe_doc[0], STDIN_FILENO);
 		close(pipe_doc[0]);
-		ft_child_heredoc(ast, minishell, pipe_doc);
-	}
-	waitpid(pid, NULL, 0);
-	dup2(pipe_doc[0], STDIN_FILENO);
-	close(pipe_doc[0]);
-	close(pipe_doc[1]);
+		close(pipe_doc[1]);
+	//}
+	/*else
+	{
+		pipe(minishell->pipe_aux);
+		//close(pipe_doc[0]);
+		ft_child_heredoc(ast, minishell, minishell->pipe_aux);
+		dup2(minishell->pipe_aux[0], STDIN_FILENO);
+		close(minishell->pipe_aux[1]);
+		//close(pipe_doc[0]);
+		//close(pipe_doc[1]);
+	}*/
+
 }
 
 void	ft_redirect(t_ast *ast, t_minishell *minishell)

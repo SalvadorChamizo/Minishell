@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 18:24:32 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:58:02 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ typedef struct s_minishell
 	int				stdout_fd;
 	int				pipe_in[2];
 	int				pipe_out[2];
+	int				pipe_aux[2];
+	int				pipe_check;
 }	t_minishell;
 
 //EXPANSER

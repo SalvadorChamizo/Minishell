@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 14:24:32 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/12 12:46:03 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,22 @@
 
 void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 {
+	if (ast->type != N_COMMAND)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast, minishell);
+		exit(0);
+	}
+	if (ast->right)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast->right, minishell);
+	}
 	close(minishell->pipe_in[1]);
-	dup2(minishell->pipe_in[0], STDIN_FILENO);
+	if (minishell->pipe_check == 1)
+		dup2(minishell->pipe_aux[0], STDIN_FILENO);
+	else
+		dup2(minishell->pipe_in[0], STDIN_FILENO);
 	close(minishell->pipe_out[0]);
 	dup2(minishell->pipe_out[1], STDOUT_FILENO);
 	close(minishell->pipe_in[0]);
@@ -25,9 +39,22 @@ void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 
 void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 {
+	if (ast->type != N_COMMAND)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast, minishell);
+		exit(0);
+	}
+	if (ast->right)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast->right, minishell);
+	}
 	close(minishell->pipe_out[0]);
 	close(minishell->pipe_out[1]);
 	close(minishell->pipe_in[0]);
+	if (minishell->pipe_check == 1)
+		dup2(minishell->pipe_aux[0], STDIN_FILENO);
 	dup2(minishell->pipe_in[1], STDOUT_FILENO);
 	close(minishell->pipe_in[1]);
 	ft_simple_command2(ast, minishell);
@@ -35,12 +62,26 @@ void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 
 void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int flag)
 {
+	if (ast->type != N_COMMAND)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast, minishell);
+		exit(0);
+	}
+	if (ast->right)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast->right, minishell);
+	}
 	if (flag == 1)
 	{
 		close(minishell->pipe_in[0]);
 		close(minishell->pipe_in[1]);
 		close(minishell->pipe_out[1]);
-		dup2(minishell->pipe_out[0], STDIN_FILENO);
+		if (minishell->pipe_check == 1)
+			dup2(minishell->pipe_aux[0], STDIN_FILENO);
+		else
+			dup2(minishell->pipe_out[0], STDIN_FILENO);
 		close(minishell->pipe_out[0]);
 	}
 	if (flag == 0)
@@ -48,7 +89,10 @@ void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int flag)
 		close(minishell->pipe_out[0]);
 		close(minishell->pipe_out[1]);
 		close(minishell->pipe_in[1]);
-		dup2(minishell->pipe_in[0], STDIN_FILENO);
+		if (minishell->pipe_check == 1)
+			dup2(minishell->pipe_aux[0], STDIN_FILENO);
+		else
+			dup2(minishell->pipe_in[0], STDIN_FILENO);
 		close(minishell->pipe_in[0]);
 	}
 	ft_simple_command2(ast, minishell);

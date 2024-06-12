@@ -24,6 +24,7 @@ FILES =	main \
 		tokenizer/tokenizer_quote \
 		parser/parser_fda \
 		parser/parser_fda_utils \
+		parser/parser_fda_error \
 		parser/parser \
 		parser/parser_utils \
 		parser/parser_ast_nodes \

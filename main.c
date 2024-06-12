@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/12 12:34:29 by saroca-f         ###   ########.fr       */
@@ -15,7 +15,7 @@
 //GLOBAL
 int		g_command_sig;
 
-void	eg(t_minishell	*minishell)
+void	ft_do_line(t_minishell *minishell)
 {
 	minishell->input->pos = 0;
 	minishell->ast = ft_expr(minishell->input);
@@ -49,8 +49,8 @@ int	main(int argc, char **argv, char **env)
 			add_history(minishell->input->line);
 		minishell->line_number++;
 		minishell->input->pos = 0;
-		if (ft_parser_fda(minishell) == 1)
-			eg(minishell);
+		if (ft_parser_fda(minishell->input) == 1)
+			ft_do_line(minishell);
 		free(minishell->input->line);
 		free(minishell->input);
 	}

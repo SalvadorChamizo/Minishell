@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 17:58:30 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:36:46 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,6 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 {
 	char	*new_text;
 
-	if (ast->type != N_COMMAND)
-		ft_executer(ast, minishell);
-	if (ast->right)
-		ft_executer(ast->right, minishell);
 	if (ast->type == N_BUILTIN)
 	{
 		execute_builtin(ast, minishell);

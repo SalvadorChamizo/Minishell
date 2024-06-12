@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 12:02:13 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:04:49 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,10 @@ void		ft_open_outfile(t_ast *ast);
 void		ft_open_outfile_2(t_ast *ast);
 void		ft_open_heredoc(t_ast *ast, t_minishell *minishell);
 void		ft_redirect(t_ast *ast, t_minishell *minishell);
+
+//parser_fda_error
+void		print_error_syntax(int level, int state);
+void		syntax_problem(t_token *token, int level, int state);
 
 t_ast		*ft_expr(t_input *input);
 void		ft_eat(t_input *input, t_tokentype type);
