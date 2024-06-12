@@ -23,6 +23,7 @@ FILES =	main \
 		parser/parser_fda \
 		parser/parser_fda_utils \
 		parser/parser_fda_error \
+		parser/parser_lva \
 		parser/parser \
 		parser/parser_utils \
 		parser/parser_ast_nodes \

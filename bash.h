@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 15:55:22 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:50:26 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "include/structs.h"
 # include "include/builtin.h"
+# include "include/parser_tokenizer.h"
+# include "include/minishell_utils.h"
 # include "libft/include/libft.h"
 # include <unistd.h>
 # include <stdio.h>
@@ -49,35 +51,6 @@
 
 //GLOBAL
 extern int		g_command_sig;
-
-//INIT
-int			input_init(t_input *input, t_minishell *minishell);
-t_minishell	*minishell_init(char **env);
-
-//tokenizer
-t_token		*get_next_token(t_input *minishell);
-void		ft_skip_spaces(t_input *input, char *text, t_token *new_token);
-void		ft_sop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-void		ft_dop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-int			isquote(char c);
-void		s_quote_case(t_input *mshll, t_token *nt, char *rt);
-void		d_quote_case(t_input *mshll, t_token *nt, char *rt);
-t_token		*tokenizer(t_input minishell);
-bool		isoperator(char c);
-
-//space control
-int			ft_isspace(char c);
-int			ft_skip_quote(t_input *input, char *text, t_token *new_token);
-int			is_operator(char c);
-t_tokentype	ft_operator(char *text);
-
-//parser
-int			is_redirection_2(t_token *token);
-int			ft_redirection(t_token *token, int state);
-int			ft_word(t_token *token, int state);
-int			ft_pipe(t_token *token, int state);
-int			ft_parents(t_token *token, int state);
-int			ft_parser_fda(t_minishell *minishell);
 
 //Expanser
 void		expand_quotes(t_ast *ast);
@@ -173,18 +146,5 @@ void		ft_add_identifier_front(t_idenlst **lst, t_idenlst *new);
 int			check_equal(char *text);
 void		ft_expanser(t_minishell *minishell, char **envp);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
-
-//sygnal
-void		sigint_signal(int signal_number);
-void		sigquit_signal(int flag);
-
-//others
-void		ft_enter(void);
-void		ft_close(void);
-
-//memory
-void		free_ast(t_ast **ast);
-void		*free_split(char **str);
-void		ft_list_clear(t_assign **list);
 
 #endif
