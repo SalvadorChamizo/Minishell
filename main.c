@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 18:29:09 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:16:30 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 //GLOBAL
 int		g_command_sig;
 
-void	eg(t_minishell	*minishell)
+void	ft_do_line(t_minishell *minishell)
 {
 	minishell->input->pos = 0;
 	minishell->ast = ft_expr(minishell->input);
-	print_ast(minishell->ast);
+	//print_ast(minishell->ast);
 	ft_expanser(minishell, minishell->env);
 	print_ast(minishell->ast);
 	ft_executer(minishell->ast, minishell);
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **env)
 		minishell->line_number++;
 		minishell->input->pos = 0;
 		if (ft_parser_fda(minishell->input) == 1)
-			eg(minishell);
+			ft_do_line(minishell);
 		free(minishell->input->line);
 		free(minishell->input);
 	}

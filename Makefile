@@ -1,6 +1,6 @@
 NAME = minishell
 CC = clang
-FLAGS = -g -Wall -Werror -Wextra -Iinclude #-fsanitize=address
+FLAGS = -g -Wall -Werror -Wextra -Iinclude -fsanitize=address
 READLINE = -lreadline -ltinfo
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -24,6 +24,7 @@ FILES =	main \
 		tokenizer/tokenizer_quote \
 		parser/parser_fda \
 		parser/parser_fda_utils \
+		parser/parser_fda_error \
 		parser/parser \
 		parser/parser_utils \
 		parser/parser_ast_nodes \
