@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 11:40:40 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:37:29 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-char *readline_prompt()
+char	*readline_prompt(void)
 {
 	char	*computer;
 	char	*prompt;
@@ -30,7 +30,7 @@ char *readline_prompt()
 	free(computer);
 	ret2 = ft_strjoin(RED"", ret);
 	free(ret);
-    prompt = ft_strjoin(ret2, ""RESET);
+	prompt = ft_strjoin(ret2, ""RESET);
 	free(ret2);
 	return (prompt);
 }

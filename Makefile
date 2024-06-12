@@ -1,6 +1,6 @@
 NAME = minishell
 CC = clang
-FLAGS = -g -Wall -Werror -Wextra -Iinclude -fsanitize=address
+FLAGS = -g -Wall -Werror -Wextra -Iinclude #-fsanitize=address
 READLINE = -lreadline -ltinfo
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -17,8 +17,6 @@ BOLD    = \033[1m
 RED     = \033[31;1m
 
 FILES =	main \
-		logo \
-		init/minishell_init \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
 		tokenizer/tokenizer_quote \
@@ -37,7 +35,6 @@ FILES =	main \
 		expanser/expanser_command \
 		expanser/expanser_heredoc \
 		expanser/expanser \
-		signal/sygnal \
 		executer/builtin/cd/cd \
 		executer/builtin/cd/cd_utils \
 		executer/builtin/cd/cd_relative \
@@ -55,7 +52,10 @@ FILES =	main \
 		executer/executer_command \
 		executer/executer_pipe \
 		executer/executer_redirect \
-		manage_memory/free_ast \
+		minishell_utils/logo \
+		minishell_utils/minishell_init \
+		minishell_utils/sygnal \
+		minishell_utils/free_ast \
 
 BNS_FILES = 
 
