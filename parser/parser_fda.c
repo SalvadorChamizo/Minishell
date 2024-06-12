@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fda.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 18:28:59 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:04:28 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,27 +123,40 @@ int	finish_fda(t_token **token, int state, int level)
 	}
 }
 
-/*void	ft_update_underscore(t_token *token, t_minishell *minishell)
+void	is_lva(t_input *input, t_token *token, char **env)
 {
-	int		i;
+	int		ret;
+	char	*str;
 
-	i = 0;
-	while (ft_strncmp(minishell->env[i], "_=", 2))
-		i++;
-	free(minishell->env[i]);
-	minishell->env[i] = ft_strjoin("_=", token->value);
-	if (!minishell->env[i])
-		return ;
-	printf("%s\n", minishell->env[i]);
-}*/
+	ret = input->pos;
+	str = NULL;
+	while (ft_isspace(input->line[ret]))
+		ret++;
+	if (token->value && input->line[ret] == '\0')
+	{
+		ret = 0;
+		while (env[ret])
+		{
+			if (!ft_strncmp(env[ret], "_=", 2))
+				break ;
+			ret++;
+		}
+		if (!env[ret] || !ft_strncmp(token->value, "$_", 2))
+			return ;
+		free(env[ret]);
+		str = ft_strjoin("_=", token->value);
+		env[ret] = ft_strdup(str);
+		free(str);
+	}
+}
 
-int	ft_parser_fda(t_input *input)
+int	ft_parser_fda(t_minishell *minishell)
 {
 	t_token	*token;
 	int		state;
 	int		level;
 
-	token = get_next_token(input);
+	token = get_next_token(minishell->input);
 	state = 1;
 	level = 0;
 	while (token->type != T_EOF)
@@ -153,11 +166,11 @@ int	ft_parser_fda(t_input *input)
 		else if (token->type == T_C_PARENT
 			&& (state == 1 || state == 6 || state == 4))
 			level--;
-		//ft_update_underscore(token, minishell);
+		is_lva(minishell->input, token, minishell->env);
 		state = parser_fda_aux(&token, state);
 		if (state == 0)
 			break ;
-		token = get_next_token(input);
+		token = get_next_token(minishell->input);
 	}
 	if (finish_fda(&token, state, level) == 1)
 		return (1);

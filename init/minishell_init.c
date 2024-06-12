@@ -6,30 +6,49 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 17:55:00 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:40:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
+char *readline_prompt()
+{
+	char	*computer;
+	char	*prompt;
+	char	*ret;
+	char	*ret2;
+
+	computer = getenv("USER");
+	ret = ft_strjoin(computer, "@");
+	computer = getenv("SESSION_MANAGER");
+	ret2 = ft_substr(computer, 6, 6);
+	computer = ft_strjoin(ret, ret2);
+	free(ret);
+	free(ret2);
+	ret = ft_strjoin(computer, "> ");
+	free(computer);
+	ret2 = ft_strjoin(RED"", ret);
+	free(ret);
+    prompt = ft_strjoin(ret2, ""RESET);
+	free(ret2);
+	return (prompt);
+}
+
 int	input_init(t_input *input, t_minishell *minishell)
 {
-	char	*user;
-	char	*computer;
+	char	*prompt;
 
 	sigquit_signal(0);
 	input->pos = 0;
 	input->error = 0;
 	input->line = NULL;
-	user = getenv("USER");
-	computer = getenv("SESSION_MANAGER");
-	computer = ft_substr(computer, 6, 6);
-	//printf(RED"%s@%s", user, computer);
-	input->line = readline(RED"PRUEBA > "RESET);
+	prompt = readline_prompt();
+	input->line = readline(prompt);
 	if (input->line == NULL && isatty(STDIN_FILENO))
 	{
 		printf("exit\n");
-		free(computer);
+		free(prompt);
 		free(input->line);
 		free(input);
 		ft_list_clear(&minishell->list);
@@ -37,7 +56,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 		free(minishell);
 		return (1);
 	}
-	free(computer);
+	free(prompt);
 	sigquit_signal(1);
 	return (0);
 }
