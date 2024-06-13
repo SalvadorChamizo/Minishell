@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:42:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/07 17:01:16 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/12 18:00:16 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	list_case(t_assign **list, char *str)
 			else
 				templ2->next = templ->next;
 			free (templ);
+			return ;
 		}
 		templ2 = templ;
 		templ = templ->next;

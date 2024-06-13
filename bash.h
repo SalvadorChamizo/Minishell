@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 10:40:38 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:20:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define BASH_H
 
 # include "include/structs.h"
+# include "include/builtin.h"
+# include "include/parser_tokenizer.h"
+# include "include/minishell_utils.h"
 # include "libft/include/libft.h"
 # include <unistd.h>
 # include <stdio.h>
@@ -49,39 +52,8 @@
 //GLOBAL
 extern int		g_command_sig;
 
-//INIT
-int			input_init(t_input *input, t_minishell *minishell);
-t_minishell	*minishell_init(char **env);
-
-//tokenizer
-t_token		*get_next_token(t_input *minishell);
-void		ft_skip_spaces(t_input *input, char *text, t_token *new_token);
-void		ft_sop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-void		ft_dop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
-int			isquote(char c);
-void		s_quote_case(t_input *mshll, t_token *nt, char *rt);
-void		d_quote_case(t_input *mshll, t_token *nt, char *rt);
-t_token		*tokenizer(t_input minishell);
-bool		isoperator(char c);
-
-//space control
-int			ft_isspace(char c);
-int			ft_skip_quote(t_input *input, char *text, t_token *new_token);
-int			is_operator(char c);
-t_tokentype	ft_operator(char *text);
-
-//parser
-int			is_redirection_2(t_token *token);
-int			ft_redirection(t_token *token, int state);
-int			ft_word(t_token *token, int state);
-int			ft_pipe(t_token *token, int state);
-int			ft_parents(t_token *token, int state);
-int			ft_parser_fda(t_minishell *minishell);
-
 //Expanser
-void		expand_redir(t_ast *ast, t_ast *prev, int flag);
 void		expand_quotes(t_ast *ast);
-void		ft_expanser(t_minishell *minishell, char **envp);
 
 //expanser_heredoc
 char	*remove_dollar_heredoc(char	*str);
@@ -123,34 +95,7 @@ void		expand_command_3(t_ast *ast, char **path);
 int			check_builtin(char *text);
 int			check_prev(t_ast *prev);
 int			check_prev2(t_ast *prev);
-int			check_equal(char *text);
 void		ft_store_env(t_assign **list, char **envp);
-
-//Builtin
-	//CD
-void		ft_cd(t_ast *tree, char **env, t_minishell *minishell);
-bool		cd_home(char **env);
-bool		cd_relative(char *rout, char **env);
-void		cd_error(char *path);
-void		point_maker(char **point, char *step);
-void		ft_cd_free_mat(char **path);
-int			ft_chdir(char *order, char **env);
-void		oldpwd_update(char **env);
-void		pwd_update(char **env);
-	//PWD
-void		ft_pwd(t_minishell *minishell, char **env);
-	//ECHO
-void		ft_echo(t_ast *ast, t_minishell *minishell);
-	//ENV
-void		ft_env(char **env, t_minishell *minishell);
-	//EXPORT
-void		ft_export(t_ast *ast, t_minishell *minishell);
-int			var_len(char *str);
-void		export_print(char **env);
-void		ft_putenv_fd(char *s);
-	//UNSET
-void		ft_unset(t_ast *ast, t_minishell *minishell);
-void		ft_exit(t_minishell **minishell, t_ast *ast);
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);
@@ -198,23 +143,8 @@ t_idenlst	*ft_lstnew_identifier(t_token *token);
 void		ft_lstadd_identifier(t_idenlst **lst, t_idenlst *new);
 void		ft_add_identifier_front(t_idenlst **lst, t_idenlst *new);
 
-t_token		*get_next_token(t_input *input);
-
 int			check_equal(char *text);
 void		ft_expanser(t_minishell *minishell, char **envp);
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
-
-//sygnal
-void		sigint_signal(int signal_number);
-void		sigquit_signal(int flag);
-
-//others
-void		ft_enter(void);
-void		ft_close(void);
-
-//memory
-void		free_ast(t_ast **ast);
-void		*free_split(char **str);
-void		ft_list_clear(t_assign **list);
 
 #endif

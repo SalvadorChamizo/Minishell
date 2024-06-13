@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:46:42 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 11:07:45 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:30:11 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	s_quote_case(t_input *mshll, t_token *nt, char *rt)
 	}
 	else
 	{
-		printf("bash: syntax error: single quote do not close\n");
+		ft_putstr_fd("bash: syntax error: single quote do not close\n", 2);
 		nt->value = NULL;
 		return ;
 	}
@@ -59,7 +59,7 @@ void	d_quote_case(t_input *mshll, t_token *nt, char *rt)
 	}
 	else
 	{
-		printf("bash: syntax error: double quote do not close\n");
+		ft_putstr_fd("bash: syntax error: double quote do not close\n", 2);
 		nt->value = NULL;
 		return ;
 	}

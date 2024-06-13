@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 12:10:54 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:31:45 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ t_token	*get_next_token(t_input *minishell)
 	newtok = malloc(sizeof(t_token));
 	if (!newtok)
 		return (NULL);
-	newtok->value = NULL;
 	while (ret[minishell->pos])
 	{
 		ft_skip_spaces(minishell, ret, newtok);
