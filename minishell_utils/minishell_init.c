@@ -6,13 +6,13 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:33:38 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:55:12 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-char *readline_prompt()
+char	*readline_prompt(void)
 {
 	char	*computer;
 	char	*prompt;
@@ -30,7 +30,7 @@ char *readline_prompt()
 	free(computer);
 	ret2 = ft_strjoin(RED"", ret);
 	free(ret);
-    prompt = ft_strjoin(ret2, ""RESET);
+	prompt = ft_strjoin(ret2, ""RESET);
 	free(ret2);
 	return (prompt);
 }
@@ -39,15 +39,12 @@ int	input_init(t_input *input, t_minishell *minishell)
 {
 	char	*prompt;
 
-	sigquit_signal(0);
+	signal(SIGQUIT, SIG_IGN);
 	input->pos = 0;
 	input->error = 0;
 	input->line = NULL;
 	minishell->pipe_check = 0;
 	minishell->pipe_num = 0;
-	minishell->heredoc_check = 0;
-	minishell->infile_check = 0;
-	minishell->outfile_check = 0;
 	prompt = readline_prompt();
 	input->line = readline(prompt);
 	if (input->line == NULL && isatty(STDIN_FILENO))
@@ -64,7 +61,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 		return (1);
 	}
 	free(prompt);
-	sigquit_signal(1);
+	signal(SIGQUIT, quit_signal);
 	return (0);
 }
 

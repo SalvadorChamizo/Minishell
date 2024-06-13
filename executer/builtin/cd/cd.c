@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/10 18:02:36 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:09:02 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_cd(t_ast *tree, char **env, t_minishell *minishell)
 	if (tree->left->left)
 	{
 		minishell->status = 1;
-		printf("bash: cd: too many arguments\n");
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
 		return ;
 	}
 	if (tree->left->token->value[0] == '/')

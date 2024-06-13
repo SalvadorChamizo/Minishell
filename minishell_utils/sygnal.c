@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 17:58:03 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:57:04 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,10 @@ void	sigint_signal(int signal_number)
 void	quit_signal(int signal_number)
 {
 	(void)signal_number;
-	printf("Quit (core dumped)\n");
-	kill (g_command_sig, SIGQUIT);
-}
-
-void	sigquit_signal(int flag)
-{
-	struct sigaction	sa;
-
-	memset(&sa, 0, sizeof(sa));
-	if (flag == 1)
-		sa.sa_handler = quit_signal;
-	else
-		sa.sa_handler = SIG_IGN;
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	if (g_command_sig)
 	{
-		perror("sigaction");
-		return ;
+		ft_putstr_fd("Quit (core dumped)\n", 2);
+		kill(g_command_sig, SIGQUIT);
+		g_command_sig = 0;
 	}
 }

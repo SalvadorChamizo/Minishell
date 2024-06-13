@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:01:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:21:15 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void	ft_do_line(t_minishell *minishell)
 {
 	minishell->input->pos = 0;
 	minishell->ast = ft_expr(minishell->input);
-	//print_ast(minishell->ast);
 	ft_expanser(minishell, minishell->env);
-	//print_ast(minishell->ast);
 	ft_executer(minishell->ast, minishell);
 	dup2(minishell->stdin_fd, STDIN_FILENO);
 	dup2(minishell->stdout_fd, STDOUT_FILENO);
@@ -45,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 		if (input_init(minishell->input, minishell) == 1)
 		{
 			ft_close();
-			exit(130);
+			exit(0);
 		}
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);

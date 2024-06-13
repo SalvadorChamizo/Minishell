@@ -17,14 +17,13 @@ BOLD    = \033[1m
 RED     = \033[31;1m
 
 FILES =	main \
-		logo \
-		init/minishell_init \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
 		tokenizer/tokenizer_quote \
 		parser/parser_fda \
 		parser/parser_fda_utils \
 		parser/parser_fda_error \
+		parser/parser_lva \
 		parser/parser \
 		parser/parser_utils \
 		parser/parser_ast_nodes \
@@ -37,7 +36,6 @@ FILES =	main \
 		expanser/expanser_command \
 		expanser/expanser_heredoc \
 		expanser/expanser \
-		signal/sygnal \
 		executer/builtin/cd/cd \
 		executer/builtin/cd/cd_utils \
 		executer/builtin/cd/cd_relative \
@@ -56,7 +54,10 @@ FILES =	main \
 		executer/executer_pipe \
 		executer/executer_pipe_utils \
 		executer/executer_redirect \
-		manage_memory/free_ast \
+		minishell_utils/logo \
+		minishell_utils/minishell_init \
+		minishell_utils/sygnal \
+		minishell_utils/free_ast \
 
 BNS_FILES = 
 

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/12 13:06:11 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:14:36 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,33 +76,6 @@ int	finish_fda(t_token **token, int state, int level)
 	{
 		syntax_problem(*token, level, state);
 		return (0);
-	}
-}
-
-void	is_lva(t_input *input, t_token *token, char **env)
-{
-	int		ret;
-	char	*str;
-
-	ret = input->pos;
-	str = NULL;
-	while (ft_isspace(input->line[ret]))
-		ret++;
-	if (token->value && input->line[ret] == '\0')
-	{
-		ret = 0;
-		while (env[ret])
-		{
-			if (!ft_strncmp(env[ret], "_=", 2))
-				break ;
-			ret++;
-		}
-		if (!env[ret] || !ft_strncmp(token->value, "$_", 2))
-			return ;
-		free(env[ret]);
-		str = ft_strjoin("_=", token->value);
-		env[ret] = ft_strdup(str);
-		free(str);
 	}
 }
 
