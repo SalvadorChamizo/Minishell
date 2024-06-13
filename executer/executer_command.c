@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 19:36:46 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:00:32 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,13 @@ void	simple_command_aux(t_ast *ast, t_minishell *minishell, char *new_text)
 	}
 }
 
+/*void sigquit_handler(int sig_num) 
+{
+	(void)sig_num;
+	printf("Quit (core dumped)\n");
+    exit(3); // Código de salida 3 para indicar que el proceso fue terminado por SIGQUIT
+}*/
+
 void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 {
 	pid_t	pid;
@@ -163,6 +170,9 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 	else
 	{
 		waitpid(pid, &status, 0);
-		minishell->status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+			minishell->status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			minishell->status = WTERMSIG(status) + 128;
 	}
 }
