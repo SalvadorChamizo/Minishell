@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 15:37:29 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/13 12:56:43 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 {
 	char	*prompt;
 
-	sigquit_signal(0);
+	signal(SIGQUIT, SIG_IGN);
 	input->pos = 0;
 	input->error = 0;
 	input->line = NULL;
@@ -57,7 +57,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 		return (1);
 	}
 	free(prompt);
-	sigquit_signal(1);
+	signal(SIGQUIT, quit_signal);
 	return (0);
 }
 
