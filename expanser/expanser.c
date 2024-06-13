@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 15:41:23 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:53:09 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,47 @@ int	check_assign_env(t_ast *ast, char **env)
 	return (0);
 }
 
+void	expand_pipefd(t_ast *ast, int flag)
+{
+	if (ast == NULL)
+		return ;
+	if (ast->type == N_PIPELINE && ast->right->type == N_PIPELINE)
+	{
+		pipe(ast->token->pipefd);
+		printf("Caso 1\n");
+		printf("pipefd[0]: %d\npipefd[1]: %d\n", ast->token->pipefd[0], ast->token->pipefd[1]);
+		ast->left->token->fd_1 = ast->token->pipefd[1];
+		ast->left->token->fd_aux1 = ast->token->pipefd[1];
+		ast->left->token->fd_aux0 = ast->token->pipefd[0];
+		if (flag == 0)
+			ast->left->token->fd_0 = ast->token->pipefd[0];
+		if (ast->right->left->type == N_COMMAND)
+		{
+			ast->right->left->token->fd_0 = ast->token->pipefd[0];
+			ast->right->left->token->fd_aux1 = ast->token->pipefd[1];
+			ast->right->left->token->fd_aux0 = ast->token->pipefd[0];
+		}
+	}
+	else if (ast->type == N_PIPELINE && ast->right->type == N_COMMAND)
+	{
+		pipe(ast->token->pipefd);
+		printf("Caso 2\n");
+		printf("pipefd[0]: %d\npipefd[1]: %d\n", ast->token->pipefd[0], ast->token->pipefd[1]);
+		ast->left->token->fd_1 = ast->token->pipefd[1];
+		if (flag == 0)
+			ast->left->token->fd_0 = ast->token->pipefd[0];
+		ast->left->token->fd_aux1 = ast->token->pipefd[1];
+		ast->left->token->fd_aux0 = ast->token->pipefd[0];
+		//ast->left->token->fd_0 = ast->token->pipefd[0];
+		ast->right->token->fd_0 = ast->token->pipefd[0];
+		ast->right->token->fd_aux0 = ast->token->pipefd[0];
+		ast->right->token->fd_aux1 = ast->token->pipefd[1];
+		ast->right->token->fd_1 = ast->token->pipefd[1];
+	}
+	if (ast->type == N_PIPELINE)
+		expand_pipefd(ast->right, 1);
+}
+
 void	ft_expanser(t_minishell *minishell, char **envp)
 {
 	t_ast			*ast;
@@ -124,6 +165,7 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	if (!path)
 		return ;
 	expand_command_3(ast, path);
+	expand_pipefd(ast, 0);
 	check_assign_env(ast, minishell->env);
 	store_assignment(ast, &minishell->list);
 	free_split(path);

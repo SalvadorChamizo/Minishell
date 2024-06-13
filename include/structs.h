@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 11:58:02 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:45:30 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ typedef struct s_token
 	char		*value;
 	t_tokentype	type;
 	bool		space;
+	int			pipefd[2];
+	int			fd_1;
+	int			fd_0;
+	int			fd_aux1;
+	int			fd_aux0;
 }	t_token;
 
 typedef struct s_input
@@ -105,10 +110,13 @@ typedef struct s_minishell
 	int				status;
 	int				stdin_fd;
 	int				stdout_fd;
-	int				pipe_in[2];
-	int				pipe_out[2];
+	int				fd_in_redir;
+	int				fd_out_redir;
 	int				pipe_aux[2];
 	int				pipe_check;
+	int				infile_check;
+	int				outfile_check;
+	int				middle_count;
 }	t_minishell;
 
 //EXPANSER

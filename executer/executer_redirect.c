@@ -6,13 +6,13 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/12 12:28:39 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:57:26 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-void	ft_open_infile(t_ast *ast)
+void	ft_open_infile(t_ast *ast, t_minishell *minishell)
 {
 	int	fd;
 
@@ -24,10 +24,15 @@ void	ft_open_infile(t_ast *ast)
 			perror("open");
 		}
 		dup2(fd, STDIN_FILENO);
+		if (minishell->pipe_check)
+		{
+			minishell->infile_check = 1;
+			minishell->fd_in_redir = fd;
+		}
 	}
 }
 
-void	ft_open_outfile(t_ast *ast)
+void	ft_open_outfile(t_ast *ast, t_minishell *minishell)
 {
 	int	fd;
 
@@ -39,6 +44,11 @@ void	ft_open_outfile(t_ast *ast)
 			perror("open");
 		}
 		dup2(fd, STDOUT_FILENO);
+		if (minishell->pipe_check)
+		{
+			minishell->outfile_check = 1;
+			minishell->fd_out_redir = fd;
+		}
 	}
 	else
 	{
@@ -48,10 +58,15 @@ void	ft_open_outfile(t_ast *ast)
 			perror("open");
 		}
 		dup2(fd, STDOUT_FILENO);
+		if (minishell->pipe_check)
+		{
+			minishell->outfile_check = 1;
+			minishell->fd_out_redir = fd;
+		}
 	}
 }
 
-void	ft_open_outfile_2(t_ast *ast)
+void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 {
 	int	fd;
 
@@ -63,6 +78,11 @@ void	ft_open_outfile_2(t_ast *ast)
 			perror("open");
 		}
 		dup2(fd, STDOUT_FILENO);
+		if (minishell->pipe_check)
+		{
+			minishell->outfile_check = 1;
+			minishell->fd_out_redir = fd;
+		}
 	}
 	else
 	{
@@ -72,6 +92,11 @@ void	ft_open_outfile_2(t_ast *ast)
 			perror("open");
 		}
 		dup2(fd, STDOUT_FILENO);
+		if (minishell->pipe_check)
+		{
+			minishell->outfile_check = 1;
+			minishell->fd_out_redir = fd;
+		}
 	}
 }
 
@@ -85,6 +110,36 @@ static void	ft_heredoc_sigint_handler(int signum)
 		exit(SIGINT);
 	}
 }
+
+/*void	ft_heredoc_pipe(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
+{
+	char	*buffer;
+	char	*delimiter;
+
+	delimiter = ast->left->token->value;
+	while (1)
+	{
+		buffer = readline("> ");
+		if (buffer == NULL && isatty(STDIN_FILENO))
+		{
+			free(buffer);
+			ft_putstr_fd("bash: warning: here-document at line ", 2);
+			ft_putnbr_fd(minishell->line_number, 2);
+			ft_putstr_fd(" delimited by end of file\n", 2);
+			exit (0);
+		}
+		if (!ft_strcmp(delimiter, buffer))
+			break ;
+		if (ft_check_dollar(buffer))
+			buffer = ft_expand_heredoc(buffer, minishell);
+		write(pipe_doc[1], buffer, ft_strlen(buffer));
+		write(pipe_doc[1], "\n", 1);
+		free(buffer);
+	}
+	free(buffer);
+	close(pipe_doc[1]);
+	exit(0);	
+}*/
 
 void	ft_child_heredoc(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
 {
@@ -124,8 +179,8 @@ void	ft_open_heredoc(t_ast *ast, t_minishell *minishell)
 
 	buffer = NULL;
 	signal(SIGINT, ft_heredoc_sigint_handler);
-	//if (minishell->pipe_check != 1)
-	//{
+	if (minishell->pipe_check != 1)
+	{
 		pipe(pipe_doc);
 		pid = fork();
 		g_command_sig = pid;
@@ -138,17 +193,18 @@ void	ft_open_heredoc(t_ast *ast, t_minishell *minishell)
 		dup2(pipe_doc[0], STDIN_FILENO);
 		close(pipe_doc[0]);
 		close(pipe_doc[1]);
-	//}
-	/*else
+	}
+	else
 	{
-		pipe(minishell->pipe_aux);
 		//close(pipe_doc[0]);
+		pipe(minishell->pipe_aux);
 		ft_child_heredoc(ast, minishell, minishell->pipe_aux);
-		dup2(minishell->pipe_aux[0], STDIN_FILENO);
-		close(minishell->pipe_aux[1]);
+		minishell->infile_check = 1;
+		minishell->fd_in_redir = minishell->pipe_aux[0];
+		//close(minishell->pipe_aux[0]);
 		//close(pipe_doc[0]);
 		//close(pipe_doc[1]);
-	}*/
+	}
 
 }
 
@@ -157,11 +213,11 @@ void	ft_redirect(t_ast *ast, t_minishell *minishell)
 	if (ast->right)
 		ft_executer(ast->right, minishell);
 	if (ft_strcmp(ast->token->value, "<") == 0)
-		ft_open_infile(ast->left);
+		ft_open_infile(ast->left, minishell);
 	else if (ft_strcmp(ast->token->value, ">") == 0)
-		ft_open_outfile(ast->left);
+		ft_open_outfile(ast->left, minishell);
 	else if (ft_strcmp(ast->token->value, ">>") == 0)
-		ft_open_outfile_2(ast->left);
+		ft_open_outfile_2(ast->left, minishell);
 	else if (ft_strcmp(ast->token->value, "<<") == 0)
 	{
 		ft_open_heredoc(ast, minishell);

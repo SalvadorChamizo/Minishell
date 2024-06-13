@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 19:29:01 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:46:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int	input_init(t_input *input, t_minishell *minishell)
 	input->error = 0;
 	input->line = NULL;
 	minishell->pipe_check = 0;
+	minishell->middle_count = 0;
+	minishell->infile_check = 0;
+	minishell->outfile_check = 0;
 	user = getenv("USER");
 	computer = getenv("SESSION_MANAGER");
 	computer = ft_substr(computer, 6, 6);
