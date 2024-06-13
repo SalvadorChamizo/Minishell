@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
 /*   Updated: 2024/06/13 10:40:38 by schamizo         ###   ########.fr       */
@@ -76,7 +76,7 @@ int			ft_redirection(t_token *token, int state);
 int			ft_word(t_token *token, int state);
 int			ft_pipe(t_token *token, int state);
 int			ft_parents(t_token *token, int state);
-int			ft_parser_fda(t_input *input);
+int			ft_parser_fda(t_minishell *minishell);
 
 //Expanser
 void		expand_redir(t_ast *ast, t_ast *prev, int flag);
