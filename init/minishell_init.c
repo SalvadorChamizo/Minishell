@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:04:36 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:33:38 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ int	input_init(t_input *input, t_minishell *minishell)
 	input->line = NULL;
 	minishell->pipe_check = 0;
 	minishell->pipe_num = 0;
+	minishell->heredoc_check = 0;
+	minishell->infile_check = 0;
+	minishell->outfile_check = 0;
 	prompt = readline_prompt();
 	input->line = readline(prompt);
 	if (input->line == NULL && isatty(STDIN_FILENO))
