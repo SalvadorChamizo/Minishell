@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executer_pipe.c                                    :+:      :+:    :+:   */
+/*   executer_pipe_prueba.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 14:59:55 by schamizo         ###   ########.fr       */
+/*   Created: 2024/06/12 15:39:26 by schamizo          #+#    #+#             */
+/*   Updated: 2024/06/12 20:14:12 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 {
-	int	i;
-
-	i = 0;
 	if (ast->type != N_COMMAND)
 	{
 		minishell->pipe_check = 1;
@@ -28,34 +25,20 @@ void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 		minishell->pipe_check = 1;
 		ft_executer(ast->right, minishell);
 	}
-	dup2(ast->token->fd_0, STDIN_FILENO);
-	dup2(ast->token->fd_1, STDOUT_FILENO);
+	close(minishell->pipe_in[1]);
 	if (minishell->pipe_check == 1)
-	{
-		if (minishell->infile_check == 1)
-		{
-			dup2(minishell->stdin_fd, STDIN_FILENO);
-			dup2(minishell->fd_in_redir, STDIN_FILENO);
-			close(minishell->fd_in_redir);
-		}
-		if (minishell->outfile_check == 1)
-		{
-			dup2(minishell->stdout_fd, STDOUT_FILENO);
-			dup2(minishell->fd_out_redir, STDOUT_FILENO);
-			close(minishell->fd_out_redir);
-		}
-	}
-	minishell->middle_count++;
-	while (i < minishell->pipe_num)
-		close(minishell->store_fds[i++]);
+		dup2(minishell->pipe_aux[0], STDIN_FILENO);
+	else
+		dup2(minishell->pipe_in[0], STDIN_FILENO);
+	close(minishell->pipe_out[0]);
+	dup2(minishell->pipe_out[1], STDOUT_FILENO);
+	close(minishell->pipe_in[0]);
+	close(minishell->pipe_out[1]);
 	ft_simple_command2(ast, minishell);
 }
 
 void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 {
-	int i;
-
-	i = 0;
 	if (ast->type != N_COMMAND)
 	{
 		minishell->pipe_check = 1;
@@ -67,32 +50,18 @@ void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 		minishell->pipe_check = 1;
 		ft_executer(ast->right, minishell);
 	}
-	dup2(ast->token->fd_1, STDOUT_FILENO);
+	close(minishell->pipe_out[0]);
+	close(minishell->pipe_out[1]);
+	close(minishell->pipe_in[0]);
 	if (minishell->pipe_check == 1)
-	{
-		if (minishell->infile_check == 1)
-		{
-			dup2(minishell->stdin_fd, STDIN_FILENO);
-			dup2(minishell->fd_in_redir, STDIN_FILENO);
-			close(minishell->fd_in_redir);
-		}
-		if (minishell->outfile_check == 1)
-		{
-			dup2(minishell->stdout_fd, STDOUT_FILENO);
-			dup2(minishell->fd_out_redir, STDOUT_FILENO);
-			close(minishell->fd_out_redir);
-		}
-	}
-	while (i < minishell->pipe_num)
-		close(minishell->store_fds[i++]);
+		dup2(minishell->pipe_aux[0], STDIN_FILENO);
+	dup2(minishell->pipe_in[1], STDOUT_FILENO);
+	close(minishell->pipe_in[1]);
 	ft_simple_command2(ast, minishell);
 }
 
-void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell)
+void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int flag)
 {
-	int	i;
-
-	i = 0;
 	if (ast->type != N_COMMAND)
 	{
 		minishell->pipe_check = 1;
@@ -104,24 +73,28 @@ void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell)
 		minishell->pipe_check = 1;
 		ft_executer(ast->right, minishell);
 	}
-	dup2(ast->token->fd_0, STDIN_FILENO);
-	if (minishell->pipe_check == 1)
+	if (flag == 1)
 	{
-		if (minishell->infile_check == 1)
-		{
-			dup2(minishell->stdin_fd, STDIN_FILENO);
-			dup2(minishell->fd_in_redir, STDIN_FILENO);
-			close(minishell->fd_in_redir);
-		}
-		if (minishell->outfile_check == 1)
-		{
-			dup2(minishell->stdout_fd, STDOUT_FILENO);
-			dup2(minishell->fd_out_redir, STDOUT_FILENO);
-			close(minishell->fd_out_redir);
-		}
+		close(minishell->pipe_in[0]);
+		close(minishell->pipe_in[1]);
+		close(minishell->pipe_out[1]);
+		if (minishell->pipe_check == 1)
+			dup2(minishell->pipe_aux[0], STDIN_FILENO);
+		else
+			dup2(minishell->pipe_out[0], STDIN_FILENO);
+		close(minishell->pipe_out[0]);
 	}
-	while (i < minishell->pipe_num)
-		close(minishell->store_fds[i++]);
+	if (flag == 0)
+	{
+		close(minishell->pipe_out[0]);
+		close(minishell->pipe_out[1]);
+		close(minishell->pipe_in[1]);
+		if (minishell->pipe_check == 1)
+			dup2(minishell->pipe_aux[0], STDIN_FILENO);
+		else
+			dup2(minishell->pipe_in[0], STDIN_FILENO);
+		close(minishell->pipe_in[0]);
+	}
 	ft_simple_command2(ast, minishell);
 }
 
@@ -130,10 +103,15 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell, int flag)
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		status;
-	int		i;
 
 	status = 0;
-	i = 0;
+	if (flag == 0)
+	{
+		if (pipe(minishell->pipe_in) == -1)
+			manage_error("pipe");
+		if (pipe(minishell->pipe_out) == -1)
+			manage_error("pipe");
+	}
 	pid_left = fork();
 	if (!pid_left)
 	{
@@ -146,23 +124,27 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell, int flag)
 	{
 		if (ast->right->type == N_PIPELINE)
 		{
-			close(ast->token->pipefd[1]);
 			ft_pipeline(ast->right, minishell, 1);
-			while (i < minishell->pipe_num)
-					close(minishell->store_fds[i++]);
 			while (wait(&status) > 0)
 				continue ;
 		}
 		else
 		{
-			close(ast->token->pipefd[1]);
+			if (flag == 0)
+			{
+				close(minishell->pipe_in[1]);
+				close(minishell->pipe_out[0]);
+				close(minishell->pipe_out[1]);
+			}
 			pid_right = fork();
 			if (!pid_right)
-				ft_pipe_child_right(ast->right, minishell);
+				ft_pipe_child_right(ast->right, minishell, flag);
 			else
 			{
-				while (i < minishell->pipe_num)
-					close(minishell->store_fds[i++]);
+				close(minishell->pipe_in[0]);
+				close(minishell->pipe_in[1]);
+				close(minishell->pipe_out[0]);
+				close(minishell->pipe_out[1]);
 				if (flag == 0)
 					while (wait(&status) > 0)
 						continue ;

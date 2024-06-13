@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 17:50:26 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:20:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,13 @@ void		ft_simple_command(t_ast *ast, t_minishell *minishell);
 
 //executer_pipe
 void		ft_pipe_child_left(t_ast *ast, t_minishell *minishell);
-void		ft_pipe_child_right(t_ast *ast, t_minishell *minishell, int flag);
+void		ft_pipe_child_right(t_ast *ast, t_minishell *minishell);
 void		ft_pipeline(t_ast *ast, t_minishell *minishell, int flag);
 
 //executer_redirect
-void		ft_open_infile(t_ast *ast);
-void		ft_open_outfile(t_ast *ast);
-void		ft_open_outfile_2(t_ast *ast);
+void		ft_open_infile(t_ast *ast, t_minishell *minishell);
+void		ft_open_outfile(t_ast *ast, t_minishell *minishell);
+void		ft_open_outfile_2(t_ast *ast, t_minishell *minishell);
 void		ft_open_heredoc(t_ast *ast, t_minishell *minishell);
 void		ft_redirect(t_ast *ast, t_minishell *minishell);
 

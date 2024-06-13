@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 13:11:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/01 18:16:49 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:54:42 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ t_ast	*bi_node(t_ast *left, t_token *op, t_ast *right)
 	ast_node = malloc(sizeof(t_ast));
 	ast_node->type = return_type(op);
 	ast_node->token = op;
+	ast_node->token->fd_aux0 = 0;
+	ast_node->token->fd_aux1 = 1;
 	ast_node->left = left;
 	ast_node->right = right;
 	return (ast_node);

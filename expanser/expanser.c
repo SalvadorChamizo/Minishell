@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/12 12:29:49 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:02:28 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,68 @@ int	check_assign_env(t_ast *ast, char **env)
 	return (0);
 }
 
+int	count_pipes(t_ast *ast)
+{
+	int	i;
+
+	i = 0;
+	if (ast == NULL)
+		return (0);
+	while (ast->type == N_PIPELINE)
+	{
+		i++;
+		ast = ast->right;
+	}
+	return (i);
+}
+
+void	ft_store_fds(t_ast *ast, t_minishell *minishell)
+{
+	int	i;
+	int *stored;
+
+	i = 0;
+	if (!ast)
+		return ;
+	minishell->pipe_num = count_pipes(ast) * 2;
+	stored = malloc(sizeof(int) * minishell->pipe_num);
+	while (ast->type == N_PIPELINE)
+	{
+		stored[i] = ast->token->pipefd[0];
+		i++;
+		stored[i] = ast->token->pipefd[1];
+		i++;
+		ast = ast->right;
+	}
+	minishell->store_fds = stored;
+}
+
+void	expand_pipefd(t_ast *ast, int flag)
+{
+	if (ast == NULL)
+		return ;
+	if (ast->type == N_PIPELINE && ast->right->type == N_PIPELINE)
+	{
+		pipe(ast->token->pipefd);
+		ast->left->token->fd_1 = ast->token->pipefd[1];
+		if (flag == 0)
+			ast->left->token->fd_0 = ast->token->pipefd[0];
+		if (ast->right->left->type == N_COMMAND)
+			ast->right->left->token->fd_0 = ast->token->pipefd[0];
+	}
+	else if (ast->type == N_PIPELINE && ast->right->type == N_COMMAND)
+	{
+		pipe(ast->token->pipefd);
+		ast->left->token->fd_1 = ast->token->pipefd[1];
+		if (flag == 0)
+			ast->left->token->fd_0 = ast->token->pipefd[0];
+		ast->right->token->fd_0 = ast->token->pipefd[0];
+		ast->right->token->fd_1 = ast->token->pipefd[1];
+	}
+	if (ast->type == N_PIPELINE)
+		expand_pipefd(ast->right, 1);
+}
+
 void	ft_expanser(t_minishell *minishell, char **envp)
 {
 	t_ast			*ast;
@@ -124,6 +186,8 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	if (!path)
 		return ;
 	expand_command_3(ast, path);
+	expand_pipefd(ast, 0);
+	ft_store_fds(ast, minishell);
 	check_assign_env(ast, minishell->env);
 	store_assignment(ast, &minishell->list);
 	free_split(path);
