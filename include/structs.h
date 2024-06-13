@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 11:45:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:28:14 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ typedef struct s_minishell
 	int				infile_check;
 	int				outfile_check;
 	int				middle_count;
+	int				*store_fds;
+	int				pipe_num;
 }	t_minishell;
 
 //EXPANSER

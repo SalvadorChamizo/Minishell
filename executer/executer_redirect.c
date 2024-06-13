@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 10:57:26 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:56:17 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,16 @@ static void	ft_heredoc_sigint_handler(int signum)
 	}
 }
 
-/*void	ft_heredoc_pipe(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
+void	ft_heredoc_pipe(t_ast *ast, t_minishell *minishell)
 {
 	char	*buffer;
 	char	*delimiter;
+	int		fd;
 
 	delimiter = ast->left->token->value;
+	fd = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+		manage_error("open");
 	while (1)
 	{
 		buffer = readline("> ");
@@ -132,14 +136,18 @@ static void	ft_heredoc_sigint_handler(int signum)
 			break ;
 		if (ft_check_dollar(buffer))
 			buffer = ft_expand_heredoc(buffer, minishell);
-		write(pipe_doc[1], buffer, ft_strlen(buffer));
-		write(pipe_doc[1], "\n", 1);
+		write(fd, buffer, ft_strlen(buffer));
+		write(fd, "\n", 1);
 		free(buffer);
 	}
-	free(buffer);
-	close(pipe_doc[1]);
-	exit(0);	
-}*/
+	close(fd);
+	minishell->fd_in_redir = open(".heredoc_tmp", O_RDONLY);
+	if (minishell->fd_in_redir < 0)
+	{
+		unlink(".heredoc_tmp");
+		manage_error("open");
+	}
+}
 
 void	ft_child_heredoc(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
 {
@@ -198,9 +206,9 @@ void	ft_open_heredoc(t_ast *ast, t_minishell *minishell)
 	{
 		//close(pipe_doc[0]);
 		pipe(minishell->pipe_aux);
-		ft_child_heredoc(ast, minishell, minishell->pipe_aux);
+		ft_heredoc_pipe(ast, minishell);
 		minishell->infile_check = 1;
-		minishell->fd_in_redir = minishell->pipe_aux[0];
+		//minishell->fd_in_redir = minishell->pipe_aux[0];
 		//close(minishell->pipe_aux[0]);
 		//close(pipe_doc[0]);
 		//close(pipe_doc[1]);
