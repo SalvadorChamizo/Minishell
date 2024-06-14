@@ -54,6 +54,7 @@ FILES =	main \
 		executer/executer \
 		executer/executer_command \
 		executer/executer_pipe \
+		executer/executer_pipe_utils \
 		executer/executer_redirect \
 		minishell_utils/logo \
 		minishell_utils/minishell_init \
