@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:02:28 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:30:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	ft_store_fds(t_ast *ast, t_minishell *minishell)
 	int *stored;
 
 	i = 0;
-	if (!ast)
+	if (!ast || ast->type != N_PIPELINE)
 		return ;
 	minishell->pipe_num = count_pipes(ast) * 2;
 	stored = malloc(sizeof(int) * minishell->pipe_num);

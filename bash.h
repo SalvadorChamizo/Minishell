@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:20:07 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:34:42 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,18 @@
 # include <fcntl.h>
 # include <stdarg.h>
 # include <ctype.h>
+# include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/ioctl.h>
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/ioctl.h>
 # include <signal.h>
 # include <termcap.h>
 # include <curses.h>
 # include <dirent.h>
-# include <sys/ioctl.h>
+# include <stdbool.h>
 
 # define RED        "\x1b[31m"
 # define GREEN      "\x1b[32m"
@@ -56,11 +58,11 @@ extern int		g_command_sig;
 void		expand_quotes(t_ast *ast);
 
 //expanser_heredoc
-char	*remove_dollar_heredoc(char	*str);
-char	*heredoc_dollar_env(char *str, char **env, int *flag);
-char	*heredoc_dollar_list(char *str, t_assign *list, int *flag);
-char	*expand_status_heredoc(char *str, t_minishell *minishell);
-char	*ft_expand_heredoc(char *str, t_minishell *minishell);
+char		*remove_dollar_heredoc(char	*str);
+char		*heredoc_dollar_env(char *str, char **env, int *flag);
+char		*heredoc_dollar_list(char *str, t_assign *list, int *flag);
+char		*expand_status_heredoc(char *str, t_minishell *minishell);
+char		*ft_expand_heredoc(char *str, t_minishell *minishell);
 
 //expanser_dollar
 
@@ -85,6 +87,7 @@ void		ft_assign_add_back(t_assign **lst, t_assign *new);
 void		store_assignment(t_ast *ast, t_assign **list);
 
 //expanser_command
+bool		ft_expanser_directory(t_ast *ast);
 char		**ft_get_path(char **envp);
 void		expand_builtin(t_ast *ast);
 void		expand_command(t_ast *ast, t_ast *prev, int flag);
@@ -108,10 +111,15 @@ char		**ft_command_args(t_ast *ast);
 void		ft_simple_command2(t_ast *ast, t_minishell *minishell);
 void		ft_simple_command(t_ast *ast, t_minishell *minishell);
 
+//executer_pipe_utils
+int			ft_more_pipes(t_ast *ast, t_minishell *minishell, int flag);
+int			ft_pipeline_aux(t_ast *ast, t_minishell *minishell, int flag);
+
 //executer_pipe
 void		ft_pipe_child_left(t_ast *ast, t_minishell *minishell);
 void		ft_pipe_child_right(t_ast *ast, t_minishell *minishell);
 void		ft_pipeline(t_ast *ast, t_minishell *minishell, int flag);
+
 
 //executer_redirect
 void		ft_open_infile(t_ast *ast, t_minishell *minishell);

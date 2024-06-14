@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 11:02:50 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:53:59 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	env_exist(char **env, char *str)
 
 	i = 0;
 	j = 0;
-	while (str[j] != '=' && str[j] != '\0')
+	while (str[j] != '\0' && str[j] != '=' && str[j] != '+')
 		j++;
 	if (str[j] == '\0')
 		return (0);
@@ -58,8 +58,13 @@ int	env_exist(char **env, char *str)
 	{
 		if (!ft_strncmp(env[i], str, j))
 		{
-			free(env[i]);
-			env[i] = ft_strdup(str);
+			if (str[j] == '+')
+				ft_export_addiction(str, &env[i]);
+			else
+			{
+				free(env[i]);
+				env[i] = ft_strdup(str);
+			}
 			return (1);
 		}
 		i++;
@@ -96,11 +101,14 @@ void	ft_export(t_ast *ast, t_minishell *minishell)
 
 	tmp = ast->left;
 	i = 0;
+	minishell->status = 0;
 	if (!tmp)
 		export_print(minishell->env);
 	while (tmp)
 	{
-		if (ft_strchr(tmp->token->value, '='))
+		if (!identifier_check(tmp->token->value))
+			minishell->status = 1;
+		else if (ft_strchr(tmp->token->value, '='))
 		{
 			if (!env_exist(minishell->env, tmp->token->value))
 				ft_newenv(&minishell->env, tmp->token->value);
@@ -109,5 +117,4 @@ void	ft_export(t_ast *ast, t_minishell *minishell)
 			list_check(tmp->token->value, minishell->list, &minishell->env);
 		tmp = tmp->left;
 	}
-	minishell->status = 0;
 }

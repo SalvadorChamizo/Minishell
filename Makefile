@@ -1,6 +1,6 @@
 NAME = minishell
 CC = clang
-FLAGS = -g -Wall -Werror -Wextra -Iinclude -fsanitize=address
+FLAGS = -g -Wall -Werror -Wextra -Iinclude #-fsanitize=address
 READLINE = -lreadline -ltinfo
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
@@ -35,6 +35,7 @@ FILES =	main \
 		expanser/expanser_assign \
 		expanser/expanser_command \
 		expanser/expanser_heredoc \
+		expanser/expanser_directory \
 		expanser/expanser \
 		executer/builtin/cd/cd \
 		executer/builtin/cd/cd_utils \
@@ -45,6 +46,7 @@ FILES =	main \
 		executer/builtin/echo/echo \
 		executer/builtin/env/env \
 		executer/builtin/export/export \
+		executer/builtin/export/export_check \
 		executer/builtin/export/export_utils \
 		executer/builtin/export/export_print \
 		executer/builtin/unset/unset \
@@ -52,6 +54,7 @@ FILES =	main \
 		executer/executer \
 		executer/executer_command \
 		executer/executer_pipe \
+		executer/executer_pipe_utils \
 		executer/executer_redirect \
 		minishell_utils/logo \
 		minishell_utils/minishell_init \

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 14:28:14 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:36:18 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ typedef struct s_minishell
 	t_input			*input;
 	t_ast			*ast;
 	t_assign		*list;
-	struct termios	termios;
 	char			**env;
 	int				line_number;
 	int				status;
@@ -112,11 +111,10 @@ typedef struct s_minishell
 	int				stdout_fd;
 	int				fd_in_redir;
 	int				fd_out_redir;
-	int				pipe_aux[2];
 	int				pipe_check;
+	int				heredoc_check;
 	int				infile_check;
 	int				outfile_check;
-	int				middle_count;
 	int				*store_fds;
 	int				pipe_num;
 }	t_minishell;
