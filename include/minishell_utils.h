@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:21:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 11:58:58 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:49:36 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_tokentype	ft_operator(char *text);
 //sygnal
 void	    quit_signal(int signal_number);
 void		sigint_signal(int signal_number);
+void	    ft_heredoc_sigint_handler(int signal_number);
 
 //others
 void		ft_enter(void);
