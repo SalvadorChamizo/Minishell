@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:14:42 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/14 16:31:47 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:27:44 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	identifier_check(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '=')
+	if (str[i] == '=' || ft_isdigit(str[i]))
 	{
 		ft_putstr_fd("bash: export: `", 2);
 		ft_putstr_fd(str, 2);
