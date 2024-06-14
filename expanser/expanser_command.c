@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:29:35 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/14 14:01:02 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:33:35 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	expand_command2(t_ast *ast)
 		return ;
 	if (ft_expanser_directory(ast))
 		ast->type = N_DIRECTORY;
-	printf ("ast->type: %d\n", ast->type);
 	if (ast->type == N_COMMAND && ast->token->value[0] != '.'
 		&& ast->token->value[0] != '/')
 	{
