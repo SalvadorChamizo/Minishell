@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:32:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:30:50 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,6 @@ void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 			minishell->outfile_check = 1;
 			minishell->fd_out_redir = fd;
 		}
-	}
-}
-
-static void	ft_heredoc_sigint_handler(int signum)
-{
-	(void)signum;
-	if (g_command_sig == 0)
-	{
-		write(1, "\n", 1);
-		exit(SIGINT);
 	}
 }
 
