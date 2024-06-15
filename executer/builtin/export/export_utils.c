@@ -6,11 +6,28 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:32:04 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 13:18:54 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:06:17 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
+
+char	*export_str_builder(t_ast **tmp)
+{
+	char	*str;
+	char	*tep;
+
+	str = ft_strdup((*tmp)->token->value);
+	tep = NULL;
+	while ((*tmp)->left	&& (*tmp)->left->token->space == false)
+	{
+		(*tmp) = (*tmp)->left;
+		tep = ft_strjoin(str, (*tmp)->token->value);
+		free(str);
+		str = tep;
+	}
+	return (str);
+}
 
 void	new_env_write(char *str, char **newenv, int flag)
 {
@@ -30,6 +47,7 @@ void	new_env_write(char *str, char **newenv, int flag)
 		i++;
 		j++;
 	}
+	(*newenv)[j] = '\0';
 }
 
 void	new_env_manager(char *str, char **newenv)
@@ -50,9 +68,7 @@ void	new_env_manager(char *str, char **newenv)
 	}
 	else
 		*newenv = malloc(sizeof(char) * j + 1);
-	j = 0;
 	new_env_write(str, newenv, flag);
-	(*newenv)[i] = '\0';
 }
 
 void	ft_export_addiction(char *str, char **env)
@@ -62,7 +78,6 @@ void	ft_export_addiction(char *str, char **env)
 	int		i;
 
 	i = 0;
-	printf("Entra\n");
 	while (str[i] != '=')
 		i++;
 	new = ft_substr(str, i + 1, ft_strlen(str));

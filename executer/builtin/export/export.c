@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 13:16:55 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:03:49 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,24 +96,25 @@ void	list_check(char *var, t_assign *list, char ***env)
 void	ft_export(t_ast *ast, t_minishell *minishell)
 {
 	t_ast		*tmp;
-	int			i;
+	char		*str;
 
 	tmp = ast->left;
-	i = 0;
 	minishell->status = 0;
+	str = NULL;
 	if (!tmp)
 		export_print(minishell->env);
 	while (tmp)
 	{
-		if (!identifier_check(tmp->token->value))
+		str = export_str_builder(&tmp);
+		if (!identifier_check(str))
 			minishell->status = 1;
-		else if (ft_strchr(tmp->token->value, '='))
+		else if (ft_strchr(str, '='))
 		{
-			if (!env_exist(minishell->env, tmp->token->value))
-				ft_newenv(&minishell->env, tmp->token->value);
+			if (!env_exist(minishell->env, str))
+				ft_newenv(&minishell->env, str);
 		}
 		else
-			list_check(tmp->token->value, minishell->list, &minishell->env);
+			list_check(str, minishell->list, &minishell->env);
 		tmp = tmp->left;
 	}
 }
