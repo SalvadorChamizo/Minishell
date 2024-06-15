@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:49:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:12:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_child_aux(t_ast *ast, t_minishell *minishell)
 	{
 		minishell->pipe_check = 1;
 		ft_executer(ast->right, minishell);
-	}	
+	}
 }
 
 void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
@@ -57,7 +57,7 @@ void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 
 void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	ft_child_aux(ast, minishell);

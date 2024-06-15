@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:55:01 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:11:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,12 @@ void		ft_executer(t_ast *ast, t_minishell *minishell);
 void		manage_error(char *error);
 int			check_files(t_ast *ast);
 void		execute_builtin(t_ast *ast, t_minishell *minishell);
+
+//executer_command_utils
+char		*ft_remove_path(char *command);
+char		**ft_command_args_aux(t_ast *temp, char **args);
+char		**ft_command_args(t_ast *ast);
+int			ft_check_path(char **envp);
 
 //executer_command
 char		**ft_command_args(t_ast *ast);

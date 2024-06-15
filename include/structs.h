@@ -6,12 +6,12 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:36:18 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:57:09 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
 # include <stdbool.h>
 # include <termios.h>

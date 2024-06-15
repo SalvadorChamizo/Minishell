@@ -51,6 +51,7 @@ FILES =	main \
 		executer/builtin/exit/exit \
 		executer/executer \
 		executer/executer_command \
+		executer/executer_command_utils \
 		executer/executer_pipe \
 		executer/executer_pipe_utils \
 		executer/executer_redirect \
