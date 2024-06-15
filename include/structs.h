@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:57:09 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:55:43 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,19 @@ typedef struct s_idenlst
 	struct s_idenlst	*prev;
 }	t_idenlst;
 
+typedef struct s_heredoc
+{
+	char				*file;
+	int					fd;
+	struct s_heredoc	*next;
+}	t_heredoc;
+
 typedef struct s_minishell
 {
 	t_input			*input;
 	t_ast			*ast;
 	t_assign		*list;
+	t_heredoc		heredoc_lst;
 	char			**env;
 	int				line_number;
 	int				status;
