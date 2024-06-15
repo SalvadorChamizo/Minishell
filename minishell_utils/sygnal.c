@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 12:57:04 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:48:35 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	sigint_signal(int signal_number)
 		{
 			printf("\n");
 			kill(g_command_sig, SIGINT);
-			g_command_sig = 0;
 		}
 		else if (!g_command_sig)
 		{
@@ -39,6 +38,15 @@ void	quit_signal(int signal_number)
 	{
 		ft_putstr_fd("Quit (core dumped)\n", 2);
 		kill(g_command_sig, SIGQUIT);
-		g_command_sig = 0;
+	}
+}
+
+void	ft_heredoc_sigint_handler(int signal_number)
+{
+	(void)signal_number;
+	if (g_command_sig == 0)
+	{
+		write(1, "\n", 1);
+		exit(SIGINT);
 	}
 }

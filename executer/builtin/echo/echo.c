@@ -6,11 +6,26 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/08 11:51:29 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:54:34 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
+
+bool n_flag(char *str)
+{
+	int i;
+
+	i = 0;
+	if (str[i] != '-')
+		return (false);
+	i++;
+	while (str[i] == 'n')
+		i++;
+	if (str[i] != '\0' && !ft_isspace(str[i]))
+		return (false);
+	return (true);
+}
 
 void	echo_print(t_ast *tmp)
 {
@@ -34,7 +49,7 @@ void	ft_echo(t_ast *ast, t_minishell *minishell)
 		return ;
 	}
 	flag = 0;
-	if (!ft_strcmp(tmp->token->value, "-n"))
+	while (tmp && n_flag(tmp->token->value))
 	{
 		flag = 1;
 		tmp = tmp->left;

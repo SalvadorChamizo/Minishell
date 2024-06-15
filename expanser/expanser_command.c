@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:29:35 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/08 15:33:41 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:33:35 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	expand_command2(t_ast *ast)
 
 	if (ast == NULL)
 		return ;
-	if (ast->token->value[0] == '/')
+	if (ft_expanser_directory(ast))
 		ast->type = N_DIRECTORY;
 	if (ast->type == N_COMMAND && ast->token->value[0] != '.'
 		&& ast->token->value[0] != '/')

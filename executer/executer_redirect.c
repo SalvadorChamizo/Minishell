@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 18:17:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/15 12:51:56 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	ft_open_outfile(t_ast *ast, t_minishell *minishell)
 	else
 		ft_open_outfile_aux(ast, minishell);
 }
+
+void	ft_open_outfile_2_aux(t_ast *ast, t_minishell *minishell)
 
 void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 {

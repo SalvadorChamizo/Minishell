@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 16:07:08 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/15 12:52:43 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 		minishell->input = malloc(sizeof(t_input));
 		if (input_init(minishell->input, minishell) == 1)
 		{
-			ft_close();
+			//ft_close();
 			exit(0);
 		}
 		if (minishell->input->line[0] != '\0')
