@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/14 18:30:50 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:24:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ void	ft_open_infile(t_ast *ast, t_minishell *minishell)
 	}
 }
 
+void	ft_open_outfile_aux(t_ast *ast, t_minishell *minishell)
+{
+	int	fd;
+
+	fd = open(ast->token->value, O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		perror("open");
+	}
+	dup2(fd, STDOUT_FILENO);
+	if (minishell->pipe_check)
+	{
+		minishell->outfile_check = 1;
+		minishell->fd_out_redir = fd;
+	}
+}
+
 void	ft_open_outfile(t_ast *ast, t_minishell *minishell)
 {
 	int	fd;
@@ -51,20 +68,10 @@ void	ft_open_outfile(t_ast *ast, t_minishell *minishell)
 		}
 	}
 	else
-	{
-		fd = open(ast->token->value, O_WRONLY | O_TRUNC, 0644);
-		if (fd < 0)
-		{
-			perror("open");
-		}
-		dup2(fd, STDOUT_FILENO);
-		if (minishell->pipe_check)
-		{
-			minishell->outfile_check = 1;
-			minishell->fd_out_redir = fd;
-		}
-	}
+		ft_open_outfile_aux(ast, minishell);
 }
+
+/*void	ft_open_outfile_2_aux(t_ast *ast, t_minishell *minishell)*/
 
 void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 {

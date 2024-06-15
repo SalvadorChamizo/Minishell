@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:30:16 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/15 18:48:30 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,62 @@ void	expand_pipefd(t_ast *ast, int flag)
 		expand_pipefd(ast->right, 1);
 }
 
+/*void	ft_heredoc_pipe(t_ast *ast, t_minishell *minishell)
+{
+	char	*buffer;
+	char	*delimiter;
+	int		fd;
+
+	delimiter = ast->left->token->value;
+	fd = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+		manage_error("open");
+	while (1)
+	{
+		buffer = readline("> ");
+		if (buffer == NULL && isatty(STDIN_FILENO))
+		{
+			free(buffer);
+			ft_putstr_fd("bash: warning: here-document at line ", 2);
+			ft_putnbr_fd(minishell->line_number, 2);
+			ft_putstr_fd(" delimited by end of file\n", 2);
+			exit (0);
+		}
+		if (!ft_strcmp(delimiter, buffer))
+			break ;
+		if (ft_check_dollar(buffer))
+			buffer = ft_expand_heredoc(buffer, minishell);
+		write(fd, buffer, ft_strlen(buffer));
+		write(fd, "\n", 1);
+		free(buffer);
+	}
+	close(fd);
+	minishell->fd_in_redir = open(".heredoc_tmp", O_RDONLY);
+	if (minishell->fd_in_redir < 0)
+	{
+		unlink(".heredoc_tmp");
+		manage_error("open");
+	}
+}*/
+void	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
+{
+	char	*filename;
+	char	*number;
+	if (!ast)
+		return ;
+	if (ast->type == N_HEREDOC)
+	{
+		number = ft_itoa(num);
+		filename = ft_strjoin(".heredoc_tmp", number);
+		printf("%s\n", filename);
+		free(filename);
+		free(number);
+		num++;
+	}
+	ft_store_heredoc(ast->left, minishell, num);
+	ft_store_heredoc(ast->right, minishell, num);
+}
+
 void	ft_expanser(t_minishell *minishell, char **envp)
 {
 	t_ast			*ast;
@@ -188,6 +244,7 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	expand_command_3(ast, path);
 	expand_pipefd(ast, 0);
 	ft_store_fds(ast, minishell);
+	ft_store_heredoc(ast, minishell, 1);
 	check_assign_env(ast, minishell->env);
 	store_assignment(ast, &minishell->list);
 	free_split(path);
