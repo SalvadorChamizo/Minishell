@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/15 12:51:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:24:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_open_outfile(t_ast *ast, t_minishell *minishell)
 		ft_open_outfile_aux(ast, minishell);
 }
 
-void	ft_open_outfile_2_aux(t_ast *ast, t_minishell *minishell)
+/*void	ft_open_outfile_2_aux(t_ast *ast, t_minishell *minishell)*/
 
 void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 {
@@ -104,16 +104,6 @@ void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 			minishell->outfile_check = 1;
 			minishell->fd_out_redir = fd;
 		}
-	}
-}
-
-static void	ft_heredoc_sigint_handler(int signum)
-{
-	(void)signum;
-	if (g_command_sig == 0)
-	{
-		write(1, "\n", 1);
-		exit(SIGINT);
 	}
 }
 
