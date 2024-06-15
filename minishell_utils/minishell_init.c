@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/14 17:36:15 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:21:02 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ char	*readline_prompt(void)
 	free(ret2);
 	ret = ft_strjoin(computer, "> ");
 	free(computer);
-	ret2 = ft_strjoin(RED"", ret);
+	ret2 = ft_strjoin("\001"RED"\002", ret);
 	free(ret);
-	prompt = ft_strjoin(ret2, ""RESET);
+	prompt = ft_strjoin(ret2, "\001"RESET"\002");
 	free(ret2);
 	return (prompt);
 }

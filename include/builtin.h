@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:52:31 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/14 19:51:10 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:22:56 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int			var_len(char *str);
 void		export_print(char **env);
 void		ft_putenv_fd(char *s);
 bool		identifier_check(char *str);
+char		*export_str_builder(t_ast **tmp);
 	//UNSET
 void		ft_unset(t_ast *ast, t_minishell *minishell);
 void		ft_exit(t_minishell **minishell, t_ast *ast);
