@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/14 16:53:59 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:16:55 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	ft_newenv(char ***env, char *str)
 		free((*env)[i]);
 		i++;
 	}
-	newenv[i] = malloc(sizeof(char) * ft_strlen(str) + 1);
-	strcpy(newenv[i], str);
+	new_env_manager(str, &newenv[i]);
 	newenv[i + 1] = NULL;
 	free(*env);
 	*env = newenv;

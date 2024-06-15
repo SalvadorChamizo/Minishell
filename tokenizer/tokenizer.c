@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 13:31:45 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:41:36 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_operat(t_input *minishell, t_token *newtok, char *ret)
 
 bool	isidentifier(char c)
 {
-	if (ft_isspace(c) || isoperator(c))
+	if (!c || ft_isspace(c) || isoperator(c))
 		return (false);
 	return (true);
 }
@@ -95,7 +95,7 @@ t_token	*get_next_token(t_input *minishell)
 			identifer_case(minishell, newtok, ret);
 			return (newtok);
 		}
-		else if (isoperator(ret[minishell->pos]) && ret[minishell->pos])
+		else if (isoperator(ret[minishell->pos]))
 		{
 			ft_operat(minishell, newtok, ret);
 			return (newtok);
