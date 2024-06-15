@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:04:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 13:31:39 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 13:41:02 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 bool	isoperator(char c)
 {
+	if (!c)
+		return (false);
 	if (c == '<' || c == '>' || c == '|' || c == '(' || c == ')')
 		return (true);
 	return (false);
@@ -48,10 +50,9 @@ void	ft_skip_spaces(t_input *input, char *text, t_token *new_token)
 {
 	new_token->value = NULL;
 	new_token->space = false;
-	if (ft_isspace(text[input->pos]))
+	while (ft_isspace(text[input->pos]))
 	{
-		while (ft_isspace(text[input->pos]))
-			input->pos++;
+		input->pos++;
 		new_token->space = true;
 	}
 }

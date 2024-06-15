@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 14:14:42 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/14 19:27:44 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/15 12:03:55 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	identifier_check(char *str)
 	}
 	while (str[i] != '\0' && str[i] != '=')
 	{
-		if (!ft_isalnum(str[i]) && (str[i] != '+' && str[i + 1] != '=')
+		if (!ft_isalnum(str[i]) && (str[i] == '+' && str[i + 1] != '=')
 			&& str[i] != '_')
 		{
 			ft_putstr_fd("bash: export: `", 2);
