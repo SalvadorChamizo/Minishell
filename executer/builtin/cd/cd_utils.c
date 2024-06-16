@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:10:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 15:26:38 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:34:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	ft_chdir(char *order, char **env)
 {
-	int		i;
-
-	i = 0;
 	if (chdir(order) == -1)
 		return (-1);
 	pwd_update(env);

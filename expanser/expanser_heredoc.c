@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:03:54 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/11 11:28:37 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:32:51 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,8 @@ char	*expand_status_heredoc(char *str, t_minishell *minishell)
 char	*ft_expand_heredoc(char *str, t_minishell *minishell)
 {
 	int	flag;
-	int	len;
 
 	flag = 0;
-	len = 0;
 	if (!str)
 		return (str);
 	if (ft_check_dollar(str) && ft_strchr(str, '?'))

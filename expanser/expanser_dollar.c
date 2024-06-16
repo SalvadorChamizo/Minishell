@@ -45,20 +45,14 @@ char	*get_variable(char	*text, int *cur)
 {
 	char	*variable;
 	int		i;
-	int		len;
 
 	variable = NULL;
-	len = 0;
 	i = *cur + 1;
 	if (text[*cur] == '$')
 	{
 		while (text[*cur] != ' ' && text[*cur] != '\0' 
 			&& text[*cur] != '\'' && text[*cur] != '\"')
-		{
 			*cur = *cur + 1;
-			len++;
-		}
-		len = 0;
 		variable = ft_substr(text, i, *cur - i);
 	}
 	return (variable);
@@ -216,10 +210,8 @@ void	ft_dollar_env(t_ast *ast, char **env, int *flag)
 void	ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell)
 {
 	int	flag;
-	int	len;
 
 	flag = 0;
-	len = 0;
 	if (ast == NULL)
 		return ;
 	if (ft_check_dollar(ast->token->value) && ft_strchr(ast->token->value, '?'))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:18:19 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 11:03:20 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:35:34 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	ft_putenv_fd(char *s)
 {
-	int		i;
 	char	*first;
 	char	*second;
 
-	i = 0;
 	ft_putstr_fd("declare -x ", 1);
 	first = ft_substr(s, 0, var_len(s));
 	ft_putstr_fd(first, 1);

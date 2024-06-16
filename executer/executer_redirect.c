@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/15 16:24:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:36:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,11 +177,9 @@ void	ft_child_heredoc(t_ast *ast, t_minishell *minishell, int pipe_doc[2])
 
 void	ft_open_heredoc(t_ast *ast, t_minishell *minishell)
 {
-	char	*buffer;
 	pid_t	pid;
 	int		pipe_doc[2];
 
-	buffer = NULL;
 	signal(SIGINT, ft_heredoc_sigint_handler);
 	if (minishell->pipe_check != 1)
 	{

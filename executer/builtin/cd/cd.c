@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 19:09:02 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:34:24 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 bool	cd_absolute(t_ast *tree, char *path, char **env)
 {
-	int	i;
-
-	i = 0;
 	if (access(tree->left->token->value, F_OK) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);

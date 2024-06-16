@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 18:12:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:36:07 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,8 @@ void	ft_pipeline(t_ast *ast, t_minishell *minishell, int flag)
 {
 	pid_t	pid_left;
 	int		status;
-	int		i;
 
 	status = 0;
-	i = 0;
 	pid_left = fork();
 	if (!pid_left)
 	{

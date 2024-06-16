@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:32:04 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 18:06:17 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:35:13 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,9 @@ void	new_env_write(char *str, char **newenv, int flag)
 
 void	new_env_manager(char *str, char **newenv)
 {
-	int		i;
 	int		j;
 	int		flag;
 
-	i = 0;
 	j = 0;
 	flag = 0;
 	while (str[j] != '=')
