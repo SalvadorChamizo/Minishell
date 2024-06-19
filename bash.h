@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 12:52:17 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:18:42 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell);
 
 //expanser_dollar_utils
 void		check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text);
-void		check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell, int *i);
+void		check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell);
 
 //expanser_assign
 void		expand_assignment(t_ast *ast, t_ast *prev);

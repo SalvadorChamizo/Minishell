@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:13:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/16 20:32:05 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:18:22 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,17 @@ void	check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text)
 	}
 }
 
-void	check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell, int *i)
+void	check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell)
 {
 	char	*exit_status;
-	int		len;
 
-	len = *i;
+	dollar->k = 0;
 	exit_status = NULL;
 	if (ft_strcmp(dollar->variable, "?") == 0)
 	{
 		exit_status = ft_itoa(minishell->status);
 		while (exit_status[dollar->k])
 			new_text[dollar->j++] = exit_status[dollar->k++];
-		len++;
 	}
-	*i = *i + len;
 	free(exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser_dollar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/12 13:02:19 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/19 21:34:36 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*get_variable(char	*text, int *cur)
 	i = *cur + 1;
 	if (text[*cur] == '$')
 	{
-		while (text[*cur] != ' ' && text[*cur] != '\0' 
-			&& text[*cur] != '\'' && text[*cur] != '\"')
+		*cur = *cur + 1;
+		while (text[*cur] != '\0' && ft_isalnum(text[*cur]))
 			*cur = *cur + 1;
 		variable = ft_substr(text, i, *cur - i);
 	}
@@ -102,22 +102,26 @@ void	dollar_exit_status(t_ast *ast, t_minishell *minishell)
 {
 	t_dollar	*dollar;
 	int			i;
+	int			len;
 	char		*new_text;
 
 	i = 0;
+	len = ft_strlen(ast->token->value);
 	dollar = malloc(sizeof(t_dollar));
 	dollar->j = 0;
-	dollar->k = 0;
 	new_text = malloc(sizeof(char) * 2048);
 	while (ast->token->value[i])
 	{
-		if (ast->token->value[i] == '$')
+		if (ast->token->value[i] == '$' && ast->token->value[i + 1] == '?')
 		{
-			dollar->variable = get_variable(ast->token->value, &i);
-			check_variable_copy(dollar, new_text, minishell, &i);
+			dollar->variable = ft_strdup("?");
+			i = i + 2;
+			check_variable_copy(dollar, new_text, minishell);
 		}
-		if (ast->token->value[i])
+		if (ast->token->value[i] && i < len)
+		{
 			new_text[dollar->j++] = ast->token->value[i++];
+		}
 	}
 	new_text[dollar->j] = '\0';
 	free(dollar->variable);
@@ -214,7 +218,8 @@ void	ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell)
 	flag = 0;
 	if (ast == NULL)
 		return ;
-	if (ft_check_dollar(ast->token->value) && ft_strchr(ast->token->value, '?'))
+	if (ft_strnstr(ast->token->value, "$?", ft_strlen(ast->token->value))
+		 && ast->token->value[0] != '\'')
 		dollar_exit_status(ast, minishell);
 	if (ft_check_dollar(ast->token->value) && ast->token->value[0] != '\'')
 	{

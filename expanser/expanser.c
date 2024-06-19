@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/15 18:48:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/19 20:24:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,14 +168,14 @@ void	expand_pipefd(t_ast *ast, int flag)
 		expand_pipefd(ast->right, 1);
 }
 
-/*void	ft_heredoc_pipe(t_ast *ast, t_minishell *minishell)
+void	ft_heredoc_store(t_ast *ast, t_minishell *minishell, char *file)
 {
 	char	*buffer;
 	char	*delimiter;
 	int		fd;
 
 	delimiter = ast->left->token->value;
-	fd = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		manage_error("open");
 	while (1)
@@ -187,7 +187,7 @@ void	expand_pipefd(t_ast *ast, int flag)
 			ft_putstr_fd("bash: warning: here-document at line ", 2);
 			ft_putnbr_fd(minishell->line_number, 2);
 			ft_putstr_fd(" delimited by end of file\n", 2);
-			exit (0);
+			exit(0);
 		}
 		if (!ft_strcmp(delimiter, buffer))
 			break ;
@@ -198,27 +198,36 @@ void	expand_pipefd(t_ast *ast, int flag)
 		free(buffer);
 	}
 	close(fd);
-	minishell->fd_in_redir = open(".heredoc_tmp", O_RDONLY);
-	if (minishell->fd_in_redir < 0)
-	{
-		unlink(".heredoc_tmp");
-		manage_error("open");
-	}
-}*/
+	exit(0);
+}
+
 void	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
 {
 	char	*filename;
 	char	*number;
+	pid_t	pid;
+
 	if (!ast)
 		return ;
 	if (ast->type == N_HEREDOC)
 	{
+		signal(SIGINT, ft_heredoc_sigint_handler);
 		number = ft_itoa(num);
 		filename = ft_strjoin(".heredoc_tmp", number);
-		printf("%s\n", filename);
+		num++;
+		pid = fork();
+		g_command_sig = pid;
+		if (!pid)
+			ft_heredoc_store(ast, minishell, filename);
+		waitpid(pid, NULL, 0);
+		minishell->fd_in_redir = open(filename, O_RDONLY);
+		if (minishell->fd_in_redir < 0)
+		{
+			unlink(filename);
+			manage_error("open");
+		}
 		free(filename);
 		free(number);
-		num++;
 	}
 	ft_store_heredoc(ast->left, minishell, num);
 	ft_store_heredoc(ast->right, minishell, num);

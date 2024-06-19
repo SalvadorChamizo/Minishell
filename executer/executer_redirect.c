@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/16 20:36:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:56:04 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_open_infile(t_ast *ast, t_minishell *minishell)
 		{
 			perror("open");
 		}
-		dup2(fd, STDIN_FILENO);
-		if (minishell->pipe_check)
+		if (minishell->infile_check == -1)
 		{
+			dup2(fd, STDIN_FILENO);
 			minishell->infile_check = 1;
 			minishell->fd_in_redir = fd;
 		}
@@ -41,9 +41,9 @@ void	ft_open_outfile_aux(t_ast *ast, t_minishell *minishell)
 	{
 		perror("open");
 	}
-	dup2(fd, STDOUT_FILENO);
-	if (minishell->pipe_check)
+	if (minishell->outfile_check == -1)
 	{
+		dup2(fd, STDOUT_FILENO);
 		minishell->outfile_check = 1;
 		minishell->fd_out_redir = fd;
 	}
@@ -60,9 +60,9 @@ void	ft_open_outfile(t_ast *ast, t_minishell *minishell)
 		{
 			perror("open");
 		}
-		dup2(fd, STDOUT_FILENO);
-		if (minishell->pipe_check)
+		if (minishell->outfile_check == -1)
 		{
+			dup2(fd, STDOUT_FILENO);
 			minishell->outfile_check = 1;
 			minishell->fd_out_redir = fd;
 		}
@@ -84,9 +84,9 @@ void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 		{
 			perror("open");
 		}
-		dup2(fd, STDOUT_FILENO);
-		if (minishell->pipe_check)
+		if (minishell->outfile_check == -1)
 		{
+			dup2(fd, STDOUT_FILENO);
 			minishell->outfile_check = 1;
 			minishell->fd_out_redir = fd;
 		}
@@ -98,9 +98,9 @@ void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 		{
 			perror("open");
 		}
-		dup2(fd, STDOUT_FILENO);
-		if (minishell->pipe_check)
+		if (minishell->outfile_check == -1)
 		{
+			dup2(fd, STDOUT_FILENO);
 			minishell->outfile_check = 1;
 			minishell->fd_out_redir = fd;
 		}
@@ -217,7 +217,10 @@ void	ft_redirect(t_ast *ast, t_minishell *minishell)
 		ft_open_outfile_2(ast->left, minishell);
 	else if (ft_strcmp(ast->token->value, "<<") == 0)
 	{
-		ft_open_heredoc(ast, minishell);
-		signal(SIGINT, sigint_signal);
+		if (minishell->infile_check == -1)
+		{
+			minishell->infile_check = 1;
+			dup2(minishell->fd_in_redir, STDIN_FILENO);
+		}
 	}
 }
