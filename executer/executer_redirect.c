@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/20 04:35:13 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 21:07:44 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,17 @@ void	ft_open_outfile_aux(t_ast *ast, t_minishell *minishell)
 {
 	int	fd;
 
-	fd = open(ast->token->value, O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
+	if (!check_files_outfile(ast, minishell))
 	{
-		perror("open");
-	}
-	if (minishell->outfile_check == -1)
-	{
-		dup2(fd, STDOUT_FILENO);
-		minishell->outfile_check = 1;
-		minishell->fd_out_redir = fd;
+		fd = open(ast->token->value, O_WRONLY | O_TRUNC, 0644);
+		if (fd < 0)
+			perror("open");
+		if (minishell->outfile_check == -1)
+		{
+			dup2(fd, STDOUT_FILENO);
+			minishell->outfile_check = 1;
+			minishell->fd_out_redir = fd;
+		}
 	}
 }
 
@@ -93,16 +94,19 @@ void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 	}
 	else
 	{
-		fd = open(ast->token->value, O_WRONLY | O_APPEND, 0644);
-		if (fd < 0)
+		if (!check_files_outfile(ast, minishell))
 		{
-			perror("open");
-		}
-		if (minishell->outfile_check == -1)
-		{
-			dup2(fd, STDOUT_FILENO);
-			minishell->outfile_check = 1;
+			fd = open(ast->token->value, O_WRONLY | O_APPEND, 0644);
+			if (fd < 0)
+			{
+				perror("open");
+			}
+			if (minishell->outfile_check == -1)
+			{
+				dup2(fd, STDOUT_FILENO);
+				minishell->outfile_check = 1;
 			minishell->fd_out_redir = fd;
+			}
 		}
 	}
 }

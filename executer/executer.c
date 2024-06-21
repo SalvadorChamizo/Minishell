@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/21 11:42:43 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:08:42 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,23 @@ void	execute_builtin(t_ast *ast, t_minishell *minishell)
 		ft_unset(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "exit"))
 		ft_exit(&minishell, ast);
+}
+
+int	check_files_outfile(t_ast *ast, t_minishell *minishell)
+{
+	if (access(ast->token->value, W_OK) != 0)
+	{
+		//ft_printf_err("bash: %s: Permission denied\n", ast->token->value);
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(ast->token->value, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		if (minishell->pipe_check == 1)
+			exit (1);
+		else
+			minishell->status = 1;
+		return (1);
+	}
+	return (0);
 }
 
 int	check_files(t_ast *ast, t_minishell *minishell)

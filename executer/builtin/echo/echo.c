@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 12:34:29 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:27:00 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ bool n_flag(char *str)
 
 void	echo_print(t_ast *tmp)
 {
+	//ft_putstr_fd(tmp->token->value, 1);
 	if (ft_strcmp(tmp->token->value, "") != 0)
-		ft_putstr_fd(tmp->token->value, 1);
+		printf("%s", tmp->token->value);
 	else
-		ft_putstr_fd("", 1);
+		printf("");
 	if (tmp->left && tmp->left->token->space)
-		ft_putstr_fd(" ", 1);
+		printf(" ");
 }
 
 void	ft_echo(t_ast *ast, t_minishell *minishell)
@@ -45,7 +46,7 @@ void	ft_echo(t_ast *ast, t_minishell *minishell)
 	tmp = ast->left;
 	if (!tmp)
 	{
-		ft_putstr_fd("\n", 1);
+		printf("\n");
 		return ;
 	}
 	flag = 0;
@@ -60,6 +61,6 @@ void	ft_echo(t_ast *ast, t_minishell *minishell)
 		tmp = tmp->left;
 	}
 	if (!flag)
-		ft_putstr_fd("\n", 1);
+		printf("\n");
 	minishell->status = 0;
 }

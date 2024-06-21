@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/20 04:57:16 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 19:39:58 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 	}
 	while (i < minishell->pipe_num)
 		close(minishell->store_fds[i++]);
-	if (ast->type != N_COMMAND)
+	if (ast->type != N_COMMAND && ast->type != N_BUILTIN)
 	{
 		minishell->pipe_check = 1;
 		ft_executer(ast, minishell);
@@ -93,7 +93,7 @@ void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 	}
 	while (i < minishell->pipe_num)
 		close(minishell->store_fds[i++]);
-	if (ast->type != N_COMMAND)
+	if (ast->type != N_COMMAND && ast->type != N_BUILTIN)
 	{
 		minishell->pipe_check = 1;
 		ft_executer(ast, minishell);
@@ -130,7 +130,7 @@ void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell)
 	}
 	while (i < minishell->pipe_num)
 		close(minishell->store_fds[i++]);
-	if (ast->type != N_COMMAND)
+	if (ast->type != N_COMMAND && ast->type != N_BUILTIN)
 	{
 		minishell->pipe_check = 1;
 		ft_executer(ast, minishell);
