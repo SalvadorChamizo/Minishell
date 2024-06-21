@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 18:14:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/20 04:58:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 
 void	simple_command_aux(t_ast *ast, t_minishell *minishell, char *new_text)
 {
+	if (ast->right)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast->right, minishell);
+	}
 	if (access(ast->token->value, F_OK | X_OK) != 0)
 	{
 		new_text = ft_remove_path(ast->token->value);
@@ -77,8 +82,8 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell)
 	int		status;
 
 	new_text = NULL;
-	if (ast->right)
-		ft_executer(ast->right, minishell);
+	//if (ast->right)
+	//	ft_executer(ast->right, minishell);
 	pid = fork();
 	g_command_sig = pid;
 	if (pid == -1)

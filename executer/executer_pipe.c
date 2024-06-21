@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/16 20:36:07 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/20 04:57:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 	int	i;
 
 	i = 0;
-	ft_child_aux(ast, minishell);
+	if (ast->right)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast->right, minishell);
+	}
 	dup2(ast->token->fd_0, STDIN_FILENO);
 	dup2(ast->token->fd_1, STDOUT_FILENO);
 	if (minishell->pipe_check == 1)
@@ -52,6 +56,12 @@ void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 	}
 	while (i < minishell->pipe_num)
 		close(minishell->store_fds[i++]);
+	if (ast->type != N_COMMAND)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast, minishell);
+		exit(0);
+	}
 	ft_simple_command2(ast, minishell);
 }
 
@@ -60,7 +70,11 @@ void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 	int	i;
 
 	i = 0;
-	ft_child_aux(ast, minishell);
+	if (ast->right)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast->right, minishell);
+	}
 	dup2(ast->token->fd_1, STDOUT_FILENO);
 	if (minishell->pipe_check == 1)
 	{
@@ -79,6 +93,12 @@ void	ft_pipe_child_left(t_ast *ast, t_minishell *minishell)
 	}
 	while (i < minishell->pipe_num)
 		close(minishell->store_fds[i++]);
+	if (ast->type != N_COMMAND)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast, minishell);
+		exit(0);
+	}
 	ft_simple_command2(ast, minishell);
 }
 
@@ -87,7 +107,11 @@ void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell)
 	int	i;
 
 	i = 0;
-	ft_child_aux(ast, minishell);
+	if (ast->right)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast->right, minishell);
+	}
 	dup2(ast->token->fd_0, STDIN_FILENO);
 	if (minishell->pipe_check == 1)
 	{
@@ -106,6 +130,12 @@ void	ft_pipe_child_right(t_ast *ast, t_minishell *minishell)
 	}
 	while (i < minishell->pipe_num)
 		close(minishell->store_fds[i++]);
+	if (ast->type != N_COMMAND)
+	{
+		minishell->pipe_check = 1;
+		ft_executer(ast, minishell);
+		exit(0);
+	}
 	ft_simple_command2(ast, minishell);
 }
 

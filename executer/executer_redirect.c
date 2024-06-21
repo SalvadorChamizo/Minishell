@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/19 18:56:04 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/20 04:35:13 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_open_infile(t_ast *ast, t_minishell *minishell)
 {
 	int	fd;
 
-	if (!check_files(ast))
+	if (!check_files(ast, minishell))
 	{
 		fd = open(ast->token->value, O_RDONLY);
 		if (fd < 0)

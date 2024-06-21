@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 17:55:43 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/20 04:57:16 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_token
 	char		*value;
 	t_tokentype	type;
 	bool		space;
+	bool		quote;
 	int			pipefd[2];
 	int			fd_1;
 	int			fd_0;

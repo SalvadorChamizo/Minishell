@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/14 18:54:34 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/21 12:34:29 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool n_flag(char *str)
 
 void	echo_print(t_ast *tmp)
 {
-	if (ft_strcmp(tmp->token->value, ""))
+	if (ft_strcmp(tmp->token->value, "") != 0)
 		ft_putstr_fd(tmp->token->value, 1);
 	else
 		ft_putstr_fd("", 1);

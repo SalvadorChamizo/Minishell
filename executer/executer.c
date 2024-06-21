@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/12 19:39:24 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:42:43 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,30 @@ void	execute_builtin(t_ast *ast, t_minishell *minishell)
 		ft_exit(&minishell, ast);
 }
 
-int	check_files(t_ast *ast)
+int	check_files(t_ast *ast, t_minishell *minishell)
 {
 	if (access(ast->token->value, F_OK) != 0)
 	{
-		printf("bash: %s: No such file or directory\n", ast->token->value);
+		//ft_printf_err("bash: %s: No such file or directory\n", ast->token->value);
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(ast->token->value, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		if (minishell->pipe_check == 1)
+			exit (1);
+		else
+			minishell->status = 1;
 		return (1);
 	}
 	if (access(ast->token->value, R_OK) != 0)
 	{
-		ft_printf("bash: %s: Permission denied\n", ast->token->value);
+		//ft_printf_err("bash: %s: Permission denied\n", ast->token->value);
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(ast->token->value, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		if (minishell->pipe_check == 1)
+			exit (1);
+		else
+			minishell->status = 1;
 		return (1);
 	}
 	return (0);

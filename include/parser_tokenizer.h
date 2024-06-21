@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tokenizer.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:15:34 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 17:23:19 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:10:59 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 //tokenizer
 t_token		*get_next_token(t_input *minishell);
-void		ft_skip_spaces(t_input *input, char *text, t_token *new_token);
+int			ft_skip_spaces(t_input *input, char *text, t_token *new_token);
 void		ft_sop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
 void		ft_dop_def(t_input *mshll, t_token *nt, char *rt, t_tokentype t);
 int			isquote(char c);

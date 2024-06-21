@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/19 21:18:42 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/20 04:35:28 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		ft_store_env(t_assign **list, char **envp);
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);
 void		manage_error(char *error);
-int			check_files(t_ast *ast);
+int			check_files(t_ast *ast, t_minishell *minishell);
 void		execute_builtin(t_ast *ast, t_minishell *minishell);
 
 //executer_command_utils
