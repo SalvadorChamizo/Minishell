@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:53:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/21 12:53:10 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 00:30:23 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,26 @@ char	*get_variable_env(char	*text)
 	return (variable);
 }
 
+char	*get_value_env(char *text)
+{
+	char	*value;
+	int		i;
+
+	value = NULL;
+	i = 0;
+	while (text[i] != '=')
+		i++;
+	i++;
+	value = ft_substr(text, i, ft_strlen(text) - i);
+	return (value);
+}
+
 void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 {
-	int	i;
-	char *env_var;
+	int		i;
+	char	*env_var;
+	char	*value;
+	char	*new_value;
 
 	dollar->j = 0;
 	i = 0;
@@ -160,11 +176,10 @@ void	check_variable_env(char **env, t_dollar *dollar, char *new_text)
 		env_var = get_variable_env(env[i]);
 		if (ft_strcmp(dollar->variable, env_var) == 0)
 		{
-			while (env[i][dollar->j] != '=')
-				dollar->j++;
-			dollar->j++;
-			while (env[i][dollar->j])
-				new_text[dollar->k++] = env[i][dollar->j++];
+			value = get_value_env(env[i]);
+			new_value = expand_quotes_str(value);
+			while (new_value[dollar->j])
+				new_text[dollar->k++] = new_value[dollar->j++];
 			*(dollar->flag) = 1;
 			dollar->j = 0;
 			free(env_var);

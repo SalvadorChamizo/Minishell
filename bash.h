@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/22 11:22:42 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/22 00:26:02 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int			check_builtin(char *text);
 int			check_prev(t_ast *prev);
 int			check_prev2(t_ast *prev);
 void		ft_store_env(t_assign **list, char **envp);
+char        *expand_quotes_str(char *str);
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);

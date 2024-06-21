@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/22 15:55:11 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/22 00:29:01 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,30 @@ void	expand_redir(t_ast *ast, t_ast *prev, int flag)
 	}
 	expand_quotes2(ast->right);
 }*/
+
+char	*expand_quotes_str(char *str)
+{
+	char	*new_str;
+
+	if (str == NULL)
+		return (str);
+	if (str[0] == '\"' || str[0] == '\'')
+	{
+		if (str[0] == '\"')
+		{
+			new_str = ft_strtrim(str, "\"");
+			free(str);
+			return (new_str);
+		}
+		else if (str[0] == '\'')
+		{
+			new_str = ft_strtrim(str, "\'");
+			free(str);
+			return (new_str);
+		}
+	}
+	return (str);
+}
 
 void	expand_quotes(t_ast *ast)
 {
