@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 21:07:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 23:10:38 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int	main(int argc, char **argv, char **env)
 {
 	t_minishell	*minishell;
 
-	g_command_sig = 0;
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, sigint_signal);
 	minishell = minishell_init(env);
 	while (1)
 	{
+		g_command_sig = 0;
 		minishell->input = malloc(sizeof(t_input));
 		if (input_init(minishell->input, minishell) == 1)
 		{
