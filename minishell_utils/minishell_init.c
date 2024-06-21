@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/19 17:48:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/20 04:58:48 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 	input->pos = 0;
 	input->error = 0;
 	input->line = NULL;
+	minishell->pipe_check = 0;
 	minishell->infile_check = -1;
 	minishell->outfile_check = -1;
 	minishell->pipe_num = 0;

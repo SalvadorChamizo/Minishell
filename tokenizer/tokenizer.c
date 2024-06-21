@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 13:41:36 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:10:01 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_operat(t_input *minishell, t_token *newtok, char *ret)
 
 bool	isidentifier(char c)
 {
-	if (!c || ft_isspace(c) || isoperator(c))
+	if (c == '\0' || ft_isspace(c) || isoperator(c))
 		return (false);
 	return (true);
 }
@@ -59,6 +59,8 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 {
 	int	start;
 
+	if (ret[minishell->pos] == '\0')
+		return ;
 	start = minishell->pos;
 	if (ret[minishell->pos] == '\'')
 		s_quote_case(minishell, newtok, ret);
@@ -89,7 +91,8 @@ t_token	*get_next_token(t_input *minishell)
 		return (NULL);
 	while (ret[minishell->pos])
 	{
-		ft_skip_spaces(minishell, ret, newtok);
+		if (ft_skip_spaces(minishell, ret, newtok))
+			break ;
 		if (isidentifier(ret[minishell->pos]))
 		{
 			identifer_case(minishell, newtok, ret);

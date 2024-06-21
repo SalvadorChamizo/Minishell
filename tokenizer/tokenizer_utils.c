@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 17:04:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 13:41:02 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:09:22 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	isoperator(char c)
 {
-	if (!c)
+	if (c == '\0')
 		return (false);
 	if (c == '<' || c == '>' || c == '|' || c == '(' || c == ')')
 		return (true);
@@ -46,7 +46,7 @@ int	ft_isspace(char c)
 		return (0);
 }
 
-void	ft_skip_spaces(t_input *input, char *text, t_token *new_token)
+int	ft_skip_spaces(t_input *input, char *text, t_token *new_token)
 {
 	new_token->value = NULL;
 	new_token->space = false;
@@ -55,4 +55,7 @@ void	ft_skip_spaces(t_input *input, char *text, t_token *new_token)
 		input->pos++;
 		new_token->space = true;
 	}
+	if (text[input->pos] == '\0')
+		return (1);
+	return (0);
 }
