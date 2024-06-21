@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:03:54 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/16 20:32:51 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:22:13 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,26 +103,38 @@ char	*expand_status_heredoc(char *str, t_minishell *minishell)
 {
 	t_dollar	*dollar;
 	int			i;
+	int			len;
 	char		*new_text;
 
 	i = 0;
+	len = ft_strlen(str);
 	dollar = malloc(sizeof(t_dollar));
 	dollar->j = 0;
-	dollar->k = 0;
 	new_text = malloc(sizeof(char) * 2048);
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] == '?')
 		{
-			dollar->variable = get_variable(str, &i);
-			check_variable_copy(dollar, new_text, minishell, &i);
+			dollar->variable = ft_strdup("?");
+			i = i + 2;
+			check_variable_copy(dollar, new_text, minishell);
 		}
-		new_text[dollar->j++] = str[i++];
+		if (str[i] && i < len)
+		{
+			new_text[dollar->j++] = str[i++];
+		}
 	}
 	new_text[dollar->j] = '\0';
-	free(str);
 	free(dollar->variable);
-	return (new_text);
+	free(dollar);
+	if (ft_strcmp(new_text, "") != 0)
+	{
+		free(str);
+		str = new_text;
+	}
+	else
+		free(new_text);
+	return (str);
 }
 
 char	*ft_expand_heredoc(char *str, t_minishell *minishell)
@@ -132,7 +144,7 @@ char	*ft_expand_heredoc(char *str, t_minishell *minishell)
 	flag = 0;
 	if (!str)
 		return (str);
-	if (ft_check_dollar(str) && ft_strchr(str, '?'))
+	if (ft_strnstr(str, "$?", ft_strlen(str)))
 		str = expand_status_heredoc(str, minishell);
 	if (ft_check_dollar(str))
 	{

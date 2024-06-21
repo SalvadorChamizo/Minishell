@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/19 20:24:41 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:04:51 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,26 @@ void	expand_redir(t_ast *ast, t_ast *prev, int flag)
 	return ;
 }
 
+/*void	expand_quotes2(t_ast *ast)
+{
+	t_ast	*temp;
+	t_ast	*prev;
+	char	*str1;
+	char	*str2;
+	char	*str3;
+
+	if (ast == NULL)
+		return ;
+	temp = ast;
+	prev = temp;
+	while (temp)
+	{
+		if ()
+		temp = temp->left;
+	}
+	expand_quotes2(ast->right);
+}*/
+
 void	expand_quotes(t_ast *ast)
 {
 	char	*str;
@@ -38,6 +58,7 @@ void	expand_quotes(t_ast *ast)
 		return ;
 	if (ast->token->value[0] == '\"' || ast->token->value[0] == '\'')
 	{
+		ast->token->quote = 1;
 		if (ast->token->value[0] == '\"')
 		{
 			str = ft_strtrim(ast->token->value, "\"");
@@ -61,7 +82,7 @@ void	remove_empty_node(t_ast *ast, t_ast *prev)
 		return ;
 	if (!ast->left && !ast->right)
 	{
-		if (ft_strcmp(ast->token->value, "") == 0)
+		if (!ast->token || ft_strcmp(ast->token->value, "") == 0)
 		{
 			free(ast->token->value);
 			free(ast->token);
@@ -241,9 +262,15 @@ void	ft_expanser(t_minishell *minishell, char **envp)
 	ast = minishell->ast;
 	path = ft_get_path(envp);
 	remove_empty_node(ast, NULL);
+	if (!ast || !ast->token)
+	{
+		minishell->ast = NULL;
+		return ;
+	}
 	expand_redir(ast, NULL, 0);
 	ft_dollar(ast, minishell->list, minishell);
 	expand_quotes(ast);
+	//expand_quotes2(ast);
 	expand_assignment(ast, NULL);
 	expand_command(ast, NULL, 0);
 	expand_builtin(ast);
