@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/21 13:04:51 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 20:44:12 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,10 +173,12 @@ void	expand_pipefd(t_ast *ast, int flag)
 		ast->left->token->fd_1 = ast->token->pipefd[1];
 		if (flag == 0)
 			ast->left->token->fd_0 = ast->token->pipefd[0];
-		if (ast->right->left->type == N_COMMAND)
+		if (ast->right->left->type == N_COMMAND
+			|| ast->right->left->type == N_BUILTIN)
 			ast->right->left->token->fd_0 = ast->token->pipefd[0];
 	}
-	else if (ast->type == N_PIPELINE && ast->right->type == N_COMMAND)
+	else if (ast->type == N_PIPELINE
+		&& (ast->right->type == N_COMMAND || ast->right->type == N_BUILTIN))
 	{
 		pipe(ast->token->pipefd);
 		ast->left->token->fd_1 = ast->token->pipefd[1];

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 13:12:06 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 21:07:56 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_do_line(t_minishell *minishell)
 {
 	minishell->input->pos = 0;
 	minishell->ast = ft_expr(minishell->input);
-	//print_ast(minishell->ast);
 	ft_expanser(minishell, minishell->env);
+	//print_ast(minishell->ast);
 	ft_executer(minishell->ast, minishell);
 	dup2(minishell->stdin_fd, STDIN_FILENO);
 	dup2(minishell->stdout_fd, STDOUT_FILENO);
