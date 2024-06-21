@@ -58,6 +58,15 @@ FILES = ft_memset \
 		ft_print_unsig \
 		ft_print_hex \
 		ft_print_hexup \
+		ft_printf_error \
+		ft_print_char_error \
+		ft_print_str_error \
+		ft_print_nbr_error \
+		ft_print_ptr_error \
+		ft_print_ptrhex_error \
+		ft_print_unsig_error \
+		ft_print_hex_error \
+		ft_print_hexup_error \
 		get_next_line \
 		get_next_line_utils \
 

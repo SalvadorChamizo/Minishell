@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 17:49:53 by schamizo          #+#    #+#             */
-/*   Updated: 2024/03/25 10:59:37 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:19:26 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,16 @@ int			ft_print_ptrhex(unsigned long int n);
 int			ft_print_unsig(unsigned int n);
 int			ft_print_hex(unsigned int n);
 int			ft_print_hexup(unsigned int n);
+
+int			ft_printf_err(const char *str, ...);
+int			print_nbr_error(int n);
+int			print_str_error(char *str);
+int			print_char_error(int c);
+int			print_ptr_error(unsigned long int n);
+int			print_ptrhex_error(unsigned long int n);
+int			print_unsig_error(unsigned int n);
+int			print_hex_error(unsigned int n);
+int			print_hexup_error(unsigned int n);
 
 char		*get_next_line(int fd);
 void		safe_free(char *str);
