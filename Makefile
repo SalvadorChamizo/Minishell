@@ -20,6 +20,7 @@ FILES =	main \
 		tokenizer/tokenizer \
 		tokenizer/tokenizer_utils \
 		tokenizer/tokenizer_quote \
+		tokenizer/tokenizer_assigment \
 		parser/parser_fda \
 		parser/parser_fda_utils \
 		parser/parser_fda_error \
@@ -33,6 +34,7 @@ FILES =	main \
 		expanser/expanser_dollar_utils \
 		expanser/expanser_utils \
 		expanser/expanser_assign \
+		expanser/expanser_assign_utils \
 		expanser/expanser_command \
 		expanser/expanser_heredoc \
 		expanser/expanser_directory \

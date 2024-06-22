@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bash.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 19:09:32 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 10:05:38 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void		expand_assignment(t_ast *ast, t_ast *prev);
 t_assign	*new_assignment(char *text, t_assign *list);
 void		ft_assign_add_back(t_assign **lst, t_assign *new);
 void		store_assignment(t_ast *ast, t_assign **list);
+int			new_value_size(char *value);
 
 //expanser_command
 bool		ft_expanser_directory(t_ast *ast);

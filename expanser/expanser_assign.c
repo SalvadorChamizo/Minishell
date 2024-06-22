@@ -3,26 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   expanser_assign.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/07 16:37:20 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 10:15:57 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
+
+void	get_new_value(char *value, char **new_value)
+{
+	int	i;
+	int	j;
+	int	flag;
+
+	i = 0;
+	j = 0;
+	flag = 0;
+	while (value[i])
+	{
+		if (value[i] == '\'' && flag != 2)
+		{
+			if (flag == 0)
+				flag = 1;
+			else
+				flag = 0;
+			i++;
+		}
+		if (value[i] == '\"' && flag != 1)
+		{
+			if (flag == 0)
+				flag = 2;
+			else
+				flag = 0;
+			i++;
+		}
+		(*new_value)[j] = value[i];
+		i++;
+		j++;
+	}
+	(*new_value)[j] = '\0';
+}
+
+void	assigment_value(t_ast *ast)
+{
+	char	*value;
+	char	*new_value;
+
+	value = ast->token->value;
+	new_value = malloc(sizeof(char) * new_value_size(value) + 1);
+	if (!new_value)
+		return ;
+	get_new_value(value, &new_value);
+	free(ast->token->value);
+	ast->token->value = new_value;
+}
 
 void	expand_assignment(t_ast *ast, t_ast *prev)
 {
 	if (ast == NULL)
 		return ;
 	if (prev == NULL && check_equal(ast->token->value))
+	{
+		assigment_value(ast);
 		ast->type = N_ASSIGN;
+	}
 	if (prev != NULL)
 	{
 		if (prev->type != N_COMMAND && prev->type != N_IDENTIFIER
 			&& prev->type != N_ARGUMENT && check_equal(ast->token->value))
+		{
+			assigment_value(ast);
 			ast->type = N_ASSIGN;
+		}
 	}
 	expand_assignment(ast->left, ast);
 	expand_assignment(ast->right, ast);

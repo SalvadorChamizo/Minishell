@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tokenizer.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:15:34 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 13:10:59 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 08:40:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		s_quote_case(t_input *mshll, t_token *nt, char *rt);
 void		d_quote_case(t_input *mshll, t_token *nt, char *rt);
 t_token		*tokenizer(t_input minishell);
 bool		isoperator(char c);
+bool        is_assing(t_input *minishell, char *ret);
 
 //parser
 int			is_redirection_2(t_token *token);

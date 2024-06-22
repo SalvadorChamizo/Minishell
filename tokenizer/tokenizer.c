@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 13:10:01 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 09:35:43 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,13 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 	if (ret[minishell->pos] == '\0')
 		return ;
 	start = minishell->pos;
-	if (ret[minishell->pos] == '\'')
+	if (is_assing(minishell, ret))
+	{
+		newtok->value = ft_substr(ret, start, minishell->pos - start);
+		newtok->type = T_ASSING;
+		return ;
+	}
+	else if (ret[minishell->pos] == '\'')
 		s_quote_case(minishell, newtok, ret);
 	else if (ret[minishell->pos] == '\"')
 		d_quote_case(minishell, newtok, ret);
@@ -74,8 +80,6 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 	}
 	if (!newtok->value)
 		return ;
-	else if (ft_strchr(newtok->value, '=') && newtok->value[0] != '=')
-		newtok->type = T_ASSING;
 	else
 		newtok->type = T_IDENTIFIER;
 }
