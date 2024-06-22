@@ -37,6 +37,7 @@ FILES =	main \
 		expanser/expanser_assign_utils \
 		expanser/expanser_command \
 		expanser/expanser_heredoc \
+		expanser/expanser_dollar_str \
 		expanser/expanser_directory \
 		expanser/expanser \
 		executer/builtin/cd/cd \
