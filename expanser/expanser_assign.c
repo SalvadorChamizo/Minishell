@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/22 10:33:18 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/22 11:24:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,20 @@ t_assign	*new_assignment(char *text, t_assign *list)
 	t_assign	*new_node;
 	t_assign	*temp;
 	char		*word;
-	char		*new_value;
 	int			i;
 
 	i = 0;
 	while (text[i] != '=')
 		i++;
-	word = ft_substr(text, 0, i);
+	if (text[i - 1] == '+')
+		word = ft_substr(text, 0, i - 1);
+	else
+		word = ft_substr(text, 0, i);
 	if (list)
 	{
 		temp = list;
-		while (temp)
-		{
-			if (!ft_strcmp(word, temp->variable))
-			{
-				new_value = ft_substr(text, i + 1, ft_strlen(text) - i);
-				free(temp->value);
-				free(word);
-				temp->value = new_value;
-				return (NULL);
-			}
-			temp = temp->next;
-		}
+		if (!list_act(text, i, temp, word))
+			return(NULL);
 	}
 	new_node = malloc(sizeof(t_assign));
 	new_node->variable = word;

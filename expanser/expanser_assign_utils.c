@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 10:01:01 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/22 10:29:42 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/22 11:21:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,45 @@ void	get_new_value(char *value, char **new_value)
 		j++;
 	}
 	(*new_value)[j] = '\0';
+}
+
+char	*lst_addiction(char *value, char *text, int i)
+{
+	char	*new_value;
+	char 	*temp;
+	
+	temp = ft_substr(text, i + 1, ft_strlen(text) - i);
+	new_value = ft_strjoin(value, temp);
+	free(value);
+	free(temp);
+	return (new_value);
+}
+
+bool	list_act(char *text, int i, t_assign *temp, char *word)
+{
+	char		*new_value;
+
+	while (temp)
+	{
+		if (!ft_strcmp(word, temp->variable))
+		{
+			if (text[i - 1] == '+')
+			{
+				new_value = lst_addiction(temp->value, text, i);
+				free(word);
+				temp->value = new_value;
+				return (false);
+			}
+			else
+			{
+				new_value = ft_substr(text, i + 1, ft_strlen(text) - i);
+				free(temp->value);
+				free(word);
+				temp->value = new_value;
+				return (false);
+			}
+		}
+		temp = temp->next;
+	}
+	return (true);
 }
