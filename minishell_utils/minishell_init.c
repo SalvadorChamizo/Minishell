@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/20 04:58:48 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:23:22 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,13 @@ int	input_init(t_input *input, t_minishell *minishell)
 {
 	char	*prompt;
 
-	signal(SIGQUIT, SIG_IGN);
-	input->pos = 0;
-	input->error = 0;
-	input->line = NULL;
-	minishell->pipe_check = 0;
-	minishell->infile_check = -1;
-	minishell->outfile_check = -1;
-	minishell->pipe_num = 0;
+	init_variables(input, minishell);
 	prompt = readline_prompt();
 	if (prompt)
 		input->line = readline(prompt);
 	else
 		input->line = readline(RED"minishell> "RESET);
+	//dollar_line(input->line, minishell);
 	if (input->line == NULL && isatty(STDIN_FILENO))
 	{
 		printf("exit\n");
