@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/21 20:44:12 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:55:11 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,7 @@ void	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
 		}
 		free(filename);
 		free(number);
+		signal(SIGINT, sigint_signal);
 	}
 	ft_store_heredoc(ast->left, minishell, num);
 	ft_store_heredoc(ast->right, minishell, num);
