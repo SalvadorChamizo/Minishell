@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 10:01:01 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/22 10:12:56 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/22 10:29:42 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,23 @@ int	new_value_size(char *value)
 		j++;
 	}
 	return (j);
+}
+
+void	get_new_value(char *value, char **new_value)
+{
+	int	i;
+	int	j;
+	int	flag;
+
+	i = 0;
+	j = 0;
+	flag = 0;
+	while (value[i])
+	{
+		quote_manage(value[i], &flag, &i);
+		(*new_value)[j] = value[i];
+		i++;
+		j++;
+	}
+	(*new_value)[j] = '\0';
 }

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/22 10:05:38 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/22 10:32:43 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_assign	*new_assignment(char *text, t_assign *list);
 void		ft_assign_add_back(t_assign **lst, t_assign *new);
 void		store_assignment(t_ast *ast, t_assign **list);
 int			new_value_size(char *value);
+void	    get_new_value(char *value, char **new_value);
 
 //expanser_command
 bool		ft_expanser_directory(t_ast *ast);
