@@ -61,6 +61,7 @@ FILES =	main \
 		executer/executer_redirect \
 		minishell_utils/logo \
 		minishell_utils/minishell_init \
+		minishell_utils/minishell_extra \
 		minishell_utils/sygnal \
 		minishell_utils/free_ast \
 

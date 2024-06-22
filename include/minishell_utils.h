@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:21:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:49:36 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:29:34 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 //init
 int			input_init(t_input *input, t_minishell *minishell);
 t_minishell	*minishell_init(char **env);
+void    	init_variables(t_input *input, t_minishell *minishell);
 
 //space control
 int			ft_isspace(char c);
