@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_command_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:08:34 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 18:10:34 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:40:49 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,23 @@ char	*ft_remove_path(char *command)
 	return (new_text);
 }
 
+char	*command_args_builder(t_ast **tmp)
+{
+	char	*str;
+	char	*tep;
+
+	str = ft_strdup((*tmp)->token->value);
+	tep = NULL;
+	while ((*tmp)->left	&& (*tmp)->left->token->space == false)
+	{
+		(*tmp) = (*tmp)->left;
+		tep = ft_strjoin(str, (*tmp)->token->value);
+		free(str);
+		str = tep;
+	}
+	return (str);
+}
+
 char	**ft_command_args_aux(t_ast *temp, char **args)
 {
 	int	i;
@@ -42,14 +59,7 @@ char	**ft_command_args_aux(t_ast *temp, char **args)
 	i = 0;
 	while (temp)
 	{
-		if (temp->token->value != NULL
-			&& ft_strcmp(temp->token->value, "") != 0)
-		{
-			if (i == 0)
-				args[i] = ft_remove_path(temp->token->value);
-			else
-				args[i] = temp->token->value;
-		}
+		args[i] = command_args_builder(&temp);
 		temp = temp->left;
 		i++;
 	}
@@ -68,13 +78,35 @@ char	**ft_command_args(t_ast *ast)
 	while (temp)
 	{
 		temp = temp->left;
+		while (temp && temp->token->space == true)
+			temp = temp->left;
 		i++;
 	}
 	temp = ast;
 	args = malloc(sizeof(char *) * i);
 	ft_command_args_aux(temp, args);
 	return (args);
+
 }
+
+/*char	**ft_command_args(t_ast *ast)
+{
+	t_ast	*temp;
+	char	**args;
+	int		i;
+
+	temp = ast;
+	i = 1;
+	while (temp)
+	{
+		temp = temp->left;
+		i++;
+	}
+	temp = ast;
+	args = malloc(sizeof(char *) * i);
+	ft_command_args_aux(temp, args);
+	return (args);
+}*/
 
 int	ft_check_path(char **envp)
 {

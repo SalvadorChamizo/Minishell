@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:20:55 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/20 04:58:16 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:42:32 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ void	ft_simple_command2(t_ast *ast, t_minishell *minishell)
 
 void	simple_command_aux(t_ast *ast, t_minishell *minishell, char *new_text)
 {
+	char **args;
+
+	args = NULL;
 	if (ast->right)
 	{
 		minishell->pipe_check = 1;
@@ -68,7 +71,8 @@ void	simple_command_aux(t_ast *ast, t_minishell *minishell, char *new_text)
 		print_error_command(minishell, new_text);
 		exit(127);
 	}
-	if (execve(ast->token->value, ft_command_args(ast), minishell->env) == -1)
+	args = ft_command_args(ast);
+	if (execve(*args, args, minishell->env) == -1)
 	{
 		perror("execve");
 		exit(1);
