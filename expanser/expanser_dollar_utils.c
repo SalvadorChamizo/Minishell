@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:13:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/19 21:18:22 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:41:12 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,16 @@ int	ft_check_dollar(char *text)
 		return (0);
 	while (text[i])
 	{
-		if (text[i] == '$' && text[i + 1] != ' '
+		if (text[i] == '\'')
+		{
+			while (text[i] && text[i] == '\'')
+				i++;
+			if (text[i])
+				i++;
+			while (text[i] && text[i] != '\'')
+				i++;
+		}
+		if (text[i] && text[i] == '$' && text[i + 1] != ' '
 			&& text[i + 1] != '\0' && text[i + 1] != '\"')
 			return (1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 06:02:01 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/22 09:04:23 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:59:09 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ char	*remove_dollar_str(char	*str)
 			while (i < len && str[i] != ' ' && str[i] != '\0')
 				i++;
 		}
-		if (i < len)
-			new_text[j] = str[i];
+		if (i < len && str[i])
+			new_text[j++] = str[i];
 		if (str[i] != '\0')
 			i++;
-		j++;
 	}
 	new_text[j] = '\0';
-	free(str);
-	return (new_text);
+	if (ft_strcmp(new_text, "") != 0)
+	{
+		free(str);
+		str = new_text;
+	}
+	return (str);
 }
 
 char	*str_dollar_env(char *str, char **env, int *flag)
@@ -154,34 +157,27 @@ char	*expand_status_str(char *str, t_minishell *minishell)
 	dollar = malloc(sizeof(t_dollar));
 	dollar->j = 0;
 	new_text = malloc(sizeof(char) * 2048);
-	while (str[i] && i < len)
+	while (i < len && str[i])
 	{
 		if (str[i] == '\'')
 		{
-			//printf("Entra 1\n");
 			while (i < len && str[i] == '\'')
-				new_text[dollar->k++] = str[i++];
+				new_text[dollar->j++] = str[i++];
 			while (i < len && str[i] != '\'')
-				new_text[dollar->k++] = str[i++];
+				new_text[dollar->j++] = str[i++];
 			while (i < len && str[i] == '\'')
-				new_text[dollar->k++] = str[i++];
-			//printf("%s\n", new_text);
+				new_text[dollar->j++] = str[i++];
 		}
 		if (i < len && str[i] == '$' && str[i + 1] == '?')
 		{
-			//printf("Entra 2\n");
 			dollar->variable = ft_strdup("?");
 			i = i + 2;
 			check_variable_copy(dollar, new_text, minishell);
 			free(dollar->variable);
 		}
 		if (i < len && str[i])
-		{
-			//printf("Entra 3\n");
 			new_text[dollar->j++] = str[i++];
-		}
 	}
-	//printf("Sale\n");
 	new_text[dollar->j] = '\0';
 	free(dollar);
 	if (ft_strcmp(new_text, "") != 0)

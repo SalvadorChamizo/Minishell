@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/21 19:08:42 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:56:45 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	manage_error(char *error)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_directory(t_ast *ast)
+void	ft_directory(t_ast *ast, t_minishell *minishell)
 {
 	DIR	*dir;
 
@@ -94,9 +94,15 @@ void	ft_directory(t_ast *ast)
 	{
 		dir = opendir(ast->token->value);
 		if (!dir)
+		{
 			printf("bash: %s: No such file or directory\n", ast->token->value);
+			minishell->status = 127;
+		}
 		else
+		{
 			printf("bash: %s: Is a directory\n", ast->token->value);
+			minishell->status = 126;
+		}
 		closedir(dir);
 	}
 }
@@ -108,7 +114,7 @@ void	ft_executer(t_ast *ast, t_minishell *minishell)
 	if (ast->type == N_PIPELINE)
 		ft_pipeline(ast, minishell, 0);
 	if (ast->type == N_DIRECTORY)
-		ft_directory(ast);
+		ft_directory(ast, minishell);
 	if (ast->type == N_BUILTIN)
 		execute_builtin(ast, minishell);
 	if (ast->type == N_COMMAND)
