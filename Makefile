@@ -18,9 +18,9 @@ RED     = \033[31;1m
 
 FILES =	main \
 		tokenizer/tokenizer \
-		tokenizer/tokenizer_utils \
+		tokenizer/tokenizer_operator \
 		tokenizer/tokenizer_quote \
-		tokenizer/tokenizer_assigment \
+		tokenizer/tokenizer_utils \
 		parser/parser_fda \
 		parser/parser_fda_utils \
 		parser/parser_fda_error \

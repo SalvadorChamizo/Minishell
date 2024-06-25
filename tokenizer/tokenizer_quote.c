@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_quote.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:46:42 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/12 15:30:11 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:30:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-int	isquote(char c)
+int	is_quote(char c)
 {
-	if (c == '\'' || c == '\"' || ft_isspace(c) || isoperator(c))
+	if (c == '\'' || c == '\"' || ft_isspace(c) || is_operator(c))
 		return (1);
 	return (0);
 }
 
-void	s_quote_case(t_input *mshll, t_token *nt, char *rt)
+void	s_quote_case(t_input *input, t_token *nt, char *rt)
 {
 	int	start;
 
-	start = mshll->pos;
-	mshll->pos++;
-	while (mshll->line[mshll->pos] != '\'' && mshll->line[mshll->pos])
-		mshll->pos++;
-	if (mshll->line[mshll->pos] == '\'')
+	start = input->pos;
+	input->pos++;
+	while (input->line[input->pos] != '\'' && input->line[input->pos])
+		input->pos++;
+	if (input->line[input->pos] == '\'')
 	{
-		nt->value = ft_substr(rt, start, mshll->pos - start + 1);
+		nt->value = ft_substr(rt, start, input->pos - start + 1);
 		if (nt->value)
-			mshll->pos++;
+			input->pos++;
 		return ;
 	}
 	else
@@ -42,19 +42,19 @@ void	s_quote_case(t_input *mshll, t_token *nt, char *rt)
 	}
 }
 
-void	d_quote_case(t_input *mshll, t_token *nt, char *rt)
+void	d_quote_case(t_input *input, t_token *nt, char *rt)
 {
 	int	start;
 
-	start = mshll->pos;
-	mshll->pos++;
-	while (mshll->line[mshll->pos] != '\"' && mshll->line[mshll->pos])
-		mshll->pos++;
-	if (mshll->line[mshll->pos] == '\"')
+	start = input->pos;
+	input->pos++;
+	while (input->line[input->pos] != '\"' && input->line[input->pos])
+		input->pos++;
+	if (input->line[input->pos] == '\"')
 	{
-		nt->value = ft_substr(rt, start, mshll->pos - start + 1);
+		nt->value = ft_substr(rt, start, input->pos - start + 1);
 		if (nt->value)
-			mshll->pos++;
+			input->pos++;
 		return ;
 	}
 	else

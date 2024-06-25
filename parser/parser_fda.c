@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fda.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/12 17:14:36 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:40:40 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-int	is_identifier(t_token *token)
+int	check_identifier(t_token *token)
 {
 	if (token->type != T_IDENTIFIER && token->type != T_ASSING)
 		return (0);
@@ -24,18 +24,18 @@ int	check_syntax(t_token *token, int state)
 	if (token->type != T_C_PARENT)
 	{
 		if ((state == 1) && token->type != T_O_PARENT
-			&& !is_redirection_2(token) && !is_identifier(token))
+			&& !is_redirection_2(token) && !check_identifier(token))
 			return (0);
 		if (state == 2 && token->type != T_O_PARENT
-			&& !is_redirection_2(token) && !is_identifier(token))
+			&& !is_redirection_2(token) && !check_identifier(token))
 			return (0);
 		if (state == 6 && token->type != T_O_PARENT
-			&& !is_redirection_2(token) && !is_identifier(token))
+			&& !is_redirection_2(token) && !check_identifier(token))
 			return (0);
 		if ((state == 4 || state == 5) && token->type != T_PIPE
-			&& !is_redirection_2(token) && !is_identifier(token))
+			&& !is_redirection_2(token) && !check_identifier(token))
 			return (0);
-		if ((state == 3 || state == 7) && !is_identifier(token))
+		if ((state == 3 || state == 7) && !check_identifier(token))
 			return (0);
 	}
 	else

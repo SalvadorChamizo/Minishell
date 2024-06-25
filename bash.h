@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/22 06:14:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:28:06 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@
 # include <dirent.h>
 # include <stdbool.h>
 
-# define RED        "\x1b[31m"
-# define GREEN      "\x1b[32m"
-# define YELLOW     "\x1b[33m"
-# define BLUE       "\x1b[34m"
-# define MAGENTA    "\x1b[35m"
-# define CYAN       "\x1b[36m"
-# define WHITE      "\033[37m"
-# define GREYM      "\x1B[38;5;245m"
-# define GREYM2     "\x1B[38;5;250m"
-# define BOLD       "\033[1m"
-# define RESET      "\x1b[0m"
-# define CLEAR      "\033[2J"
+# define RED		"\x1b[31m"
+# define GREEN		"\x1b[32m"
+# define YELLOW		"\x1b[33m"
+# define BLUE		"\x1b[34m"
+# define MAGENTA	"\x1b[35m"
+# define CYAN		"\x1b[36m"
+# define WHITE		"\033[37m"
+# define GREYM		"\x1B[38;5;245m"
+# define GREYM2		"\x1B[38;5;250m"
+# define BOLD		"\033[1m"
+# define RESET		"\x1b[0m"
+# define CLEAR		"\033[2J"
 
 //GLOBAL
 extern int		g_command_sig;
@@ -93,8 +93,8 @@ t_assign	*new_assignment(char *text, t_assign *list);
 void		ft_assign_add_back(t_assign **lst, t_assign *new);
 void		store_assignment(t_ast *ast, t_assign **list);
 int			new_value_size(char *value);
-void	    get_new_value(char *value, char **new_value);
-bool	    list_act(char *text, int i, t_assign *temp, char *word);
+void		get_new_value(char *value, char **new_value);
+bool		list_act(char *text, int i, t_assign *temp, char *word);
 
 //expanser_command
 bool		ft_expanser_directory(t_ast *ast);
@@ -109,13 +109,13 @@ int			check_builtin(char *text);
 int			check_prev(t_ast *prev);
 int			check_prev2(t_ast *prev);
 void		ft_store_env(t_assign **list, char **envp);
-char        *expand_quotes_str(char *str);
+char		*expand_quotes_str(char *str);
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);
 void		manage_error(char *error);
 int			check_files(t_ast *ast, t_minishell *minishell);
-int	        check_files_outfile(t_ast *ast, t_minishell *minishell);
+int			check_files_outfile(t_ast *ast, t_minishell *minishell);
 void		execute_builtin(t_ast *ast, t_minishell *minishell);
 
 //executer_command_utils
@@ -137,7 +137,6 @@ int			ft_pipeline_aux(t_ast *ast, t_minishell *minishell, int flag);
 void		ft_pipe_child_left(t_ast *ast, t_minishell *minishell);
 void		ft_pipe_child_right(t_ast *ast, t_minishell *minishell);
 void		ft_pipeline(t_ast *ast, t_minishell *minishell, int flag);
-
 
 //executer_redirect
 void		ft_open_infile(t_ast *ast, t_minishell *minishell);

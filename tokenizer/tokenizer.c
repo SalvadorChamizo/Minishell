@@ -3,80 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:14:52 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/22 09:35:43 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/25 11:28:56 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-void	is_redir(t_input *minishell, t_token *newtok, char *ret)
+bool	is_identifier(char c)
 {
-	char	c;
-	char	d;
-
-	c = ret[minishell->pos];
-	d = 0;
-	if (ret[minishell->pos + 1])
-		d = ret[minishell->pos + 1];
-	if (c == '<' && d != '<')
-		ft_sop_def(minishell, newtok, ret, T_LESS);
-	else if (c == '>' && d != '>')
-		ft_sop_def(minishell, newtok, ret, T_GREAT);
-	else if (c == '<' && d == '<')
-		ft_dop_def(minishell, newtok, ret, T_DLESS);
-	else if (c == '>' && d == '>')
-		ft_dop_def(minishell, newtok, ret, T_DGREAT);
-}
-
-void	ft_operat(t_input *minishell, t_token *newtok, char *ret)
-{
-	char	c;
-
-	c = ret[minishell->pos];
-	if (c == '|')
-		ft_sop_def(minishell, newtok, ret, T_PIPE);
-	else if (c == '(')
-		ft_sop_def(minishell, newtok, ret, T_O_PARENT);
-	else if (c == ')')
-		ft_sop_def(minishell, newtok, ret, T_C_PARENT);
-	is_redir(minishell, newtok, ret);
-	if (!newtok->value)
-		return ;
-	minishell->pos++;
-}
-
-bool	isidentifier(char c)
-{
-	if (c == '\0' || ft_isspace(c) || isoperator(c))
+	if (c == '\0' || ft_isspace(c) || is_operator(c))
 		return (false);
 	return (true);
 }
 
-void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
+void	identifer_case(t_input *input, t_token	*newtok, char *ret)
 {
 	int	start;
 
-	if (ret[minishell->pos] == '\0')
+	if (ret[input->pos] == '\0')
 		return ;
-	start = minishell->pos;
-	if (is_assing(minishell, ret))
+	start = input->pos;
+	if (is_assing(input, ret))
 	{
-		newtok->value = ft_substr(ret, start, minishell->pos - start);
+		newtok->value = ft_substr(ret, start, input->pos - start);
 		newtok->type = T_ASSING;
 		return ;
 	}
-	else if (ret[minishell->pos] == '\'')
-		s_quote_case(minishell, newtok, ret);
-	else if (ret[minishell->pos] == '\"')
-		d_quote_case(minishell, newtok, ret);
+	else if (ret[input->pos] == '\'')
+		s_quote_case(input, newtok, ret);
+	else if (ret[input->pos] == '\"')
+		d_quote_case(input, newtok, ret);
 	else
 	{
-		while (ret[minishell->pos] && !isquote(ret[minishell->pos]))
-			minishell->pos++;
-		newtok->value = ft_substr(ret, start, minishell->pos - start);
+		while (ret[input->pos] && !is_quote(ret[input->pos]))
+			input->pos++;
+		newtok->value = ft_substr(ret, start, input->pos - start);
 	}
 	if (!newtok->value)
 		return ;
@@ -84,30 +48,42 @@ void	identifer_case(t_input *minishell, t_token	*newtok, char *ret)
 		newtok->type = T_IDENTIFIER;
 }
 
-t_token	*get_next_token(t_input *minishell)
+t_token	*ft_each_case(t_input *input, t_token *newtok, char *ret)
+{
+	if (is_identifier(ret[input->pos]))
+	{
+		identifer_case(input, newtok, ret);
+		return (newtok);
+	}
+	else if (is_operator(ret[input->pos]))
+	{
+		ft_operator(input, newtok, ret);
+		return (newtok);
+	}
+	else
+		return (newtok);
+}
+
+t_token	*get_next_token(t_input *input)
 {
 	char		*ret;
 	t_token		*newtok;
 
-	ret = minishell->line;
+	ret = input->line;
 	newtok = malloc(sizeof(t_token));
 	if (!newtok)
 		return (NULL);
-	while (ret[minishell->pos])
+	while (ret[input->pos])
 	{
-		if (ft_skip_spaces(minishell, ret, newtok))
+		if (ft_skip_spaces(input, ret, newtok))
 			break ;
-		if (isidentifier(ret[minishell->pos]))
+		if (is_identifier(ret[input->pos])
+			|| is_operator(ret[input->pos]))
 		{
-			identifer_case(minishell, newtok, ret);
+			ft_each_case(input, newtok, ret);
 			return (newtok);
 		}
-		else if (isoperator(ret[minishell->pos]))
-		{
-			ft_operat(minishell, newtok, ret);
-			return (newtok);
-		}
-		minishell->pos++;
+		input->pos++;
 	}
 	newtok->type = T_EOF;
 	newtok->value = 0;
