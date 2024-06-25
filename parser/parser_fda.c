@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:01:03 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:15:38 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	parser_fda_aux(t_token **token, int state)
 	if (state == 0)
 		return (state);
 	state = ft_parents(*token, state);
-	state = ft_pipe(*token, state);
+	state = ft_pipe_status(*token, state);
 	state = ft_word(*token, state);
 	state = ft_redirection(*token, state);
 	free((*token)->value);
