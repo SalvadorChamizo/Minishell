@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:15:34 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/25 12:12:25 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:20:21 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ t_ast		*ft_assignment(t_input *input, t_idenlst **list);
 t_ast		*ft_identifier(t_input *input, t_idenlst **list);
 t_ast		*ft_infile(t_input *input, t_idenlst **list);
 t_ast		*ft_outfile(t_input *input, t_idenlst **list);
-t_ast		*ft_pipe(t_input *input);
+t_ast		*ft_parser_ast(t_input *input);
 
 //parser_ast_utils
 
 void		ft_eat(t_input *input, t_tokentype type);
 void		ft_eat_aux(t_input *input);
 int			is_redirection(t_token *token);
-t_ast		*ft_pipe_aux(t_ast *ast, t_ast *ast2, t_idenlst **list);
+t_ast		*ft_parser_aux(t_ast *ast, t_ast *ast2, t_idenlst **list);
 
 //parser_ast_list
 

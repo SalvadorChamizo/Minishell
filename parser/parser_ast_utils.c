@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:13:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:07:27 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:19:38 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_redirection(t_token *token)
 	return (0);
 }
 
-t_ast	*ft_pipe_aux(t_ast *ast, t_ast *ast2, t_idenlst **list)
+t_ast	*ft_parser_aux(t_ast *ast, t_ast *ast2, t_idenlst **list)
 {
 	t_ast	*ast3;
 

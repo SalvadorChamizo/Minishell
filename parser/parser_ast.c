@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:17:58 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:04:47 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:20:38 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ast	*ft_assignment(t_input *input, t_idenlst **list)
 	}
 	else if (token->type == T_O_PARENT)
 	{
-		ast_node = ft_pipe(input);
+		ast_node = ft_parser_ast(input);
 		ft_eat(input, T_C_PARENT);
 		return (ast_node);
 	}
@@ -104,7 +104,7 @@ t_ast	*ft_outfile(t_input *input, t_idenlst **list)
 	return (ast);
 }
 
-t_ast	*ft_pipe(t_input *input)
+t_ast	*ft_parser_ast(t_input *input)
 {
 	t_ast		*ast;
 	t_ast		*ast2;
@@ -118,9 +118,9 @@ t_ast	*ft_pipe(t_input *input)
 	token = input->current_token;
 	if (input->current_token->type == T_PIPE)
 	{
-		ast = bi_node(ast, token, ft_pipe(input));
+		ast = bi_node(ast, token, ft_parser_ast(input));
 	}
-	ast = ft_pipe_aux(ast, ast2, &list);
+	ast = ft_parser_aux(ast, ast2, &list);
 	if (token->type == T_EOF)
 		free(token);
 	return (ast);
