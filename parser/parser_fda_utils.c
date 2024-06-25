@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 18:19:19 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:01:42 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:16:29 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_word(t_token *token, int state)
 	return (state);
 }
 
-int	ft_pipe(t_token *token, int state)
+int	ft_pipe_status(t_token *token, int state)
 {
 	if (token->type == T_PIPE && (state == 4 || state == 5))
 		state = 6;

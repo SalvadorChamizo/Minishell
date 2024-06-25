@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:02:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:02:35 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:16:48 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	check_syntax(t_token *token, int state)
 	}
 	else
 		return (state);
+	return (state);
 }
 
 void	print_error_syntax(int level, int state)
