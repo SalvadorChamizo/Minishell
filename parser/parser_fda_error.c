@@ -6,11 +6,34 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 13:02:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/21 13:02:51 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:02:35 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
+
+int	check_syntax(t_token *token, int state)
+{
+	if (token->type != T_C_PARENT)
+	{
+		if ((state == 1) && token->type != T_O_PARENT
+			&& !is_redirection_2(token) && !check_identifier(token))
+			return (0);
+		if (state == 2 && token->type != T_O_PARENT
+			&& !is_redirection_2(token) && !check_identifier(token))
+			return (0);
+		if (state == 6 && token->type != T_O_PARENT
+			&& !is_redirection_2(token) && !check_identifier(token))
+			return (0);
+		if ((state == 4 || state == 5) && token->type != T_PIPE
+			&& !is_redirection_2(token) && !check_identifier(token))
+			return (0);
+		if ((state == 3 || state == 7) && !check_identifier(token))
+			return (0);
+	}
+	else
+		return (state);
+}
 
 void	print_error_syntax(int level, int state)
 {

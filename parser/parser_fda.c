@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 11:40:40 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:01:03 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,31 @@ int	check_identifier(t_token *token)
 	return (1);
 }
 
-int	check_syntax(t_token *token, int state)
+void	ft_underscore(t_input *input, t_token *token, char **env)
 {
-	if (token->type != T_C_PARENT)
+	int		ret;
+	char	*str;
+
+	ret = input->pos;
+	str = NULL;
+	while (ft_isspace(input->line[ret]))
+		ret++;
+	if (token->value && input->line[ret] == '\0')
 	{
-		if ((state == 1) && token->type != T_O_PARENT
-			&& !is_redirection_2(token) && !check_identifier(token))
-			return (0);
-		if (state == 2 && token->type != T_O_PARENT
-			&& !is_redirection_2(token) && !check_identifier(token))
-			return (0);
-		if (state == 6 && token->type != T_O_PARENT
-			&& !is_redirection_2(token) && !check_identifier(token))
-			return (0);
-		if ((state == 4 || state == 5) && token->type != T_PIPE
-			&& !is_redirection_2(token) && !check_identifier(token))
-			return (0);
-		if ((state == 3 || state == 7) && !check_identifier(token))
-			return (0);
+		ret = 0;
+		while (env[ret])
+		{
+			if (!ft_strncmp(env[ret], "_=", 2))
+				break ;
+			ret++;
+		}
+		if (!env[ret] || !ft_strncmp(token->value, "$_", 2))
+			return ;
+		free(env[ret]);
+		str = ft_strjoin("_=", token->value);
+		env[ret] = ft_strdup(str);
+		free(str);
 	}
-	else
-	{
-		return (state);
-	}
-	return (state);
 }
 
 int	parser_fda_aux(t_token **token, int state)
@@ -95,7 +96,7 @@ int	ft_parser_fda(t_minishell *minishell)
 		else if (token->type == T_C_PARENT
 			&& (state == 1 || state == 6 || state == 4))
 			level--;
-		is_lva(minishell->input, token, minishell->env);
+		ft_underscore(minishell->input, token, minishell->env);
 		state = parser_fda_aux(&token, state);
 		if (state == 0)
 			break ;

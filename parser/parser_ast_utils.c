@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   parser_ast_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:13:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/06 12:24:57 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:07:27 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_redirection(t_token *token)
 	return (0);
 }
 
-t_ast	*ft_expr_aux(t_ast *ast, t_ast *ast2, t_idenlst **list)
+t_ast	*ft_pipe_aux(t_ast *ast, t_ast *ast2, t_idenlst **list)
 {
 	t_ast	*ast3;
 

@@ -24,11 +24,10 @@ FILES =	main \
 		parser/parser_fda \
 		parser/parser_fda_utils \
 		parser/parser_fda_error \
-		parser/parser_lva \
-		parser/parser \
-		parser/parser_utils \
+		parser/parser_ast \
+		parser/parser_ast_utils \
 		parser/parser_ast_nodes \
-		parser/parser_list \
+		parser/parser_ast_list \
 		parser/print_parser \
 		expanser/expanser_dollar \
 		expanser/expanser_dollar_utils \
