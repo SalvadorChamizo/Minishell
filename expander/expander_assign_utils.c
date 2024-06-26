@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanser_assign_utils.c                            :+:      :+:    :+:   */
+/*   expander_assign_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 10:01:01 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/22 11:21:40 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:34:57 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../bash.h"
+#include "../bash.h"
 
 void	quote_manage(char c, int *flag, int *i)
 {
@@ -72,8 +72,8 @@ void	get_new_value(char *value, char **new_value)
 char	*lst_addiction(char *value, char *text, int i)
 {
 	char	*new_value;
-	char 	*temp;
-	
+	char	*temp;
+
 	temp = ft_substr(text, i + 1, ft_strlen(text) - i);
 	new_value = ft_strjoin(value, temp);
 	free(value);

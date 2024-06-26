@@ -29,16 +29,19 @@ FILES =	main \
 		parser/parser_ast_nodes \
 		parser/parser_ast_list \
 		parser/print_parser \
-		expanser/expanser_dollar \
-		expanser/expanser_dollar_utils \
-		expanser/expanser_utils \
-		expanser/expanser_assign \
-		expanser/expanser_assign_utils \
-		expanser/expanser_command \
-		expanser/expanser_heredoc \
-		expanser/expanser_dollar_str \
-		expanser/expanser_directory \
-		expanser/expanser \
+		expander/expander_dollar \
+		expander/expander_dollar_env \
+		expander/expander_dollar_list \
+		expander/expander_dollar_str \
+		expander/expander_dollar_utils \
+		expander/expander_utils \
+		expander/expander_assign \
+		expander/expander_assign_utils \
+		expander/expander_command \
+		expander/expander_heredoc \
+		expander/expander_redirections_fd \
+		expander/expander_directory \
+		expander/expander \
 		executer/builtin/cd/cd \
 		executer/builtin/cd/cd_utils \
 		executer/builtin/cd/cd_relative \

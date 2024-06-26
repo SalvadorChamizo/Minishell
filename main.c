@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/25 12:20:49 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:42:32 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_do_line(t_minishell *minishell)
 	ft_executer(minishell->ast, minishell);
 	dup2(minishell->stdin_fd, STDIN_FILENO);
 	dup2(minishell->stdout_fd, STDOUT_FILENO);
-	free_ast(&minishell->ast);
+	free_ast(&minishell->ast, 1);
 	if (minishell->pipe_num != 0)
 		free(minishell->store_fds);
 }

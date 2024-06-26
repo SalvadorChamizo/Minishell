@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/24 15:28:06 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:25:07 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "include/structs.h"
 # include "include/builtin.h"
 # include "include/parser_tokenizer.h"
+# include "include/expander.h"
 # include "include/minishell_utils.h"
 # include "libft/include/libft.h"
 # include <unistd.h>
@@ -75,7 +76,7 @@ char		*ft_expand_str(char *str, t_minishell *minishell);
 
 void		dollar_exit_status(t_ast *ast, t_minishell *minishell);
 char		*get_variable_env(char	*text);
-void		check_variable_env(char **env, t_dollar *dollar, char *new_text);
+void		check_variable_env(char **env, t_dollar *dollar, char *new_text, char *str);
 void		ft_dollar_env(t_ast *ast, char **env, int *flag);
 int			ft_check_dollar(char *text);
 char		*remove_dollar(t_ast *ast);
@@ -84,7 +85,7 @@ void		ft_dollar_list(t_ast *ast, t_assign *list, int *flag);
 void		ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell);
 
 //expanser_dollar_utils
-void		check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text);
+void		check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text, char *str);
 void		check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell);
 
 //expanser_assign

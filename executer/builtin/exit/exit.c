@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:55 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 21:12:20 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:42:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exit_free(t_minishell **minishell, t_ast *ast, char *str)
 	if (str)
 		free(str);
 	rl_clear_history();
-	free_ast(&ast);
+	free_ast(&ast, 1);
 	if ((*minishell)->list)
 		ft_list_clear(&(*minishell)->list);
 	free((*minishell)->input->line);

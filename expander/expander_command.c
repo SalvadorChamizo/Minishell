@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanser_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:29:35 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/14 18:33:35 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/25 12:25:32 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	expand_command(t_ast *ast, t_ast *prev, int flag)
 			if (check_prev(prev) && ast->type != N_ASSIGN
 				&& flag == 1 && !check_builtin(ast->token->value))
 				ast->type = N_COMMAND;
-			else if (check_prev2(prev) && !check_builtin(ast->token->value) && ast->type != N_ASSIGN)
+			else if (check_prev2(prev)
+				&& !check_builtin(ast->token->value) && ast->type != N_ASSIGN)
 				ast->type = N_ARGUMENT;
 		}
 	}
@@ -110,7 +111,7 @@ void	expand_command_3(t_ast *ast, char **path)
 				free(ast->token->value);
 				ast->token->value = str;
 				break ;
-			}	
+			}
 			free(str);
 			str = NULL;
 			i++;

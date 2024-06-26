@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanser_assign.c                                  :+:      :+:    :+:   */
+/*   expander_assign.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:40:29 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/22 11:24:58 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:35:17 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_assign	*new_assignment(char *text, t_assign *list)
 	{
 		temp = list;
 		if (!list_act(text, i, temp, word))
-			return(NULL);
+			return (NULL);
 	}
 	new_node = malloc(sizeof(t_assign));
 	new_node->variable = word;
