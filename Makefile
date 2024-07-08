@@ -66,6 +66,7 @@ FILES =	main \
 		minishell_utils/minishell_init \
 		minishell_utils/minishell_init_extra \
 		minishell_utils/sygnal \
+		minishell_utils/sygnal_heredoc \
 		minishell_utils/free_ast \
 
 BNS_FILES = 
