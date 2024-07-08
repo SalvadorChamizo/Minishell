@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:11:31 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/08 12:48:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:06:20 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	ft_write_heredoc(t_ast *ast, t_minishell *minishell, char *name)
 
 	delimiter = ast->left->token->value;
 	fd = open(name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	heredoc_signal();
+	//signal(SIGINT, SIG_IGN);
 	if (fd < 0)
 		manage_error("open");
 	while (1)
@@ -124,6 +126,7 @@ void	ft_write_heredoc(t_ast *ast, t_minishell *minishell, char *name)
 		unlink(name);
 		manage_error("open");
 	}
+	signal(SIGINT, sigint_signal);
 }
 
 int	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
@@ -136,7 +139,8 @@ int	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
 		return (num);
 	if (ast->type == N_HEREDOC)
 	{
-		signal(SIGINT, ft_heredoc_sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
 		number = ft_itoa(num);
 		filename = ft_strjoin(".heredoc_tmp", number);
 		pid = fork();
@@ -156,6 +160,8 @@ int	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
 			free(number);
 			num++;
 		}
+		signal(SIGQUIT, quit_signal);
+		signal(SIGINT, sigint_signal);
 	}
 	num = ft_store_heredoc(ast->left, minishell, num);
 	num = ft_store_heredoc(ast->right, minishell, num);

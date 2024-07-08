@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:21:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/26 17:24:43 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/08 17:33:41 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void		init_variables(t_input *input, t_minishell *minishell);
 
 //sygnal
 void		quit_signal(int signal_number);
+void	    quit_signal_heredoc(int signal_number);
 void		sigint_signal(int signal_number);
+void		int_signal_heredoc(int signal_number);
 void		ft_heredoc_sigint_handler(int signal_number);
+void	    heredoc_signal();
 
 //others
 void		ft_enter(void);

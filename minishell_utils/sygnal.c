@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 15:49:21 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/13 15:48:35 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/08 18:39:49 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ void	quit_signal(int signal_number)
 		kill(g_command_sig, SIGQUIT);
 	}
 }
+
+/*void	int_signal_heredoc(int signal_number)
+{
+	(void)signal_number;
+	exit(131);
+}*/
 
 void	ft_heredoc_sigint_handler(int signal_number)
 {
