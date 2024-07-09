@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 18:47:22 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/24 11:56:45 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 12:18:43 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	execute_builtin(t_ast *ast, t_minishell *minishell)
 	else if (!ft_strcmp(ast->token->value, "echo"))
 		ft_echo(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "env"))
-		ft_env(minishell->env, minishell);
+		ft_env(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "export"))
 		ft_export(ast, minishell);
 	else if (!ft_strcmp(ast->token->value, "unset"))
