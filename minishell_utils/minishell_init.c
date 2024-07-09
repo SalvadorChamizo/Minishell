@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 23:15:36 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:03:26 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ t_minishell	*minishell_init(char **env)
 		minishell->env = ft_env_init(env);
 	else
 		minishell->env = ft_null_env();
+	minishell->underscore = NULL;
 	minishell->list = NULL;
 	ft_store_env(&minishell->list, minishell->env);
 	minishell->line_number = 0;

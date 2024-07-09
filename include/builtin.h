@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:52:31 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/09 11:10:51 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:38:18 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		ft_pwd(t_minishell *minishell, char **env);
 	//ECHO
 void		ft_echo(t_ast *ast, t_minishell *minishell);
 	//ENV
-void		ft_env(char **env, t_minishell *minishell);
+void		ft_env(t_ast *ast, t_minishell *minishell);
 	//EXPORT
 void		ft_export(t_ast *ast, t_minishell *minishell);
 void		ft_export_addiction(char *str, char **env);
