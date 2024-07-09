@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:55 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/26 17:42:41 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:39:07 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*str_maker(t_ast **ast)
 	if (!(*ast))
 		return (str);
 	str = ft_strdup((*ast)->token->value);
-	while ((*ast)->left	&& (*ast)->left->token->space == false)
+	while ((*ast)->left && (*ast)->left->token->space == false)
 	{
 		(*ast) = (*ast)->left;
 		tep = ft_strjoin(str, (*ast)->token->value);

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:04:59 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/21 22:07:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:39:52 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*str_echo_maker(t_ast **ast)
 	if (!(*ast))
 		return (str);
 	str = ft_strdup((*ast)->token->value);
-	while ((*ast)->left	&& (*ast)->left->token->space == false)
+	while ((*ast)->left && (*ast)->left->token->space == false)
 	{
 		(*ast) = (*ast)->left;
 		tep = ft_strjoin(str, (*ast)->token->value);
@@ -32,7 +32,7 @@ char	*str_echo_maker(t_ast **ast)
 	return (str);
 }
 
-bool n_flag(t_ast **tmp)
+bool	n_flag(t_ast **tmp)
 {
 	int		i;
 	char	*str;

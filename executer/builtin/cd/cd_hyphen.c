@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 10:50:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/09 11:15:43 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:40:48 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ bool	cd_hyphen(char **env)
 		free(hyphen);
 		return (false);
 	}
-    ft_putstr_fd(hyphen, 1);
-    ft_putstr_fd("\n", 1);
+	ft_putstr_fd(hyphen, 1);
+	ft_putstr_fd("\n", 1);
 	oldpwd_update(env);
 	if (chdir(hyphen) < 0)
 	{

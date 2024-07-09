@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:32:04 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/16 20:35:13 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:38:38 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*export_str_builder(t_ast **tmp)
 
 	str = ft_strdup((*tmp)->token->value);
 	tep = NULL;
-	while ((*tmp)->left	&& (*tmp)->left->token->space == false)
+	while ((*tmp)->left && (*tmp)->left->token->space == false)
 	{
 		(*tmp) = (*tmp)->left;
 		tep = ft_strjoin(str, (*tmp)->token->value);
@@ -72,7 +72,7 @@ void	new_env_manager(char *str, char **newenv)
 void	ft_export_addiction(char *str, char **env)
 {
 	char	*new;
-	char 	*tmp;
+	char	*tmp;
 	int		i;
 
 	i = 0;
