@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/26 17:42:32 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:04:03 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,36 @@
 //GLOBAL
 int		g_command_sig;
 
+void	ft_underscore_asg(t_minishell *minishell)
+{
+	int	ret;
+	char *str;
+
+	ret = 0;
+	str = NULL;
+	while (minishell->env[ret])
+	{
+		if (!ft_strncmp(minishell->env[ret], "_=", 2))
+			break ;
+		ret++;
+	}
+	if (!minishell->env[ret] || !ft_strncmp(minishell->underscore, "$_", 2))
+		return ;
+	free(minishell->env[ret]);
+	str = ft_strjoin("_=", minishell->underscore);
+	minishell->env[ret] = ft_strdup(str);
+	free(str);
+}
+
 void	ft_do_line(t_minishell *minishell)
 {
 	minishell->input->pos = 0;
 	minishell->ast = ft_parser_ast(minishell->input);
 	//print_ast(minishell->ast);
 	ft_expanser(minishell, minishell->env);
+	//print_ast(minishell->ast);
 	ft_executer(minishell->ast, minishell);
+	ft_underscore_asg(minishell);
 	dup2(minishell->stdin_fd, STDIN_FILENO);
 	dup2(minishell->stdout_fd, STDOUT_FILENO);
 	free_ast(&minishell->ast, 1);

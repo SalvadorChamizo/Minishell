@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fda.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:15:38 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:39:22 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,15 @@ int	check_identifier(t_token *token)
 	return (1);
 }
 
-void	ft_underscore(t_input *input, t_token *token, char **env)
+void	ft_underscore(t_minishell *minishell, t_token *token)
 {
 	int		ret;
-	char	*str;
 
-	ret = input->pos;
-	str = NULL;
-	while (ft_isspace(input->line[ret]))
+	ret = minishell->input->pos;
+	while (ft_isspace(minishell->input->line[ret]))
 		ret++;
-	if (token->value && input->line[ret] == '\0')
-	{
-		ret = 0;
-		while (env[ret])
-		{
-			if (!ft_strncmp(env[ret], "_=", 2))
-				break ;
-			ret++;
-		}
-		if (!env[ret] || !ft_strncmp(token->value, "$_", 2))
-			return ;
-		free(env[ret]);
-		str = ft_strjoin("_=", token->value);
-		env[ret] = ft_strdup(str);
-		free(str);
-	}
+	if (token->value && minishell->input->line[ret] == '\0')
+		minishell->underscore = token->value;
 }
 
 int	parser_fda_aux(t_token **token, int state)
@@ -96,7 +80,7 @@ int	ft_parser_fda(t_minishell *minishell)
 		else if (token->type == T_C_PARENT
 			&& (state == 1 || state == 6 || state == 4))
 			level--;
-		ft_underscore(minishell->input, token, minishell->env);
+		ft_underscore(minishell, token);
 		state = parser_fda_aux(&token, state);
 		if (state == 0)
 			break ;

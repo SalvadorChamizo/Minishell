@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tokenizer.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:15:34 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/25 12:20:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:19:50 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_token		*ft_each_case(t_input *input, t_token *newtok, char *ret);
 //parser_fda
 
 int			check_identifier(t_token *token);
-void		ft_underscore(t_input *input, t_token *token, char **env);
 int			parser_fda_aux(t_token **token, int state);
 int			finish_fda(t_token **token, int state, int level);
 int			ft_parser_fda(t_minishell *minishell);

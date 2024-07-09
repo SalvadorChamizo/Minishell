@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 16:59:20 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/20 04:57:16 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:02:32 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_minishell
 	t_ast			*ast;
 	t_assign		*list;
 	t_heredoc		heredoc_lst;
+	char 			*underscore;
 	char			**env;
 	int				line_number;
 	int				status;
