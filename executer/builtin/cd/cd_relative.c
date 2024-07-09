@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:57:10 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/11 16:35:54 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/09 10:18:23 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	cd_relative_checker(char *road, char **env)
 	return (1);
 }
 
-bool	cd_relative(char *rout, char **env)
+void	cd_relative(char *rout, char **env, t_minishell *minishell)
 {
 	char	**path;
 	int		i;
@@ -107,7 +107,8 @@ bool	cd_relative(char *rout, char **env)
 	if (!cd_relative_checker(rout, env))
 	{
 		free_split(path);
-		return (false);
+		minishell->status = 1;
+		return ;
 	}
 	oldpwd_update(env);
 	while (path[i])
@@ -116,5 +117,5 @@ bool	cd_relative(char *rout, char **env)
 		i++;
 	}
 	free_split(path);
-	return (true);
+	minishell->status = 0;
 }

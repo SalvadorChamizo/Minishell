@@ -47,6 +47,7 @@ FILES =	main \
 		executer/builtin/cd/cd_relative \
 		executer/builtin/cd/cd_pwd \
 		executer/builtin/cd/cd_home \
+		executer/builtin/cd/cd_hyphen \
 		executer/builtin/pwd/pwd \
 		executer/builtin/echo/echo \
 		executer/builtin/env/env \

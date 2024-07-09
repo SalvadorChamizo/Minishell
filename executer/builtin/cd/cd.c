@@ -3,35 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:17:29 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/16 20:34:24 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:10:19 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../bash.h"
 
-bool	cd_absolute(t_ast *tree, char *path, char **env)
+void	cd_absolute(t_ast *tree, char *path, char **env, t_minishell *minishell)
 {
+	minishell->status = 0;
 	if (access(tree->left->token->value, F_OK) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(tree->left->token->value, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
-		return (false);
+		minishell->status = 1;
+		return ;
 	}
 	else if (access(tree->left->token->value, X_OK) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", 2);
 		ft_putstr_fd(tree->left->token->value, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
-		return (false);
+		minishell->status = 1;
+		return ;
 	}
 	oldpwd_update(env);
 	chdir(path);
 	pwd_update(env);
-	return (true);
 }
 
 void	ft_cd(t_ast *tree, char **env, t_minishell *minishell)
@@ -43,24 +45,23 @@ void	ft_cd(t_ast *tree, char **env, t_minishell *minishell)
 			minishell->status = 1;
 		return ;
 	}
-	if (tree->left->left)
+	else if (tree->left->left)
 	{
 		minishell->status = 1;
 		ft_putstr_fd("bash: cd: too many arguments\n", 2);
 		return ;
 	}
-	if (tree->left->token->value[0] == '/')
+	else if (ft_strcmp(tree->left->token->value, "-") == 0)
 	{
 		minishell->status = 0;
-		if (!cd_absolute(tree, tree->left->token->value, env))
+		if (!cd_hyphen(env))
 			minishell->status = 1;
+		return ;
 	}
+	else if (tree->left->token->value[0] == '/')
+		cd_absolute(tree, tree->left->token->value, env, minishell);
 	else
-	{
-		minishell->status = 0;
-		if (!cd_relative(tree->left->token->value, env))
-			minishell->status = 1;
-	}
+		cd_relative(tree->left->token->value, env, minishell);
 }
 
 /*int main()
