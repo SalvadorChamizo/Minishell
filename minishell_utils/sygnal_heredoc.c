@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 16:56:25 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/08 18:44:06 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/09 20:03:19 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	int_signal_heredoc(int signal_number)
 	exit(130);
 }
 
-void	heredoc_signal()
+void	heredoc_signal(void)
 {
 	struct sigaction	sa_int;
 

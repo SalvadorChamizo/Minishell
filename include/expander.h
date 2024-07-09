@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:52:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/09 17:59:37 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 20:01:49 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ char		*ft_expand_str(char *str, t_minishell *minishell);
 int			ft_check_dollar(char *text);
 void		copy_variable(t_assign *temp, \
 t_dollar *dollar, char *text, char *str);
-void		check_variable_copy(t_dollar *dollar, char *text, t_minishell *mnshll);
+void		check_variable_copy(t_dollar *dollar, \
+char *text, t_minishell *mnshll);
 char		*get_variable(char	*text, int *cur);
 
 //expander_heredoc_status
