@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 06:02:01 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/26 12:56:14 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/08 18:45:06 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,22 @@ int	ft_skip_quote(char *str, char *new_text, int *i, int k)
 char	*remove_dollar_str(char	*str)
 {
 	char	*new_text;
-	int		len;
 	int		i;
 	int		j;
 
 	new_text = malloc(sizeof(char) * ft_strlen(str));
 	i = 0;
 	j = 0;
-	len = ft_strlen(str);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'')
 			j = ft_skip_quote(str, new_text, &i, j);
-		if (i < len && str[i] == '$')
+		if (str[i] == '$')
 		{
-			while (i < len && str[i] != ' ' && str[i] != '\0')
+			while (str[i] != ' ' && str[i] != '\0')
 				i++;
 		}
-		if (i < len && str[i])
+		if (str[i])
 			new_text[j++] = str[i];
 		if (str[i] != '\0')
 			i++;
@@ -60,19 +58,14 @@ char	*remove_dollar_str(char	*str)
 	return (str);
 }
 
-void	ft_search_env(char **env, t_dollar *dollar, char *new_text, char *str)
+void	ft_search_aux(char **env, t_dollar *dollar, char *new_text, int *flag)
 {
 	int		i;
-	int		j;
 	char	*env_var;
 	char	*value;
 	char	*new_value;
-	int		flag;
 
-	j = dollar->j;
-	dollar->j = 0;
 	i = 0;
-	flag = 0;
 	while (env[i])
 	{
 		env_var = get_variable_env(env[i]);
@@ -80,41 +73,59 @@ void	ft_search_env(char **env, t_dollar *dollar, char *new_text, char *str)
 		{
 			value = get_value_env(env[i]);
 			new_value = expand_quotes_str(value);
+			dollar->j = 0;
 			while (new_value[dollar->j])
 				new_text[dollar->k++] = new_value[dollar->j++];
 			*(dollar->flag) = 1;
-			flag = 1;
-			dollar->j = 0;
+			*flag = 1;
 			free(env_var);
 			break ;
 		}
 		free(env_var);
 		i++;
 	}
+}
+
+void	ft_search_env(char **env, t_dollar *dollar, char *new_text, char *str)
+{
+	int		j;
+	int		flag;
+
+	j = dollar->j;
+	flag = 0;
+	ft_search_aux(env, dollar, new_text, &flag);
 	if (flag == 0)
 	{
 		if (str[j] == '$')
-		{
 			new_text[dollar->k++] = str[j++];
-		}
 		while (str[j] != '\0' && ft_isalnum(str[j]))
 			new_text[dollar->k++] = str[j++];
 	}
 }
 
-char	*str_dollar_env(char *str, char **env, int *flag)
+void	init_str_env(t_dollar **dollar, char **new_text, int *flag)
 {
-	t_dollar	*dollar;
-	char		*new_text;
-	int			i;
-	int			len;
+	*dollar = malloc(sizeof(t_dollar));
+	if (!*dollar)
+		return ;
+	*new_text = malloc(sizeof(char) * 2048);
+	if (!*new_text)
+	{
+		free(*dollar);
+		*dollar = NULL;
+		return ;
+	}
+	(*dollar)->flag = flag;
+	(*dollar)->k = 0;
+}
+
+void	process_env(char *str, char *new_text, t_dollar *dollar, char **env)
+{
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(str);
-	dollar = malloc(sizeof(t_dollar));
-	new_text = malloc(sizeof(char) * 2048);
-	dollar->flag = flag;
-	dollar->k = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -130,6 +141,21 @@ char	*str_dollar_env(char *str, char **env, int *flag)
 			new_text[dollar->k++] = str[i++];
 	}
 	new_text[dollar->k] = '\0';
+}
+
+char	*str_dollar_env(char *str, char **env, int *flag)
+{
+	t_dollar	*dollar;
+	char		*new_text;
+	int			i;
+	int			len;
+
+	i = 0;
+	len = ft_strlen(str);
+	init_str_env(&dollar, &new_text, flag);
+	if (!new_text)
+		return (str);
+	process_env(str, new_text, dollar, env);
 	flag = dollar->flag;
 	free(dollar);
 	if (ft_strcmp(new_text, "") != 0 && *flag == 1)
@@ -142,22 +168,29 @@ char	*str_dollar_env(char *str, char **env, int *flag)
 	return (str);
 }
 
-char	*str_dollar_list(char *str, t_assign *list, int *flag)
+void	init_str_list(t_dollar **dollar, char **new_text, int *flag)
 {
-	t_dollar	*dollar;
-	char		*new_text;
-	t_assign	*temp;
-	int			i;
-	int			len;
+	*dollar = malloc(sizeof(t_dollar));
+	if (!*dollar)
+		return ;
+	*new_text = malloc(sizeof(char) * 2048);
+	if (!*new_text)
+	{
+		free(*dollar);
+		*dollar = NULL;
+		return ;
+	}
+	(*dollar)->flag = flag;
+	(*dollar)->k = 0;
+}
+
+void	process_list(char *str, t_assign *list, t_dollar *dollar, char *new_text)
+{
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(str);
-	dollar = malloc(sizeof(t_dollar));
-	new_text = malloc(sizeof(char) * 2048);
-	dollar->flag = flag;
-	dollar->k = 0;
-	if (!ft_check_dollar(str))
-		return (str);
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -166,13 +199,30 @@ char	*str_dollar_list(char *str, t_assign *list, int *flag)
 		{
 			dollar->j = i;
 			dollar->variable = get_variable(str, &i);
-			temp = list;
-			check_variable_copy2(temp, dollar, new_text, str);
+			check_variable_copy2(list, dollar, new_text, str);
 			free(dollar->variable);
 		}
 		if (i < len && str[i])
 			new_text[dollar->k++] = str[i++];
 	}
+	new_text[dollar->k] = '\0';
+}
+
+char	*str_dollar_list(char *str, t_assign *list, int *flag)
+{
+	t_dollar	*dollar;
+	char		*new_text;
+	int			i;
+	int			len;
+
+	i = 0;
+	len = ft_strlen(str);
+	init_str_list(&dollar, &new_text, flag);
+	if (!new_text)
+		return (str);
+	if (!ft_check_dollar(str))
+		return (str);
+	process_list(str, list, dollar, new_text);
 	flag = dollar->flag;
 	free(dollar);
 	if (ft_strcmp(new_text, "") != 0)
@@ -185,18 +235,31 @@ char	*str_dollar_list(char *str, t_assign *list, int *flag)
 	return (str);
 }
 
-char	*expand_status_str(char *str, t_minishell *minishell)
+char	*init_status(t_dollar **dollar)
 {
-	t_dollar	*dollar;
-	int			i;
-	int			len;
-	char		*new_text;
+	char	*new_text;
+
+	*dollar = malloc(sizeof(t_dollar));
+	if (!dollar)
+		return (NULL);
+	new_text = malloc(sizeof(char) * 2048);
+	if (!new_text)
+	{
+		free(dollar);
+		dollar = NULL;
+		return (NULL);
+	}
+	(*dollar)->j = 0;
+	return (new_text);
+}
+
+void	process_status(char *str, t_minishell *minishell, t_dollar *dollar, char *new_text)
+{
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(str);
-	dollar = malloc(sizeof(t_dollar));
-	dollar->j = 0;
-	new_text = malloc(sizeof(char) * 2048);
 	while (i < len && str[i])
 	{
 		if (str[i] == '\'')
@@ -212,6 +275,17 @@ char	*expand_status_str(char *str, t_minishell *minishell)
 			new_text[dollar->j++] = str[i++];
 	}
 	new_text[dollar->j] = '\0';
+}
+
+char	*expand_status_str(char *str, t_minishell *minishell)
+{
+	t_dollar	*dollar;
+	char		*new_text;
+
+	new_text = init_status(&dollar);
+	if (!new_text)
+		return (str);
+	process_status(str, minishell, dollar, new_text);
 	free(dollar);
 	if (ft_strcmp(new_text, "") != 0)
 	{
@@ -238,8 +312,7 @@ char	*ft_expand_str(char *str, t_minishell *minishell)
 		{
 			str = str_dollar_env(str, minishell->env, &flag);
 			str = str_dollar_list(str, minishell->list, &flag);
-			if (flag == 0)
-				str = remove_dollar_str(str);
+			str = remove_dollar_str(str);
 		}
 	}
 	return (str);
