@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:35:25 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 15:03:45 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:38:25 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,28 +74,4 @@ void	ft_store_env(t_assign **list, char **envp)
 		ft_assign_add_back(list, new_node);
 		i++;
 	}
-}
-
-char	*expand_quotes_str(char *str)
-{
-	char	*new_str;
-
-	if (str == NULL)
-		return (str);
-	if (str[0] == '\"' || str[0] == '\'')
-	{
-		if (str[0] == '\"')
-		{
-			new_str = ft_strtrim(str, "\"");
-			free(str);
-			return (new_str);
-		}
-		else if (str[0] == '\'')
-		{
-			new_str = ft_strtrim(str, "\'");
-			free(str);
-			return (new_str);
-		}
-	}
-	return (str);
 }

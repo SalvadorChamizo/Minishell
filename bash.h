@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/08 18:45:38 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:55:15 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,63 +54,6 @@
 
 //GLOBAL
 extern int		g_command_sig;
-
-//Expanser
-void		expand_quotes(t_ast *ast);
-
-//expanser_heredoc
-char		*remove_dollar_heredoc(char	*str);
-char		*heredoc_dollar_env(char *str, char **env, int *flag);
-char		*heredoc_dollar_list(char *str, t_assign *list, int *flag);
-char		*expand_status_heredoc(char *str, t_minishell *minishell);
-char		*ft_expand_heredoc(char *str, t_minishell *minishell);
-
-//expanser_dollar_str
-char		*remove_dollar_str(char	*str);
-char		*str_dollar_env(char *str, char **env, int *flag);
-char		*str_dollar_list(char *str, t_assign *list, int *flag);
-char		*expand_status_str(char *str, t_minishell *minishell);
-char		*ft_expand_str(char *str, t_minishell *minishell);
-
-//expanser_dollar
-
-void		dollar_exit_status(t_ast *ast, t_minishell *minishell);
-char		*get_variable_env(char	*text);
-void		check_variable_env(char **env, t_dollar *dollar, char *new_text, char *str);
-void		ft_dollar_env(t_ast *ast, char **env, int *flag);
-int			ft_check_dollar(char *text);
-char		*remove_dollar(t_ast *ast);
-char		*get_variable(char	*text, int *cur);
-void		ft_dollar_list(t_ast *ast, t_assign *list, int *flag);
-void		ft_dollar(t_ast *ast, t_assign *list, t_minishell *minishell);
-
-//expanser_dollar_utils
-void		check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text, char *str);
-void		check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell);
-
-//expanser_assign
-void		expand_assignment(t_ast *ast, t_ast *prev);
-t_assign	*new_assignment(char *text, t_assign *list);
-void		ft_assign_add_back(t_assign **lst, t_assign *new);
-void		store_assignment(t_ast *ast, t_assign **list);
-int			new_value_size(char *value);
-void		get_new_value(char *value, char **new_value);
-bool		list_act(char *text, int i, t_assign *temp, char *word);
-
-//expanser_command
-bool		ft_expanser_directory(t_ast *ast);
-char		**ft_get_path(char **envp);
-void		expand_builtin(t_ast *ast);
-void		expand_command(t_ast *ast, t_ast *prev, int flag);
-void		expand_command2(t_ast *ast);
-void		expand_command_3(t_ast *ast, char **path);
-
-//expanser_utils
-int			check_builtin(char *text);
-int			check_prev(t_ast *prev);
-int			check_prev2(t_ast *prev);
-void		ft_store_env(t_assign **list, char **envp);
-char		*expand_quotes_str(char *str);
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);

@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:13:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/26 12:42:21 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:50:58 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_check_dollar(char *text)
 	return (0);
 }
 
-void	check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text, char *str)
+void	copy_variable(t_assign *temp, t_dollar *dollar, char *text, char *str)
 {
 	int	flag;
 	int	j;
@@ -42,10 +42,9 @@ void	check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text, char
 		if (ft_strcmp(dollar->variable, temp->variable) == 0)
 		{
 			while (temp->value[dollar->j])
-				new_text[dollar->k++] = temp->value[dollar->j++];
+				text[dollar->k++] = temp->value[dollar->j++];
 			flag = 1;
 			*(dollar->flag) = 1;
-			dollar->j = 0;
 			break ;
 		}
 		temp = temp->next;
@@ -53,15 +52,13 @@ void	check_variable_copy2(t_assign *temp, t_dollar *dollar, char *new_text, char
 	if (flag == 0)
 	{
 		if (str[j] == '$')
-		{
-			new_text[dollar->k++] = str[j++];
-		}
+			text[dollar->k++] = str[j++];
 		while (str[j] != '\0' && ft_isalnum(str[j]))
-			new_text[dollar->k++] = str[j++];
+			text[dollar->k++] = str[j++];
 	}
 }
 
-void	check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishell)
+void	check_variable_copy(t_dollar *dollar, char *text, t_minishell *mnshll)
 {
 	char	*exit_status;
 
@@ -69,9 +66,26 @@ void	check_variable_copy(t_dollar *dollar, char *new_text, t_minishell *minishel
 	exit_status = NULL;
 	if (ft_strcmp(dollar->variable, "?") == 0)
 	{
-		exit_status = ft_itoa(minishell->status);
+		exit_status = ft_itoa(mnshll->status);
 		while (exit_status[dollar->k])
-			new_text[dollar->j++] = exit_status[dollar->k++];
+			text[dollar->j++] = exit_status[dollar->k++];
 	}
 	free(exit_status);
+}
+
+char	*get_variable(char	*text, int *cur)
+{
+	char	*variable;
+	int		start;
+
+	variable = NULL;
+	start = *cur + 1;
+	if (text[*cur] == '$')
+	{
+		*cur = *cur + 1;
+		while (text[*cur] != '\0' && ft_isalnum(text[*cur]))
+			*cur = *cur + 1;
+		variable = ft_substr(text, start, *cur - start);
+	}
+	return (variable);
 }

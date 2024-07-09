@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:03:54 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/26 12:58:47 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:04:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,24 @@ char	*heredoc_dollar_env(char *str, char **env, int *flag)
 	int			i;
 
 	i = 0;
-	dollar = malloc(sizeof(t_dollar));
-	new_text = malloc(sizeof(char) * 2048);
-	dollar->flag = flag;
-	dollar->k = 0;
+	init_dollar(&dollar, &new_text, flag);
+	if (!new_text)
+		return (str);
 	while (str[i])
 	{
 		if (str[i] == '$')
 		{
 			dollar->j = i;
 			dollar->variable = get_variable(str, &i);
-			check_variable_env(env, dollar, new_text, str);
+			env_variable(env, dollar, new_text, str);
+			free(dollar->variable);
 		}
 		new_text[dollar->k++] = str[i++];
 	}
 	new_text[dollar->k] = '\0';
 	flag = dollar->flag;
-	free(dollar->variable);
 	free(dollar);
-	if (ft_strcmp(new_text, "") != 0)
-	{
-		free(str);
-		str = new_text;
-	}
+	str = status_heredoc_free(new_text, str);
 	return (str);
 }
 
@@ -75,77 +70,28 @@ char	*heredoc_dollar_list(char *str, t_assign *list, int *flag)
 {
 	t_dollar	*dollar;
 	char		*new_text;
-	t_assign	*temp;
 	int			i;
-	int			len;
 
 	i = 0;
-	len = ft_strlen(str);
-	dollar = malloc(sizeof(t_dollar));
-	new_text = malloc(sizeof(char) * 2048);
-	dollar->flag = flag;
-	dollar->k = 0;
+	init_dollar(&dollar, &new_text, flag);
+	if (!new_text)
+		return (str);
 	if (!ft_check_dollar(str))
 		return (str);
 	while (str[i])
 	{
-		if (i < len && str[i] == '$')
+		if (str[i] == '$')
 		{
 			dollar->variable = get_variable(str, &i);
-			temp = list;
-			check_variable_copy2(temp, dollar, new_text, str);
+			copy_variable(list, dollar, new_text, str);
 			free(dollar->variable);
 		}
-		if (i < len && str[i])
+		if (str[i])
 			new_text[dollar->k++] = str[i++];
 	}
 	flag = dollar->flag;
 	free(dollar);
-	if (ft_strcmp(new_text, "") != 0)
-	{
-		free(str);
-		str = new_text;
-	}
-	else
-		free(new_text);
-	return (str);
-}
-
-char	*expand_status_heredoc(char *str, t_minishell *minishell)
-{
-	t_dollar	*dollar;
-	int			i;
-	int			len;
-	char		*new_text;
-
-	i = 0;
-	len = ft_strlen(str);
-	dollar = malloc(sizeof(t_dollar));
-	dollar->j = 0;
-	new_text = malloc(sizeof(char) * 2048);
-	while (str[i])
-	{
-		if (str[i] == '$' && str[i + 1] == '?')
-		{
-			dollar->variable = ft_strdup("?");
-			i = i + 2;
-			check_variable_copy(dollar, new_text, minishell);
-		}
-		if (str[i] && i < len)
-		{
-			new_text[dollar->j++] = str[i++];
-		}
-	}
-	new_text[dollar->j] = '\0';
-	free(dollar->variable);
-	free(dollar);
-	if (ft_strcmp(new_text, "") != 0)
-	{
-		free(str);
-		str = new_text;
-	}
-	else
-		free(new_text);
+	str = status_heredoc_free(new_text, str);
 	return (str);
 }
 
@@ -160,14 +106,11 @@ char	*ft_expand_heredoc(char *str, t_minishell *minishell)
 		str = expand_status_heredoc(str, minishell);
 	if (ft_check_dollar(str))
 	{
-		if (!minishell->list)
-			str = remove_dollar_heredoc(str);
-		else if (minishell->list)
+		if (minishell->list)
 		{
 			str = heredoc_dollar_env(str, minishell->env, &flag);
 			str = heredoc_dollar_list(str, minishell->list, &flag);
-			if (flag == 0)
-				str = remove_dollar_heredoc(str);
+			str = remove_dollar_heredoc(str);
 		}
 	}
 	return (str);

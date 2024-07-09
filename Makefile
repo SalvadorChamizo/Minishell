@@ -29,18 +29,21 @@ FILES =	main \
 		parser/parser_ast_nodes \
 		parser/parser_ast_list \
 		parser/print_parser \
-		expander/expander_dollar \
+		expander/expander_assign_utils \
+		expander/expander_assign \
+		expander/expander_command \
+		expander/expander_directory \
 		expander/expander_dollar_env \
-		expander/expander_dollar_list \
+		expander/expander_dollar_str_status \
+		expander/expander_dollar_str_utils \
 		expander/expander_dollar_str \
 		expander/expander_dollar_utils \
-		expander/expander_utils \
-		expander/expander_assign \
-		expander/expander_assign_utils \
-		expander/expander_command \
+		expander/expander_heredoc_status \
+		expander/expander_heredoc_utils \
 		expander/expander_heredoc \
+		expander/expander_quotes \
 		expander/expander_redirections_fd \
-		expander/expander_directory \
+		expander/expander_utils \
 		expander/expander \
 		executer/builtin/cd/cd \
 		executer/builtin/cd/cd_utils \
