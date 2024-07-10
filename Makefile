@@ -28,6 +28,8 @@ FILES =	main \
 		parser/parser_ast_utils \
 		parser/parser_ast_nodes \
 		parser/parser_ast_list \
+		parser/parser_underscore \
+		parser/parser_underscore_utils \
 		parser/print_parser \
 		expander/expander_assign_utils \
 		expander/expander_assign \

@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:15:05 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:31:37 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@ int	check_identifier(t_token *token)
 	if (token->type != T_IDENTIFIER && token->type != T_ASSING)
 		return (0);
 	return (1);
-}
-
-void	ft_underscore(t_minishell *minishell, t_token *token)
-{
-	int		ret;
-
-	ret = minishell->input->pos;
-	printf("token->value: %s\n", token->value);
-	while (ft_isspace(minishell->input->line[ret]))
-		ret++;
-	if (token->value && minishell->input->line[ret] == '\0')
-		minishell->underscore = token->value;
 }
 
 int	parser_fda_aux(t_token **token, int state)
