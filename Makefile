@@ -32,6 +32,7 @@ FILES =	main \
 		expander/expander_assign_utils \
 		expander/expander_assign \
 		expander/expander_command \
+		expander/expander_command_utils \
 		expander/expander_directory \
 		expander/expander_dollar_env \
 		expander/expander_dollar_str_status \

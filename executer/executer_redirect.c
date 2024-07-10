@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:17:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 12:21:04 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:22:19 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	ft_open_infile(t_ast *ast, t_minishell *minishell)
 	{
 		fd = open(ast->token->value, O_RDONLY);
 		if (fd < 0)
+		{
 			perror("open");
+		}
 		dup2(fd, STDIN_FILENO);
 		minishell->infile_check = 1;
 		minishell->fd_in_redir = fd;
@@ -54,7 +56,9 @@ void	ft_open_outfile_2(t_ast *ast, t_minishell *minishell)
 	{
 		fd = open(ast->token->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd < 0)
+		{
 			perror("open");
+		}
 		dup2(fd, STDOUT_FILENO);
 		minishell->outfile_check = 1;
 		minishell->fd_out_redir = fd;

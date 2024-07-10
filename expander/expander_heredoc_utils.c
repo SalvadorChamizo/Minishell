@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:46:49 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 12:09:09 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:24:41 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,24 @@ void	ft_write_heredoc(t_ast *ast, t_minishell *minishell, char *name)
 
 void	store_heredoc_aux(t_ast *ast, t_minishell *mnshll, char *name, int pid)
 {
+	int	status;
+
 	g_command_sig = pid;
 	if (!pid)
+	{
 		ft_write_heredoc(ast, mnshll, name);
+		exit(0);
+	}
 	else
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
 		mnshll->fd_in_redir = open(name, O_RDONLY);
 		if (mnshll->fd_in_redir < 0)
 		{
 			unlink(name);
 			manage_error("open");
 		}
+		mnshll->status = status;
 		free(name);
 	}
 }
@@ -95,7 +101,6 @@ int	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
 		free(number);
 		pid = fork();
 		store_heredoc_aux(ast, minishell, filename, pid);
-		free(filename);
 		num++;
 		signal(SIGQUIT, quit_signal);
 		signal(SIGINT, sigint_signal);

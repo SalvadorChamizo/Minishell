@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:17:43 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 09:59:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:22:31 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	ft_open_outfile_aux(t_ast *ast, t_minishell *minishell)
 	{
 		fd = open(ast->token->value, O_WRONLY | O_TRUNC, 0644);
 		if (fd < 0)
+		{
 			perror("open");
+		}
 		if (minishell->outfile_check == -1)
 		{
 			dup2(fd, STDOUT_FILENO);
@@ -38,7 +40,9 @@ void	ft_open_outfile_2_aux(t_ast *ast, t_minishell *minishell)
 	{
 		fd = open(ast->token->value, O_WRONLY | O_APPEND, 0644);
 		if (fd < 0)
+		{
 			perror("open");
+		}
 		if (minishell->outfile_check == -1)
 		{
 			dup2(fd, STDOUT_FILENO);
