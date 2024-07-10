@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 09:34:07 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:19:13 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ char	*readline_prompt(void)
 	char	*ret;
 	char	*ret2;
 
-	computer = NULL;
-	ret = NULL;
-	prompt = NULL;
-	ret2 = NULL;
+	prompt_init(computer, prompt, ret, ret2);
 	computer = getenv("USER");
 	if (!computer)
 		return (NULL);
@@ -114,7 +111,7 @@ t_minishell	*minishell_init(char **env)
 {
 	t_minishell	*minishell;
 
-	//ft_enter();
+	ft_enter();
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (NULL);
