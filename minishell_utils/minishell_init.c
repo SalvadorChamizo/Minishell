@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/09 16:03:26 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 09:54:48 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ char	*readline_prompt(void)
 	char	*ret;
 	char	*ret2;
 
-	computer = NULL;
-	ret = NULL;
-	prompt = NULL;
-	ret2 = NULL;
+	prompt_init(computer, prompt, ret, ret2);
 	computer = getenv("USER");
 	if (!computer)
 		return (NULL);
@@ -53,7 +50,6 @@ int	input_init(t_input *input, t_minishell *minishell)
 		input->line = readline(prompt);
 	else
 		input->line = readline(RED"minishell> "RESET);
-	//dollar_line(input->line, minishell);
 	if (input->line == NULL && isatty(STDIN_FILENO))
 	{
 		printf("exit\n");
@@ -115,7 +111,7 @@ t_minishell	*minishell_init(char **env)
 {
 	t_minishell	*minishell;
 
-	//ft_enter();
+	ft_enter();
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (NULL);

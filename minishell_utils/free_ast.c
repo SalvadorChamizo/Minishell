@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 16:47:13 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/26 17:44:22 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 09:31:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
 
-int		free_ast(t_ast **ast, int num)
+int	free_ast(t_ast **ast, int num)
 {
 	t_ast	*temp;
 	char	*number;
