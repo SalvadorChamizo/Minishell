@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:29:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 12:43:28 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:55:18 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	word_count(char *word)
 {
 	int	i;
 	int	j;
-	int flag;
+	int	flag;
 
 	i = 0;
 	j = 0;
@@ -38,7 +38,7 @@ void	quote_delete(char *word, char *ret)
 {
 	int	i;
 	int	j;
-	int flag;
+	int	flag;
 
 	i = 0;
 	j = 0;
@@ -84,7 +84,7 @@ char	*word_selector(t_minishell *minishell, int *ret, int size)
 	while (minishell->input->line[*ret] != '\0'
 		&& !ft_isspace(minishell->input->line[*ret]))
 		(*ret)++;
-	word = ft_substr(minishell->input->line, temp - size , *ret);
+	word = ft_substr(minishell->input->line, temp - size, *ret);
 	if (word)
 		skip_quotes(word);
 	return (word);
