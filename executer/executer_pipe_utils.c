@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 15:28:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:48:05 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:03:46 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,23 @@ int	ft_more_pipes(t_ast *ast, t_minishell *minishell, int flag)
 	while (wait(&status) > 0)
 		continue ;
 	return (status);
+}
+
+void	ft_pipe_redirection(t_minishell *minishell)
+{
+	if (minishell->pipe_check == 1)
+	{
+		if (minishell->infile_check == 1)
+		{
+			dup2(minishell->stdin_fd, STDIN_FILENO);
+			dup2(minishell->fd_in_redir, STDIN_FILENO);
+			close(minishell->fd_in_redir);
+		}
+		if (minishell->outfile_check == 1)
+		{
+			dup2(minishell->stdout_fd, STDOUT_FILENO);
+			dup2(minishell->fd_out_redir, STDOUT_FILENO);
+			close(minishell->fd_out_redir);
+		}
+	}
 }
