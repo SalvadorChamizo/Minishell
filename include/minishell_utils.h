@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:21:18 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 09:54:32 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:20:30 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int			input_init(t_input *input, t_minishell *minishell);
 t_minishell	*minishell_init(char **env);
 void		init_variables(t_input *input, t_minishell *minishell);
-void	    prompt_init(char computer, char *prompt, char *ret, char *ret2);
+void	    prompt_init(char **computer, char **prompt, char **ret, char **ret2);
 
 //sygnal
 void		quit_signal(int signal_number);

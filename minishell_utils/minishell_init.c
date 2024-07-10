@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 09:54:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:17:28 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*readline_prompt(void)
 	char	*ret;
 	char	*ret2;
 
-	prompt_init(computer, prompt, ret, ret2);
+	prompt_init(&computer, &prompt, &ret, &ret2);
 	computer = getenv("USER");
 	if (!computer)
 		return (NULL);
