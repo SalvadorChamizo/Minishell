@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fda.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:09:00 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:15:05 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:12:29 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_underscore(t_minishell *minishell, t_token *token)
 	int		ret;
 
 	ret = minishell->input->pos;
-	printf("token->value: %s\n", token->value);
 	while (ft_isspace(minishell->input->line[ret]))
 		ret++;
 	if (token->value && minishell->input->line[ret] == '\0')

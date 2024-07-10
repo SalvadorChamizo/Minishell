@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 06:02:01 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:55:17 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:06:11 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,10 @@ char	*ft_expand_str(char *str, t_minishell *minishell)
 		if (minishell->list)
 		{
 			str = str_dollar_env(str, minishell->env, &flag);
-			str = str_dollar_list(str, minishell->list, &flag);
-			str = remove_dollar_str(str);
+			if (ft_check_dollar(str))
+				str = str_dollar_list(str, minishell->list, &flag);
+			if (ft_check_dollar(str))
+				str = remove_dollar_str(str);
 		}
 	}
 	return (str);

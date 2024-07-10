@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 16:28:13 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/09 16:29:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:16:26 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	ft_search_aux(char **env, t_dollar *dollar, char *new_text, int *flag)
 			dollar->j = 0;
 			while (new_value[dollar->j])
 				new_text[dollar->k++] = new_value[dollar->j++];
+			free(new_value);
 			*(dollar->flag) = 1;
 			*flag = 1;
 			free(env_var);

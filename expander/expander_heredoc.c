@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:03:54 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:40:48 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:57:54 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	*heredoc_dollar_env(char *str, char **env, int *flag)
 			env_variable(env, dollar, new_text, str);
 			free(dollar->variable);
 		}
-		new_text[dollar->k++] = str[i++];
+		if (str[i])
+			new_text[dollar->k++] = str[i++];
 	}
 	new_text[dollar->k] = '\0';
 	flag = dollar->flag;
@@ -122,7 +123,8 @@ char	*ft_expand_heredoc(char *str, t_minishell *minishell)
 		{
 			str = heredoc_dollar_env(str, minishell->env, &flag);
 			str = heredoc_dollar_list(str, minishell->list, &flag);
-			str = remove_dollar_heredoc(str);
+			if (ft_check_dollar(str))
+				str = remove_dollar_heredoc(str);
 		}
 	}
 	return (str);
