@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 12:14:07 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:11:42 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_minishell	*minishell_init(char **env)
 {
 	t_minishell	*minishell;
 
-	//ft_enter();
+	ft_enter();
 	minishell = malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 		return (NULL);
