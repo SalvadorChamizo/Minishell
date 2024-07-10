@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:55 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 12:42:43 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:25:23 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	exit_free(t_minishell **minishell, t_ast *ast, char *str)
 		ft_list_clear(&(*minishell)->list);
 	free((*minishell)->input->line);
 	free((*minishell)->input);
+	free((*minishell)->underscore);
 	while ((*minishell)->env[i])
 	{
 		free((*minishell)->env[i]);

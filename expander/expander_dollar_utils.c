@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 15:13:48 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 16:28:27 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:26:57 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*get_variable(char	*text, int *cur)
 	{
 		*cur = *cur + 1;
 		while (text[*cur] != '\0' && (ft_isalnum(text[*cur])
+				|| text[*cur] == '_'))
 				|| text[*cur] == '_'))
 			*cur = *cur + 1;
 		variable = ft_substr(text, start, *cur - start);
