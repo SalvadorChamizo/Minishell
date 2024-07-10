@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:15:34 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 14:38:48 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:14:11 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ t_ast		*bi_node(t_ast *left, t_token *op, t_ast *right);
 
 //parser_underscore
 
-void	ft_underscore(t_minishell *minishell, t_token *token);
-void	underscore_init(int *i, int *j, int *flag);
-int	    simple_quote_control(int flag);
-int	    double_quote_control(int flag);
+void		ft_underscore(t_minishell *minishell, t_token *token);
+void		underscore_init(int *i, int *j, int *flag);
+int			simple_quote_control(int flag);
+int			double_quote_control(int flag);
 
 #endif
