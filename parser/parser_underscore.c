@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_underscore.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:29:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 18:30:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:56:37 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,6 @@ void	ft_underscore(t_minishell *minishell, t_token *token)
 			free(minishell->underscore);
 		minishell->underscore = word;
 	}
+	else if (word)
+		free(word);
 }
