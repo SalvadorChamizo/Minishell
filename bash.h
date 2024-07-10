@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/09 17:55:15 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:12:56 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "include/builtin.h"
 # include "include/parser_tokenizer.h"
 # include "include/expander.h"
+# include "include/executer.h"
 # include "include/minishell_utils.h"
 # include "libft/include/libft.h"
 # include <unistd.h>

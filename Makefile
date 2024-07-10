@@ -66,6 +66,7 @@ FILES =	main \
 		executer/executer_pipe \
 		executer/executer_pipe_utils \
 		executer/executer_redirect \
+		executer/executer_redirect_utils \
 		minishell_utils/logo \
 		minishell_utils/minishell_init \
 		minishell_utils/minishell_init_extra \
