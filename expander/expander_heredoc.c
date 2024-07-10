@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:03:54 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/09 18:04:41 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:40:48 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,28 @@ char	*heredoc_dollar_env(char *str, char **env, int *flag)
 	return (str);
 }
 
+void	loop_list(char *str, t_assign *list, t_dollar *dollar, char *text)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_strlen(str);
+	while (str[i])
+	{
+		if (i < len && str[i] == '$')
+		{
+			dollar->j = i;
+			dollar->variable = get_variable(str, &i);
+			copy_variable(list, dollar, text, str);
+			free(dollar->variable);
+		}
+		if (i < len && str[i])
+			text[dollar->k++] = str[i++];
+	}
+	text[dollar->k] = '\0';
+}
+
 char	*heredoc_dollar_list(char *str, t_assign *list, int *flag)
 {
 	t_dollar	*dollar;
@@ -78,17 +100,7 @@ char	*heredoc_dollar_list(char *str, t_assign *list, int *flag)
 		return (str);
 	if (!ft_check_dollar(str))
 		return (str);
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			dollar->variable = get_variable(str, &i);
-			copy_variable(list, dollar, new_text, str);
-			free(dollar->variable);
-		}
-		if (str[i])
-			new_text[dollar->k++] = str[i++];
-	}
+	loop_list(str, list, dollar, new_text);
 	flag = dollar->flag;
 	free(dollar);
 	str = status_heredoc_free(new_text, str);

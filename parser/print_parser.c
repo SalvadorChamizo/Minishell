@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:10:25 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/07 15:23:06 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:29:02 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	print_ast(t_ast *root)
 void	print_assignment(t_assign *list)
 {
 	t_assign	*temp;
-	int				i;
+	int			i;
 
 	i = 1;
 	temp = list;
@@ -101,7 +101,7 @@ void	print_assignment(t_assign *list)
 			printf("Node %d: Variable = %s, Value = %s\n", i, temp->variable, temp->value);
 			temp = temp->next;
 			i++;
-		}		
+		}
 	}
 }
 
@@ -122,6 +122,6 @@ void	print_list(t_idenlst *list)
 			printf("Node %d: Value = %s\n", i, temp->token->value);
 			temp = temp->next;
 			i++;
-		}		
+		}
 	}
 }
