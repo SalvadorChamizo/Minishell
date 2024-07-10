@@ -6,11 +6,18 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 12:28:33 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 12:39:35 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:31:39 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
+
+void	underscore_init(int *i, int *j, int *flag)
+{
+	*i = 0;
+	*j = 0;
+	*flag = 0;
+}
 
 int	simple_quote_control(int flag)
 {

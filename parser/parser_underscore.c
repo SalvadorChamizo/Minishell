@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:29:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 12:57:40 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:04:51 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ int	word_count(char *word)
 	int	j;
 	int	flag;
 
-	i = 0;
-	j = 0;
-	flag = 0;
+	underscore_init(&i, &j, &flag);
 	while (word[i] != '\0')
 	{
 		if (word[i] == '\'' && flag != 2)
@@ -34,15 +32,13 @@ int	word_count(char *word)
 	return (j);
 }
 
-void	quote_delete(char *word, char *ret)
+char	*quote_delete(char *word, char *ret)
 {
 	int	i;
 	int	j;
 	int	flag;
 
-	i = 0;
-	j = 0;
-	flag = 0;
+	underscore_init(&i, &j, &flag);
 	while (word[i] != '\0')
 	{
 		if (word[i] == '\'' && flag != 2)
@@ -57,26 +53,29 @@ void	quote_delete(char *word, char *ret)
 		i++;
 	}
 	ret[j] = '\0';
-	free(word);
-	word = ft_strdup(ret);
-	free(ret);
+	return (ret);
 }
 
-void	skip_quotes(char *word)
+char	*skip_quotes(char *word)
 {
 	char	*ret;
+	char 	*new_word;
 	int		i;
 
 	i = word_count(word);
 	ret = malloc(sizeof(char) * i + 1);
 	if (ret == NULL)
-		return ;
-	quote_delete(word, ret);
+		return (word);
+	ret = quote_delete(word, ret);
+	new_word = ft_strdup(ret);
+	free(ret);
+	return (new_word);
 }
 
 char	*word_selector(t_minishell *minishell, int *ret, int size)
 {
 	char	*word;
+	char	*old_word;
 	int		temp;
 
 	word = NULL;
@@ -85,8 +84,11 @@ char	*word_selector(t_minishell *minishell, int *ret, int size)
 		&& !ft_isspace(minishell->input->line[*ret]))
 		(*ret)++;
 	word = ft_substr(minishell->input->line, temp - size, *ret);
-	if (word)
-		skip_quotes(word);
+	if (!word)
+		return (NULL);
+	old_word = word;
+	word = skip_quotes(word);
+	free(old_word);
 	return (word);
 }
 

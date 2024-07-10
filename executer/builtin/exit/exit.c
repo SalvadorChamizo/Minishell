@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 12:44:55 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/09 11:39:07 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:03:04 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	exit_free(t_minishell **minishell, t_ast *ast, char *str)
 		ft_list_clear(&(*minishell)->list);
 	free((*minishell)->input->line);
 	free((*minishell)->input);
+	free((*minishell)->underscore);
 	while ((*minishell)->env[i])
 	{
 		free((*minishell)->env[i]);
