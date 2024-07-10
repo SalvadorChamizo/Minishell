@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:52:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:18:52 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 10:42:55 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int			ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num);
 
 char		*remove_dollar_heredoc(char	*str);
 char		*heredoc_dollar_env(char *str, char **env, int *flag);
+void		loop_list(char *str, t_assign *list, \
+t_dollar *dollar, char *text);
 char		*heredoc_dollar_list(char *str, t_assign *list, int *flag);
 char		*ft_expand_heredoc(char *str, t_minishell *minishell);
 

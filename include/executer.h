@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:05:11 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:11:54 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:49:36 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_simple_command(t_ast *ast, t_minishell *minishell);
 //executer_command_utils
 
 char	*ft_remove_path(char *command);
-char	*command_args_builder(t_ast **tmp);
+char	*command_args_builder(t_ast **temp);
 char	**ft_command_args_aux(t_ast *temp, char **args);
 char	**ft_command_args(t_ast *ast);
 int		ft_check_path(char **envp);

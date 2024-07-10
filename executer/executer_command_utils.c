@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:08:34 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 09:34:57 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:50:36 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ char	*ft_remove_path(char *command)
 	return (new_text);
 }
 
-char	*command_args_builder(t_ast **tmp)
+char	*command_args_builder(t_ast **temp)
 {
 	char	*str;
-	char	*tep;
+	char	*new_str;
 
-	str = ft_strdup((*tmp)->token->value);
-	tep = NULL;
-	while ((*tmp)->left && (*tmp)->left->token->space == false)
+	str = ft_strdup((*temp)->token->value);
+	new_str = NULL;
+	while ((*temp)->left && (*temp)->left->token->space == false)
 	{
-		(*tmp) = (*tmp)->left;
-		tep = ft_strjoin(str, (*tmp)->token->value);
+		*temp = (*temp)->left;
+		new_str = ft_strjoin(str, (*temp)->token->value);
 		free(str);
-		str = tep;
+		str = new_str;
 	}
 	return (str);
 }
@@ -78,7 +78,7 @@ char	**ft_command_args(t_ast *ast)
 	while (temp)
 	{
 		temp = temp->left;
-		while (temp && temp->token->space == true)
+		while (temp && temp->token->space == false)
 			temp = temp->left;
 		i++;
 	}

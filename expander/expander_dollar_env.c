@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 15:35:33 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/09 17:24:18 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:15:30 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	env_variable_loop(t_dollar *dollar, char *new_text, char **env)
 			while (new_value[dollar->j])
 				new_text[dollar->k++] = new_value[dollar->j++];
 			*(dollar->flag) = 1;
+			free(new_value);
 			free(env_var);
 			return (1);
 		}

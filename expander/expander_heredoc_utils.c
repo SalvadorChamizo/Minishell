@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 14:46:49 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/09 16:43:01 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:09:09 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	ft_store_heredoc(t_ast *ast, t_minishell *minishell, int num)
 		free(number);
 		pid = fork();
 		store_heredoc_aux(ast, minishell, filename, pid);
+		free(filename);
 		num++;
 		signal(SIGQUIT, quit_signal);
 		signal(SIGINT, sigint_signal);
