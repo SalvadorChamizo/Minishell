@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:29:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 12:55:18 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:57:40 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,4 @@ void	ft_underscore(t_minishell *minishell, t_token *token)
 			free(minishell->underscore);
 		minishell->underscore = word;
 	}
-	printf("word: %s\n", word);
 }
