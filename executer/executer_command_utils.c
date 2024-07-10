@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:08:34 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 11:50:36 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:03:00 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*ft_remove_path(char *command)
 
 char	*command_args_builder(t_ast **temp)
 {
+	t_ast	*temp2;
 	char	*str;
 	char	*new_str;
 
@@ -44,10 +45,12 @@ char	*command_args_builder(t_ast **temp)
 	new_str = NULL;
 	while ((*temp)->left && (*temp)->left->token->space == false)
 	{
+		temp2 = *temp;
 		*temp = (*temp)->left;
 		new_str = ft_strjoin(str, (*temp)->token->value);
 		free(str);
 		str = new_str;
+		temp2->left = (*temp)->left;
 	}
 	return (str);
 }

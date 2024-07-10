@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 12:52:08 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:42:55 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:50:51 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,15 @@ void		store_assignment(t_ast *ast, t_assign **list);
 
 //expander_command
 
-char		**ft_get_path(char **envp);
-void		expand_builtin(t_ast *ast);
 void		expand_command(t_ast *ast, t_ast *prev, int flag);
 void		expand_command2(t_ast *ast);
+void		expand_command_3_aux(t_ast *ast, t_ast *temp, char **path);
 void		expand_command_3(t_ast *ast, char **path);
+
+//expander_command_utils
+
+char		**ft_get_path(char **envp);
+void		expand_builtin(t_ast *ast);
 
 //expander_directory
 

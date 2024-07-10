@@ -1,49 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanser_command.c                                 :+:      :+:    :+:   */
+/*   expander_command.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:29:35 by schamizo          #+#    #+#             */
-/*   Updated: 2024/06/25 12:25:32 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:42:11 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
-
-char	**ft_get_path(char **envp)
-{
-	int		i;
-	int		flag;
-	char	*str;
-	char	**split;
-
-	i = 0;
-	flag = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
-	{
-		i++;
-		if (envp[i] && ft_strncmp(envp[i], "PATH=", 5) == 0)
-			flag = 1;
-	}
-	if (flag == 0)
-		return (NULL);
-	str = ft_substr(envp[i], 5, ft_strlen(envp[i]));
-	split = ft_split(str, ':');
-	free(str);
-	return (split);
-}
-
-void	expand_builtin(t_ast *ast)
-{
-	if (ast == NULL)
-		return ;
-	if (ast->type == N_IDENTIFIER && check_builtin(ast->token->value))
-		ast->type = N_BUILTIN;
-	expand_builtin(ast->left);
-	expand_builtin(ast->right);
-}
 
 void	expand_command(t_ast *ast, t_ast *prev, int flag)
 {
@@ -93,16 +60,15 @@ void	expand_command2(t_ast *ast)
 	expand_command2(ast->right);
 }
 
-void	expand_command_3(t_ast *ast, char **path)
+void	expand_command_3_aux(t_ast *ast, t_ast *temp, char **path)
 {
 	int		i;
 	char	*str;
 
 	i = 0;
-	if (!ast)
-		return ;
 	if (ast->type == N_COMMAND)
 	{
+		ast->token->value = command_args_builder(&temp);
 		while (path[i] != NULL)
 		{
 			str = ft_strjoin(path[i], ast->token->value);
@@ -117,6 +83,16 @@ void	expand_command_3(t_ast *ast, char **path)
 			i++;
 		}
 	}
+}
+
+void	expand_command_3(t_ast *ast, char **path)
+{
+	t_ast	*temp;
+
+	temp = ast;
+	if (!ast)
+		return ;
+	expand_command_3_aux(ast, temp, path);
 	expand_command_3(ast->left, path);
 	expand_command_3(ast->right, path);
 }
