@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 19:17:44 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:27:02 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	input_init(t_input *input, t_minishell *minishell)
 			free(minishell->store_fds);
 		ft_list_clear(&minishell->list);
 		free_split(minishell->env);
+		free(minishell->underscore);
 		free(minishell);
 		return (1);
 	}
