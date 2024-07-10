@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:29:35 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 16:42:11 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:04:37 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	expand_command2(t_ast *ast)
 {
 	char	*str;
 
+	str = NULL;
 	if (ast == NULL)
 		return ;
 	if (ft_expanser_directory(ast))

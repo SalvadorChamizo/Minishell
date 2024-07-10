@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 18:08:34 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 16:03:00 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:15:47 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*command_args_builder(t_ast **temp)
 	char	*new_str;
 
 	str = ft_strdup((*temp)->token->value);
+	free((*temp)->token->value);
 	new_str = NULL;
 	while ((*temp)->left && (*temp)->left->token->space == false)
 	{
@@ -87,6 +88,8 @@ char	**ft_command_args(t_ast *ast)
 	}
 	temp = ast;
 	args = malloc(sizeof(char *) * i);
+	if (!args)
+		return (NULL);
 	ft_command_args_aux(temp, args);
 	return (args);
 }

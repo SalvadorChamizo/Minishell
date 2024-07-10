@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_init.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:02:48 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 16:11:42 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:17:44 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	**ft_env_init(char **env)
 		j++;
 	newenv = NULL;
 	newenv = malloc(sizeof(char *) * (j + 1));
+	if (!newenv)
+		return (NULL);
 	i = 0;
 	while (env[i])
 	{
