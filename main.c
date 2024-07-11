@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 18:27:30 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:42:33 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	ft_underscore_asg(t_minishell *minishell)
 
 	ret = 0;
 	str = NULL;
+	if (!minishell->underscore)
+		return ;
 	while (minishell->env[ret])
 	{
 		if (!ft_strncmp(minishell->env[ret], "_=", 2))
