@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:29:35 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 19:04:37 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:33:01 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	expand_command_3_aux(t_ast *ast, t_ast *temp, char **path)
 	i = 0;
 	if (ast->type == N_COMMAND)
 	{
-		ast->token->value = command_args_builder(&temp);
+		ast->token->value = command_args_builder(&temp, 1);
 		while (path[i] != NULL)
 		{
 			str = ft_strjoin(path[i], ast->token->value);

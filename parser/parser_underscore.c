@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_underscore.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 10:29:30 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 18:56:37 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:55:32 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	ft_underscore(t_minishell *minishell, t_token *token)
 	int		size;
 	char	*word;
 
+	if (!token->value)
+		return ;
 	ret = minishell->input->pos;
 	word = NULL;
 	size = ft_strlen(token->value);
