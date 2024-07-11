@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 10:32:04 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/11 12:03:50 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:35:58 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	new_env_manager(char *str, char **newenv)
 		j++;
 	if (str[j - 1] == '+')
 	{
-		*newenv = malloc(sizeof(char) * j);
+		*newenv = malloc(sizeof(char) * (strlen(str)));
 		flag = 1;
 	}
 	else
-		*newenv = malloc(sizeof(char) * j + 1);
+		*newenv = malloc(sizeof(char) * (strlen(str) + 1));
 	new_env_write(str, newenv, flag);
 }
 
