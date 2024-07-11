@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:12:02 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/06/15 18:03:49 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:04:08 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	ft_export(t_ast *ast, t_minishell *minishell)
 		}
 		else
 			list_check(str, minishell->list, &minishell->env);
+		free(str);
 		tmp = tmp->left;
 	}
 }
