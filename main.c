@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/11 12:15:46 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:27:59 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int		g_command_sig;
 
 void	ft_underscore_asg(t_minishell *minishell)
 {
-	int	ret;
-	char *str;
+	int		ret;
+	char	*str;
 
 	ret = 0;
 	str = NULL;
@@ -42,9 +42,7 @@ void	ft_do_line(t_minishell *minishell)
 {
 	minishell->input->pos = 0;
 	minishell->ast = ft_parser_ast(minishell->input);
-	//print_ast(minishell->ast);
 	ft_expander(minishell, minishell->env);
-	//print_ast(minishell->ast);
 	ft_executer(minishell->ast, minishell);
 	ft_underscore_asg(minishell);
 	dup2(minishell->stdin_fd, STDIN_FILENO);
@@ -52,6 +50,16 @@ void	ft_do_line(t_minishell *minishell)
 	free_ast(&minishell->ast, 1);
 	if (minishell->pipe_num != 0)
 		free(minishell->store_fds);
+}
+
+void	main_aux(t_minishell *minishell)
+{
+	char	*str;
+
+	str = minishell->input->line;
+	minishell->input->line = ft_expand_str(str, minishell);
+	minishell->line_number++;
+	minishell->input->pos = 0;
 }
 
 int	main(int argc, char **argv, char **env)
@@ -68,14 +76,12 @@ int	main(int argc, char **argv, char **env)
 		minishell->input = malloc(sizeof(t_input));
 		if (input_init(minishell->input, minishell) == 1)
 		{
-			//ft_close();
+			ft_close();
 			exit(0);
 		}
 		if (minishell->input->line[0] != '\0')
 			add_history(minishell->input->line);
-		minishell->input->line = ft_expand_str(minishell->input->line, minishell);
-		minishell->line_number++;
-		minishell->input->pos = 0;
+		main_aux(minishell);
 		if (ft_parser_fda(minishell) == 1)
 			ft_do_line(minishell);
 		free(minishell->input->line);
