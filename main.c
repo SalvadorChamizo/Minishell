@@ -6,14 +6,14 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:56:12 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/11 12:27:59 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:46:29 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bash.h"
 
 //GLOBAL
-int		g_command_sig;
+int	g_command_sig;
 
 void	ft_underscore_asg(t_minishell *minishell)
 {

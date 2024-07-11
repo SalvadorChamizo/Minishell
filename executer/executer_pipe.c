@@ -6,26 +6,11 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 16:24:21 by schamizo          #+#    #+#             */
-/*   Updated: 2024/07/10 10:04:20 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:43:11 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../bash.h"
-
-/*void	ft_child_aux(t_ast *ast, t_minishell *minishell)
-{
-	if (ast->type != N_COMMAND)
-	{
-		minishell->pipe_check = 1;
-		ft_executer(ast, minishell);
-		exit(0);
-	}
-	if (ast->right)
-	{
-		minishell->pipe_check = 1;
-		ft_executer(ast->right, minishell);
-	}
-}*/
 
 void	ft_pipe_middle(t_ast *ast, t_minishell *minishell)
 {

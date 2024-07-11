@@ -6,7 +6,7 @@
 /*   By: schamizo <schamizo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 18:26:09 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/10 10:12:56 by schamizo         ###   ########.fr       */
+/*   Updated: 2024/07/11 12:46:08 by schamizo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define CLEAR		"\033[2J"
 
 //GLOBAL
-extern int		g_command_sig;
+extern int	g_command_sig;
 
 //executer
 void		ft_executer(t_ast *ast, t_minishell *minishell);
