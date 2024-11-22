@@ -6,7 +6,7 @@
 /*   By: saroca-f <saroca-f@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 16:57:10 by saroca-f          #+#    #+#             */
-/*   Updated: 2024/07/09 10:18:23 by saroca-f         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:16:44 by saroca-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	cd_relative_checker(char *road, char **env)
 		}
 		i++;
 	}
-	if (!archive_checker(road, now))
+	if (!now || !archive_checker(road, now))
 		return (0);
 	else if (access(road, X_OK) < 0)
 	{
